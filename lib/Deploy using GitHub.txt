@@ -1,0 +1,8 @@
+ref:
+https://blog.usejournal.com/beginners-guide-to-flutter-web-set-up-to-deployment-39c967d7dfae
+
+cd build/web
+git add .
+git commit -m "Must have a message"
+git remote add
+git push -u origin master
