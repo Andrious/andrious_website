@@ -14,7 +14,8 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with StateSet {
+  //
   Future<void> getUserInfo() async {
     await getUser();
     setState(() {});
@@ -29,13 +30,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Explore',
+    return MaterialApp.router(
+      title: 'Andrious Solutions',
       theme: lightThemeData,
       darkTheme: darkThemeData,
       debugShowCheckedModeBanner: false,
       themeMode: EasyDynamicTheme.of(context).themeMode,
-      home: const HomePage(),
+      routerDelegate: AppRouterDelegate(
+        this,
+        home: (BuildContext context) => const HomePage(),
+      ),
+      routeInformationParser: AppRouteInformationParser(),
     );
   }
 }

@@ -23,7 +23,7 @@ class FeaturedHeading extends StatelessWidget {
               children: [
                 Row(),
                 const Text(
-                  'Featured',
+                  'Andrious Solutions Ltd.',
                   style: TextStyle(
                     fontSize: 24,
                     fontFamily: 'Montserrat',
@@ -32,7 +32,7 @@ class FeaturedHeading extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Unique wildlife tours & destinations',
+                  'Mobile, Web and Desktop Development - All in Flutter',
                   textAlign: TextAlign.end,
                   style: Theme.of(context).primaryTextTheme.subtitle1,
                 ),
@@ -44,7 +44,7 @@ class FeaturedHeading extends StatelessWidget {
 //              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text(
-                  'Featured',
+                  'Andrious Solutions Ltd.',
                   style: TextStyle(
                     fontSize: 40,
                     fontFamily: 'Montserrat',
@@ -53,7 +53,7 @@ class FeaturedHeading extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    'Unique wildlife tours & destinations',
+                    'Mobile, Web and Desktop Development - All in Flutter',
                     textAlign: TextAlign.end,
                     style: Theme.of(context).primaryTextTheme.subtitle1,
                   ),

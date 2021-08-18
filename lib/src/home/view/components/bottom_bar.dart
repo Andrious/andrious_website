@@ -22,12 +22,9 @@ class BottomBar extends StatelessWidget {
                 onPressedS1: () {},
                 s2: 'About Us',
                 s3: 'Use Case Example',
-                onPressedS3: () async {
-                  await Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      fullscreenDialog: true,
-                      builder: (context) => const UseCaseExample(),
-                    ),
+                onPressedS3: () {
+                  AppRouterDelegate.nextRoute(
+                    {'/use_case': (context) => const UseCaseExample()},
                   );
                 },
               ),

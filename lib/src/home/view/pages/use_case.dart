@@ -12,7 +12,7 @@ class UseCaseExample extends StatelessWidget {
         'https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F2.jpg?alt=media';
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Article Two'),
+        title: const Text('Use Case'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.share),
@@ -51,26 +51,6 @@ class UseCaseExample extends StatelessWidget {
                   const Text('Oct 21, 2017 By DLohani'),
                   const SizedBox(height: 10),
                   const Divider(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: const <Widget>[
-                      Icon(Icons.favorite_border),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('20.2k'),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Icon(Icons.comment),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('2.2k'),
-                    ],
-                  ),
                   const SizedBox(
                     height: 10,
                   ),

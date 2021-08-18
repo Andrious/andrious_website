@@ -9,6 +9,9 @@ export 'package:flutter/material.dart';
 /// MVC framework
 export 'package:mvc_application/view.dart' hide AppMenu, runApp;
 
+/// Navigation
+export 'package:andrious/src/app/view/app_navigator.dart';
+
 /// SetState routine
 export 'package:state_set/state_set.dart';
 
@@ -31,6 +34,7 @@ export 'package:andrious/src/home/view/components/bottom_bar.dart';
 /// Webpages
 export 'package:andrious/src/home/view/pages/main_page.dart';
 export 'package:andrious/src/home/view/pages/use_case.dart';
+export 'package:andrious/src/home/view/pages/unknown.dart';
 
 export 'package:andrious/src/home/view/screens/home_page.dart';
 export 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
