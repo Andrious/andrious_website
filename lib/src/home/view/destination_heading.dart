@@ -9,39 +9,32 @@ class DestinationHeading extends StatelessWidget {
   final Size screenSize;
 
   @override
-  Widget build(BuildContext context) => ResponsiveWidget.isSmallScreen(context)
-      ? Container(
-          padding: EdgeInsets.only(
-            top: screenSize.height / 20,
-            bottom: screenSize.height / 20,
-          ),
-          width: screenSize.width,
-          // color: Colors.black,
-          child: const Text(
-            'Destinations diversity',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
-      : Container(
-          padding: EdgeInsets.only(
-            top: screenSize.height / 10,
-            bottom: screenSize.height / 15,
-          ),
-          width: screenSize.width,
-          // color: Colors.black,
-          child: const Text(
-            'Destinations diversity',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 40,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        );
+  Widget build(BuildContext context) => Image.asset(
+        'assets/images/art_of_war.jpg',
+        width: 797,
+        height: 135,
+      );
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final smallScreen = ResponsiveWidget.isSmallScreen(context);
+//     return Container(
+//       padding: EdgeInsets.only(
+//         top: screenSize.height / (smallScreen ? 20 : 10),
+//         bottom: screenSize.height / (smallScreen ? 20 : 15),
+//       ),
+// //      width: screenSize.width,
+//       // color: Colors.black,
+//
+//       child: Text(
+//         'Art of War',
+//         textAlign: TextAlign.center,
+//         style: TextStyle(
+//           fontSize: smallScreen ? 24 : 40,
+//           fontFamily: 'Montserrat',
+//           fontWeight: FontWeight.bold,
+//         ),
+//       ),
+//     );
+//   }
 }

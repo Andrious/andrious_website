@@ -31,6 +31,7 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
   static late List<MaterialPage<dynamic>> _pages;
 
   /// Of course, You're free to override this function if you like
+  /// This getter will update the current URL path
   @override
   AppRoutePath get currentConfiguration => _parseRoutePath(_path);
 
@@ -145,7 +146,7 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 }
 
 /// Parser inspired by https://github.com/acoutts/flutter_nav_2.0_mobx/blob/master/lib/main.dart
-///
+/// Converts a route into the user class type, <T>
 /// Using typed information instead of string allows for greater flexibility
 class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
   //
