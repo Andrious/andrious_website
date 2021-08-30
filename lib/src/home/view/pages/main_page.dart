@@ -4,8 +4,6 @@
 
 import 'package:andrious/src/view.dart';
 
-import 'dart:html' as html;
-
 import 'package:flutter/material.dart' hide Element;
 
 class MainPage extends StatefulWidget {

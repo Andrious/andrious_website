@@ -2,146 +2,198 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:andrious/src/view.dart';
+//import 'package:andrious/src/view.dart';
+import 'package:flutter/material.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppRoutePath>
-    with PopNavigatorRouterDelegateMixin<AppRoutePath> {
-  AppRouterDelegate(
-    this.state, {
-    required this.home,
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
+  factory AppRouterDelegate({
+    required Map<String, WidgetBuilder> routes,
+    void Function(VoidCallback listener)? add,
+    void Function(VoidCallback listener)? remove,
+  }) =>
+      _this ??= AppRouterDelegate._(
+        routes: routes,
+        add: add,
+        remove: remove,
+      );
+
+  AppRouterDelegate._({
+    required this.routes,
     this.add,
-    this.builder,
     this.remove,
-    this.setPath,
   }) : _navigatorKey = GlobalKey<NavigatorState>() {
-    _this = this;
+    _routes = _mapPages(routes);
   }
+  //
+  static AppRouterDelegate? _this;
 
-  static late AppRouterDelegate _this;
-
-  final State state;
-  final WidgetBuilder home;
+  final Map<String, WidgetBuilder> routes;
   final void Function(VoidCallback listener)? add;
-  final Widget Function(BuildContext context)? builder;
   final void Function(VoidCallback listener)? remove;
-  final Future<void> Function(dynamic configuration)? setPath;
   final GlobalKey<NavigatorState>? _navigatorKey;
 
-  static String? _path = '/';
-  static late List<MaterialPage<dynamic>> _pages;
+  Page<dynamic>? homePage;
+  final List<Page<dynamic>> _pages = [];
 
-  /// Of course, You're free to override this function if you like
-  /// This getter will update the current URL path
-  @override
-  AppRoutePath get currentConfiguration => _parseRoutePath(_path);
-
-  /// Of course, You're free to override this function if you like
-  @override
-  Widget build(BuildContext context) {
-    if (builder != null) {
-      return builder!(context);
-    } else {
-      // Use a StatefulWidget is the logic isn't repeatedly called (it's in the State object)
-      return _PageList(delegate: this);
-    }
-  }
-
-  /// Of course, You're free to override this function if you like
-  @override
-  void addListener(VoidCallback listener) {
-    if (add != null) {
-      add!(listener);
-    } else {}
-  }
-
-  /// Of course, You're free to override this function if you like
-  @override
-  void removeListener(VoidCallback listener) {
-    if (remove != null) {
-      remove!(listener);
-    } else {}
-  }
-
-  /// Of course, You're free to override this function if you like
-  @override
-  Future<void> setNewRoutePath(AppRoutePath configuration) async {
-    if (setPath != null) {
-      await setPath!(configuration);
-    } else {
-      // Supply the 'id' (whatever that is) to this Delegator.
-      if (configuration.isHomePage) {
-        _path = configuration.path;
-      } else if (configuration.isWebPage) {
-        _path = configuration.path;
-        refresh();
-      } else {
-        _path = AppRoutePath.unknown().path;
-        refresh();
-      }
-    }
-  }
+  late WidgetBuilder home;
+  late Map<String, Page<dynamic>> _routes;
 
   /// Of course, You're free to override this function if you like
   @override
   GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
 
-  void refresh() {
-    if (state.mounted) {
-      state.setState(() {});
+  /// Of course, You're free to override this function if you like
+  /// This getter will update the current URL path
+  @override
+  AppRoutePath get currentConfiguration {
+    AppRoutePath route;
+    final path = _pages.isEmpty ? '/' : _pages.last.name;
+
+    if (_foundRoute(path)) {
+      route = path == '/' ? AppRoutePath.home() : AppRoutePath.page(path);
+    } else {
+      route = AppRoutePath.unknown();
+    }
+    return route;
+  }
+
+  /// Of course, You're free to override this function if you like
+  @override
+  Widget build(BuildContext context) => Navigator(
+        key: navigatorKey, // UniqueKey(),
+        pages: [
+          homePage ??= _materialPage(context, '/', home),
+          if (_pages.isNotEmpty) _pages.last,
+        ],
+        onPopPage: (route, result) {
+          //
+          final pop = route.didPop(result);
+
+          if (pop) {
+            //
+            if (_pages.isNotEmpty) {
+              _pages.removeLast();
+            }
+
+            notifyListeners();
+          }
+          return pop;
+        },
+      );
+
+  /// Of course, You're free to override this function if you like
+  @override
+  Future<void> setNewRoutePath(AppRoutePath configuration) async {
+    //
+    if (configuration.isWebPage) {
+      _addRoute(configuration.path);
+    } else if (!configuration.isHomePage) {
+      _addRoute('/404');
     }
   }
 
-  MaterialPage<dynamic>? materialPage(
-    String path,
-    WidgetBuilder builder, {
-    bool? maintainState,
-    bool? fullscreenDialog,
-    LocalKey? key,
-    String? name,
-    Object? arguments,
-    String? restorationId,
-  }) {
-    final _PageListState? state =
-        StateSet.stateOf<_PageList>() as _PageListState;
-    return state?.materialPage(
-      path,
-      builder,
-      maintainState: maintainState,
-      fullscreenDialog: fullscreenDialog,
-      key: key,
-      name: name,
-      arguments: arguments,
-      restorationId: restorationId,
-    );
+  /// Supply the next route
+  static bool nextRoute(String? path) {
+    //
+    bool next;
+
+    next = _this!._addRoute(path);
+
+    if (next) {
+      _this!.notifyListeners();
+    }
+    return next;
   }
 
-  /// Supply the next route
-  static void nextRoute(
-    final Map<String, WidgetBuilder>? routes, {
-    bool? maintainState,
-    bool? fullscreenDialog,
-    LocalKey? key,
-    String? name,
-    Object? arguments,
-    String? restorationId,
-  }) {
+  /// Add the next route
+  bool _addRoute(String? path) {
     //
-    routes?.forEach((path, builder) {
-      _pages.add(
-        _this.materialPage(
-          path,
-          builder,
-          maintainState: maintainState,
-          fullscreenDialog: fullscreenDialog,
-          key: key,
-          name: name,
-          arguments: arguments,
-          restorationId: restorationId,
-        )!,
+    if (path == null) {
+      return false;
+    }
+
+    path = path.trim();
+
+    if (path.isEmpty) {
+      return false;
+    }
+
+    // The 'root' should always be found.
+    if (path == '/') {
+      return true;
+    }
+
+    final pageBuilder = _this!._routes[path.trim()];
+
+    bool add = pageBuilder != null;
+
+    // Don't repeatedly add a page.
+    if (add) {
+      add = _pages.isEmpty || _pages.last != pageBuilder;
+    }
+
+    if (add) {
+      _pages.add(pageBuilder!);
+    }
+    return add;
+  }
+
+  /// Find the specified path in the 'routes' map.
+  bool _foundRoute(String? path) {
+    //
+    if (path == null) {
+      return false;
+    }
+
+    path = path.trim();
+
+    if (path.isEmpty) {
+      return false;
+    }
+
+    // The 'root' should always be found.
+    if (path == '/') {
+      return true;
+    }
+
+    return _this!._routes[path] != null;
+  }
+
+  /// Compose the webpages for this app.
+  Map<String, Page<dynamic>> _mapPages(Map<String, WidgetBuilder> routes) {
+    //
+    const root = '/';
+
+    // Ensure there is a 'home' page.
+    if (routes.containsKey(root)) {
+      home = routes.remove(root)!;
+    } else {
+      home = routes.remove(routes.entries.first.key)!;
+    }
+
+    const notFound = '/404';
+
+    // Ensure there's an '404' entry
+    if (!routes.containsKey(notFound)) {
+      if (routes.containsKey('404')) {
+        routes[notFound] = routes.remove('404')!;
+      } else {
+        routes[notFound] = (context) => _UnknownScreen();
+      }
+    }
+
+    // Create a new map for the 'web pages'
+    final Map<String, Page<dynamic>> pages = {};
+
+    routes.forEach((path, builder) {
+      pages[path] = _webPage(
+        path,
+        builder,
       );
     });
 
-    _this.setNewRoutePath(_parseRoutePath(_pages.last.name));
+    return pages;
   }
 }
 
@@ -150,6 +202,11 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 /// Using typed information instead of string allows for greater flexibility
 class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
   //
+  factory AppRouteInformationParser() =>
+      _this ??= AppRouteInformationParser._();
+  AppRouteInformationParser._();
+  static AppRouteInformationParser? _this;
+
   @override
   Future<AppRoutePath> parseRouteInformation(
           RouteInformation routeInformation) async =>
@@ -163,10 +220,12 @@ class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
 
 /// Return the appropriate AppRoutePath object with it's specific URL
 AppRoutePath _parseRoutePath(String? path) {
-  // Supply the current path if null
-  path ??= AppRouterDelegate._path;
+  //
+  if (path == null) {
+    return AppRoutePath.home();
+  }
 
-  final uri = Uri.parse(path!);
+  final uri = Uri.parse(path);
 
   if (uri.pathSegments.isEmpty) {
     return AppRoutePath.home();
@@ -175,15 +234,20 @@ AppRoutePath _parseRoutePath(String? path) {
   // Handle '/book/:id'
   if (uri.pathSegments.length == 2) {
     //
-    if (!uri.pathSegments[0].startsWith('/')) {
-      return AppRoutePath.unknown();
-    }
+    // if (!uri.pathSegments[0].startsWith('/')) {
+    //   return AppRoutePath.unknown();
+    // }
 
-    final remaining = uri.pathSegments[1];
+    var remaining = uri.pathSegments[1];
 
     if (remaining.isEmpty) {
       return AppRoutePath.unknown();
     }
+
+    if (!remaining.startsWith('/')) {
+      remaining = '/$remaining';
+    }
+
     return AppRoutePath.page(remaining);
   } else if (uri.pathSegments.length == 1) {
     //
@@ -220,242 +284,84 @@ class AppRoutePath {
   final bool isWebPage;
 }
 
-// /// Of course, You're likely to override this class conveying your app's current state.
-// mixin AppRouteState<T extends StatefulWidget> on State<T> {
-//   String? path;
-//
-//   // Override so you don't call if not mounted in the Widget tree.
-//   @override
-//   void setState(VoidCallback fn) {
-//     // Don't bother if the State object is disposed of.
-//     if (mounted) {
-//       super.setState(fn);
-//     }
-//   }
-// }
+/// Returns a Page object.
+Page<dynamic> _webPage(
+  String path,
+  WidgetBuilder builder, {
+  LocalKey? key,
+  String? name,
+  Object? arguments,
+  String? restorationId,
+}) =>
+    _WebPage(
+      key: key ?? ValueKey(path),
+      name: name ?? path,
+      arguments: arguments,
+      restorationId: restorationId,
+      builder: builder,
+    );
 
-class _PageList extends StatefulWidget {
-  const _PageList({required this.delegate, Key? key}) : super(key: key);
-  final AppRouterDelegate delegate;
-  @override
-  State createState() => _PageListState();
+/// Returns a MaterialPage object.
+MaterialPage<dynamic> _materialPage(
+  BuildContext context,
+  String path,
+  WidgetBuilder builder, {
+  bool? maintainState,
+  bool? fullscreenDialog,
+  LocalKey? key,
+  String? name,
+  Object? arguments,
+  String? restorationId,
+}) {
+  Widget? widget;
+
+  try {
+    widget = builder(context);
+  } catch (ex) {
+    // Those in error are not included!
+    widget = null;
+    assert(widget != null, '$builder generated an error!');
+  }
+
+  return MaterialPage<void>(
+    maintainState: maintainState ?? true,
+    fullscreenDialog: fullscreenDialog ?? true,
+    key: key ?? ValueKey('$path/${widget.toString()}'),
+    name: name ?? path,
+    arguments: arguments,
+    restorationId: restorationId,
+    child: widget ?? Container(),
+  );
 }
 
-class _PageListState extends State<_PageList> with StateSet {
-  @override
-  void initState() {
-    //
-    super.initState();
-
-    // AppRouterDelegate._pages = listPages(
-    //   context,
-    //   widget.delegate.routes,
-    //   widget.delegate.pages,
-    // );
-
-    final page = materialPage('/', widget.delegate.home);
-
-    AppRouterDelegate._pages = [page];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final pages = AppRouterDelegate._pages;
-    return Navigator(
-      key: widget.delegate.navigatorKey,
-      pages: pages,
-      onPopPage: (route, result) {
-        //
-        final pop = route.didPop(result);
-
-        if (pop) {
-          //
-          Navigator.pop(context);
-
-          // // Update the list of pages by setting _selectedVeggie to null
-          // _selectedVeggie = null;
-          // show404 = false;
-          // notifyListeners();
-          widget.delegate.state.setState(() {});
-        }
-        return pop;
-      },
-    );
-  }
-
-  /// Returns a MaterialPage object.
-  MaterialPage<dynamic> materialPage(
-    String path,
-    WidgetBuilder builder, {
-    bool? maintainState,
-    bool? fullscreenDialog,
+class _WebPage extends Page<void> {
+  const _WebPage({
     LocalKey? key,
     String? name,
     Object? arguments,
     String? restorationId,
-  }) {
-    Widget? widget;
+    this.builder,
+  }) : super(
+          key: key,
+          name: name,
+          arguments: arguments,
+          restorationId: restorationId,
+        );
+  final WidgetBuilder? builder;
 
-    try {
-      widget = builder(context);
-    } catch (ex) {
-      // Those in error are not included!
-      widget = null;
-      assert(widget != null, '$builder generated an error!');
-    }
-
-    return MaterialPage<void>(
-      maintainState: maintainState ?? true,
-      fullscreenDialog: fullscreenDialog ?? true,
-      key: ValueKey('$path/${widget.toString()}'),
-      name: path,
-      arguments: arguments,
-      restorationId: restorationId,
-      child: widget ?? Container(),
-    );
-  }
-
-  // Return a list of pages to be used by this app
-  List<Page<dynamic>> listPages(
-    BuildContext? context,
-    Map<String, WidgetBuilder>? routes,
-    List<MaterialPage<dynamic>>? pages,
-  ) {
-    //
-    final Map<String, Page<dynamic>> _pages = {};
-
-    if (routes != null) {
-      //
-      routes.forEach((path, widgetBuilder) {
-        //
-        Widget? widget;
-
-        try {
-          widget = widgetBuilder(context!);
-        } catch (ex) {
-          // Those in error are not included!
-          widget = null;
-
-          // Remove that entry, it's no good.
-          routes.remove(path);
-
-          assert(widget != null, '$widgetBuilder generated an error!');
-        }
-
-        // The widget may error
-        // The path may be repeated
-        if (widget != null) {
-          //
-          var newPath = path.trim();
-
-          if (newPath.isEmpty || !newPath.startsWith('/')) {
-            // Correct the path key.
-            widgetBuilder = routes.remove(path)!;
-            newPath = '/$newPath';
-            routes[newPath] = widgetBuilder;
-          }
-
-          if (_pages.containsKey(newPath)) {
-            // Remove the duplicate.
-            routes.remove(newPath);
-          } else {
-            //
-            _pages[path] = MaterialPage<void>(
-              fullscreenDialog: true,
-              key: ValueKey('$path/${widget.toString()}'),
-              name: newPath,
-              child: widget,
-            );
-          }
-        }
-      });
-    }
-
-    // Any MaterialPage objects come secondary
-    if (pages != null) {
-      //
-      for (MaterialPage<dynamic> page in pages) {
-        //
-        var path = page.name;
-
-        // It must have a path and key specified.
-        if (page.key == null || path == null || path.isEmpty) {
-          late String key;
-
-          if (path == null || path.isEmpty) {
-            path = page.toString().toLowerCase();
-            key = path;
-          } else {
-            path = path.trim();
-            key = '$path/${page.toString()}';
-          }
-
-          // Create a new MaterialPage with a path and key.
-          page = MaterialPage<void>(
-            child: page.child,
-            //ignore: avoid_redundant_argument_values
-            maintainState: true,
-            // Webpages are always Full Screen Dialogs
-            fullscreenDialog: true,
-            key: ValueKey(key),
-            name: path,
-            arguments: page.arguments,
-            restorationId: page.restorationId,
-          );
-        }
-        // Always keep the first instance in the map
-        if (_pages.containsKey(path)) {
-          continue;
-        }
-
-        _pages[path] = page;
-
-        routes![path] = (BuildContext context) => page.child;
-      }
-    }
-
-    var path = AppRoutePath.home().path!;
-
-    // If a 'home' page is not specified, use the first one in the list.
-    if (_pages.isNotEmpty && !_pages.containsKey(path)) {
-      //
-      final entry = _pages.entries.first;
-
-      final value = _pages.remove(entry.key);
-
-      final page = value as MaterialPage<dynamic>;
-
-      // Create a new MaterialPage with a path and key.
-      _pages[path] = MaterialPage<void>(
-        child: page.child,
-        //ignore: avoid_redundant_argument_values
-        maintainState: true,
-        // Webpages are always Full Screen Dialogs
-        fullscreenDialog: true,
-        key: ValueKey('$path/${page.child.toString()}'),
-        name: path,
-        arguments: page.arguments,
-        restorationId: page.restorationId,
+  @override
+  Route<void> createRoute(BuildContext context) => MaterialPageRoute(
+        settings: this,
+        builder: builder ?? (BuildContext context) => Container(),
       );
-    }
+}
 
-    path = AppRoutePath.unknown().path!;
-
-    if (_pages.isNotEmpty && !_pages.containsKey(path)) {
-      //
-      const widget = UnknownScreen();
-
-      _pages[path] = MaterialPage<void>(
-        fullscreenDialog: true,
-        key: ValueKey('$path/${widget.toString()}'),
-        name: path,
-        child: widget,
+class _UnknownScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(),
+        body: const Center(
+          child: Text('404!'),
+        ),
       );
-    }
-
-    return [
-      _pages['/']!,
-      if (AppRouterDelegate._path != '/') _pages[AppRouterDelegate._path]!,
-    ];
-  }
 }

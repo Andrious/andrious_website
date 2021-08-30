@@ -1,4 +1,12 @@
 
+## 1.4.0
+ August 30, 2021
+- New screens: Use Case & How Projects Really Work
+
+
+## 1.3.0+2
+ August 23, 2021
+- updated app_navigator.dart
 
 ## 1.3.0
  August 23, 2021

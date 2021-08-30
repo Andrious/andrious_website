@@ -39,7 +39,7 @@ class _GoogleButtonState extends State<GoogleButton> {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute<void>(
                   fullscreenDialog: true,
-                  builder: (context) => const HomePage(),
+                  builder: (context) => HomePage(),
                 ),
               );
             }

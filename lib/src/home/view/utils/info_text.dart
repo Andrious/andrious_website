@@ -1,13 +1,38 @@
 import 'package:andrious/src/view.dart';
 
 class InfoText extends StatelessWidget {
-  const InfoText({required this.type, required this.text, Key? key})
-      : super(key: key);
+  const InfoText({
+    Key? key,
+    required this.type,
+    required this.text,
+    this.selectable = false,
+  }) : super(key: key);
   final String type;
   final String text;
+  final bool selectable;
 
   @override
   Widget build(BuildContext context) {
+    //
+    final style = TextStyle(
+      color: Colors.blueGrey[100],
+      fontSize: 16,
+    );
+
+    Widget _text;
+
+    if (selectable) {
+      _text = SelectableText(
+        text,
+        style: style,
+      );
+    } else {
+      _text = Text(
+        text,
+        style: style,
+      );
+    }
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -21,15 +46,7 @@ class InfoText extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-        Flexible(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: Colors.blueGrey[100],
-              fontSize: 16,
-            ),
-          ),
-        )
+        Flexible(child: _text)
       ],
     );
   }

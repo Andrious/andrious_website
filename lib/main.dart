@@ -1,46 +1,97 @@
 import 'package:andrious/src/view.dart';
 
-void main() {
-  runApp(
-    EasyDynamicThemeWidget(
-      child: const MyApp(),
-    ),
-  );
-}
+// void main() {
+//   runApp(
+//     EasyDynamicThemeWidget(
+//       child: const MyApp(),
+//     ),
+//   );
+// }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
+
+class MyApp extends AppStatefulWidget {
+  MyApp({Key? key}) : super(key: key);
   @override
-  _MyAppState createState() => _MyAppState();
+  AppState createView() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with StateSet {
+class _MyAppState extends AppState {
+  _MyAppState()
+      : super(
+          useMaterial: true,
+          debugShowCheckedModeBanner: false,
+          title: 'Andrious Solutions',
+          theme: lightThemeData,
+          darkTheme: darkThemeData,
+          routerDelegate: AppRouterDelegate(routes: {
+            '/': (BuildContext context) => const HomePage(),
+            '/projects_work': (BuildContext context) => const HowProjectsWork(),
+            '/use_case': (context) => const UseCaseExample(),
+            '/disclosure': (context) => const InitialDisclosure(),
+          }),
+          routeInformationParser: AppRouteInformationParser(),
+        );
+
+  @override
+  ThemeMode onThemeMode() => AppTheme.mode();
+
   //
-  Future<void> getUserInfo() async {
-    await getUser();
-    setState(() {});
-    print(uid);
+  // Future<void> getUserInfo() async {
+  //   await getUser();
+  //   setState(() {});
+  //   print(uid);
+  // }
+  //
+  // @override
+  // void initState() {
+  //   getUserInfo();
+  //   super.initState();
+  // }
+}
+
+class AppTheme {
+  /// Set the app's theme mode.
+  static ThemeMode mode([String? themeMode]) {
+//
+    String? setting = '';
+
+    if (themeMode != null && themeMode.isNotEmpty) {
+      themeMode = themeMode.toLowerCase().trim();
+      if ('light dark system'.contains(themeMode)) {
+        setting = themeMode;
+        Prefs.setString('ThemeMode', setting);
+      }
+    }
+
+    if (setting.isEmpty) {
+      setting = Prefs.getString('ThemeMode', 'system');
+    }
+
+    ThemeMode mode;
+    switch (setting) {
+      case 'light':
+        mode = ThemeMode.light;
+        break;
+      case 'dark':
+        mode = ThemeMode.dark;
+        break;
+      default:
+        mode = ThemeMode.system;
+    }
+    return mode;
   }
 
-  @override
-  void initState() {
-    getUserInfo();
-    super.initState();
-  }
+  static ThemeMode toggleMode() {
+    //
+    var setting = Prefs.getString('ThemeMode', 'system');
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Andrious Solutions',
-      theme: lightThemeData,
-      darkTheme: darkThemeData,
-      debugShowCheckedModeBanner: false,
-      themeMode: EasyDynamicTheme.of(context).themeMode,
-      routerDelegate: AppRouterDelegate(
-        this,
-        home: (BuildContext context) => const HomePage(),
-      ),
-      routeInformationParser: AppRouteInformationParser(),
-    );
+    if (setting == 'system') {
+      setting = 'dark';
+    } else {
+      setting = 'system';
+    }
+    App.refresh();
+    return mode(setting);
   }
 }

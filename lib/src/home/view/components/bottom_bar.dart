@@ -23,15 +23,16 @@ class BottomBar extends StatelessWidget {
                 s2: 'About Us',
                 s3: 'Use Case Example',
                 onPressedS3: () {
-                  AppRouterDelegate.nextRoute(
-                    {'/use_case': (context) => const UseCaseExample()},
-                  );
+                  AppRouterDelegate.nextRoute('/use_case');
                 },
               ),
-              const BottomBarColumn(
+              BottomBarColumn(
                 heading: 'HELP',
                 s1: 'Payment',
-                s2: 'Cancellation',
+                s2: 'Disclosure Agreement',
+                onPressedS2: () {
+                  AppRouterDelegate.nextRoute('/disclosure');
+                },
                 s3: 'FAQ',
               ),
               const BottomBarColumn(
@@ -53,6 +54,7 @@ class BottomBar extends StatelessWidget {
                     InfoText(
                       type: '',
                       text: 'info@andrioussolutions.com',
+                      selectable: true,
                     ),
                     SizedBox(height: 5),
                     InfoText(

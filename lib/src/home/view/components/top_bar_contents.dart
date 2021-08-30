@@ -38,7 +38,7 @@ class _TopBarContentsState extends State<TopBarContents> {
           child: Row(
 //            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: const [
               // Text(
               //   'EXPLORE',
               //   style: TextStyle(
@@ -129,13 +129,14 @@ class _TopBarContentsState extends State<TopBarContents> {
 //                 ),
 //              ),
               IconButton(
-                icon: const Icon(Icons.brightness_6),
+                icon: Icon(Icons.brightness_6),
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 color: Colors.white,
-                onPressed: () {
-                  EasyDynamicTheme.of(context).changeTheme();
-                },
+                onPressed: AppTheme.toggleMode,
+                // onPressed: () {
+                //   EasyDynamicTheme.of(context).changeTheme();
+                // },
               ),
               // SizedBox(
               //   width: screenSize.width / 50,

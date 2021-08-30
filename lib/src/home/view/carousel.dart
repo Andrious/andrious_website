@@ -36,20 +36,20 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
   final List<String> images = [
     'assets/images/asia.jpg',
     'assets/images/africa.jpg',
-    'assets/images/europe.jpg',
+    'assets/images/how_projects_work.jpg',
     'assets/images/south_america.jpg',
     'assets/images/australia.jpg',
     'assets/images/antarctica.jpg',
   ];
 
-  final List<String> places = [
-    'ASIA',
-    'AFRICA',
-    'EUROPE',
-    'SOUTH AMERICA',
-    'AUSTRALIA',
-    'ANTARCTICA',
-  ];
+  final Map<String, String> places = {
+    'ASIA': '/asia',
+    'AFRICA': '/africa',
+    'How Projects Really Work': '/projects_work',
+    'SOUTH AMERICA': '/south_america',
+    'AUSTRALIA': '/australia',
+    'ANTARCTICA': '/antarctica',
+  };
 
   List<Widget> generateImageTiles(screenSize) => images
       .map(
@@ -67,7 +67,7 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final imageSliders = generateImageTiles(screenSize);
-
+    final _places = places.keys.toList();
     return Stack(
       children: [
         CarouselSlider(
@@ -93,18 +93,28 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
               }),
           carouselController: _controller,
         ),
+        // AspectRatio(
+        //   aspectRatio: 18 / 8,
+        //   child: Center(
+        //     child: Text(
+        //       places[_current],
+        //       style: TextStyle(
+        //         letterSpacing: 8,
+        //         fontFamily: 'Electrolize',
+        //         fontSize: screenSize.width / 25,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //   ),
+        // ),
         AspectRatio(
-          aspectRatio: 18 / 8,
-          child: Center(
-            child: Text(
-              places[_current],
-              style: TextStyle(
-                letterSpacing: 8,
-                fontFamily: 'Electrolize',
-                fontSize: screenSize.width / 25,
-                color: Colors.white,
-              ),
-            ),
+          aspectRatio: 16 / 8,
+          child: InkWell(
+            splashColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            onTap: () {
+              AppRouterDelegate.nextRoute(places[_places[_current]]);
+            },
           ),
         ),
         if (ResponsiveWidget.isSmallScreen(context))
@@ -131,7 +141,7 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          for (int i = 0; i < places.length; i++)
+                          for (int i = 0; i < _places.length; i++)
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -153,7 +163,7 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
                                         top: screenSize.height / 80,
                                         bottom: screenSize.height / 90),
                                     child: Text(
-                                      places[i],
+                                      _places[i],
                                       style: TextStyle(
                                         color: _isHovering[i]
                                             ? Theme.of(context)
