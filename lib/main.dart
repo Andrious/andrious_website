@@ -27,6 +27,7 @@ class _MyAppState extends AppState {
           routerDelegate: AppRouterDelegate(routes: {
             '/': (BuildContext context) => const HomePage(),
             '/projects_work': (BuildContext context) => const HowProjectsWork(),
+            '/paradox': (BuildContext context) => const ProgrammingParadox(),
             '/use_case': (context) => const UseCaseExample(),
             '/disclosure': (context) => const InitialDisclosure(),
           }),

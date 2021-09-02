@@ -12,7 +12,7 @@ class InitialDisclosure extends WebPage {
   String get title => 'Initial Disclosure Agreement';
 
   @override
-  List<Widget> children(BuildContext context) {
+  List<Widget> children05(BuildContext context) {
     final _screenSize = screenSize;
     return [
       Stack(

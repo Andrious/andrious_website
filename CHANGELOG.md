@@ -1,4 +1,8 @@
 
+## 1.4.1
+ September 02, 2021
+- The Programming Paradox
+
 ## 1.4.0
  August 30, 2021
 - New screens: Use Case & How Projects Really Work

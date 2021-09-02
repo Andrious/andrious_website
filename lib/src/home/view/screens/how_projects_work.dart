@@ -12,7 +12,7 @@ class HowProjectsWork extends WebPage {
   String get title => 'How Projects Really Work';
 
   @override
-  List<Widget> children(BuildContext context) {
+  List<Widget> children05(BuildContext context) {
     final _screenSize = screenSize;
     return [
       Stack(

@@ -12,8 +12,77 @@ abstract class WebPage extends WebPageBase {
   /// Supply a title
   String get title;
 
-  /// Supply the 'children' for this Andrious webpage.
-  List<Widget> children(BuildContext context);
+  List<Widget> children05(BuildContext context) {
+    final Size _screenSize = screenSize!;
+    final List<Widget> children = [];
+    List<Widget>? widgets;
+    try {
+      widgets = children03(context);
+    } catch (ex) {
+      widgets = null;
+    }
+    if (widgets != null) {
+      /// children03
+      children.add(Stack(children: widgets));
+    }
+    try {
+      /// children04
+      widgets = children04(context);
+    } catch (ex) {
+      widgets = null;
+    }
+    if (widgets != null) {
+      children.addAll(widgets);
+    }
+    return children;
+  }
+
+  List<Widget>? children04(BuildContext context) => null;
+
+  List<Widget>? children03(BuildContext context) {
+    final Size _screenSize = screenSize!;
+    List<Widget>? widgets;
+    try {
+      widgets = children02(context);
+    } catch (ex) {
+      widgets = null;
+    }
+    return [
+      SizedBox(
+        height: _screenSize.height * 0.45,
+        width: _screenSize.width,
+        child: Image.asset(
+          'assets/images/earhNetworked.jpg',
+          fit: BoxFit.cover,
+        ),
+      ),
+      if (widgets != null)
+        Column(
+          /// children02
+          children: widgets,
+        ),
+    ];
+  }
+
+  List<Widget>? children02(BuildContext context) {
+    final Size _screenSize = screenSize!;
+    List<Widget>? widgets;
+    try {
+      widgets = children01(context);
+    } catch (ex) {
+      widgets = null;
+    }
+    return [
+      FloatingQuickAccessBar(screenSize: _screenSize),
+      if (widgets != null)
+        Column(
+          /// children01
+          children: widgets,
+        ),
+    ];
+  }
+
+  List<Widget>? children01(BuildContext context) => null;
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) => AppBar(
@@ -30,7 +99,7 @@ abstract class WebPage extends WebPageBase {
   Widget child(BuildContext context) {
     List<Widget> widgets;
     try {
-      widgets = children(context);
+      widgets = children05(context);
     } catch (ex) {
       widgets = [];
     }

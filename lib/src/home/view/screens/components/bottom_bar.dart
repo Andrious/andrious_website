@@ -33,7 +33,10 @@ class BottomBar extends StatelessWidget {
                 onPressedS2: () {
                   AppRouterDelegate.nextRoute('/disclosure');
                 },
-                s3: 'FAQ',
+                s3: 'The Programming Paradox',
+                onPressedS3: () {
+                  AppRouterDelegate.nextRoute('/paradox');
+                },
               ),
               const BottomBarColumn(
                 heading: 'SOCIAL',

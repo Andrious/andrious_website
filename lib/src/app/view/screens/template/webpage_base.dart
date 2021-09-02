@@ -35,7 +35,7 @@ abstract class WebPageBase extends ScaffoldScreenAbstract {
         );
 
   /// The 'child' widget containing the core of the screen's content.
-  Widget child(BuildContext context);
+  Widget? child(BuildContext context);
 
   /// Provide a appBar
 //  PreferredSizeWidget? appBar(BuildContext context);

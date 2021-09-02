@@ -1,6 +1,6 @@
 import 'package:andrious/src/view.dart';
 
-import 'package:andrious/src/home/view/components/google_sign_in_button.dart';
+import 'package:andrious/src/home/view/screens/components/google_sign_in_button.dart';
 
 class AuthDialog extends StatefulWidget {
   const AuthDialog({Key? key}) : super(key: key);

@@ -9,9 +9,9 @@ class FeaturedTiles extends StatelessWidget {
   final Size screenSize;
 
   final List<String> assets = [
-    'assets/images/phone_road.jpg', //    'assets/images/trekking.jpg',
-    'assets/images/phone_trail.jpg', // 'assets/images/animals.jpg',
-    'assets/images/phone_mountains.jpg', // 'assets/images/photography.jpeg',
+    'assets/images/phone_road.jpg',
+    'assets/images/phone_trail.jpg',
+    'assets/images/phone_mountains.jpg',
   ];
 
   final List<String> title = ['Trekking', 'Animals', 'Photography'];
@@ -92,6 +92,8 @@ class FeaturedTiles extends StatelessWidget {
               onTap: () {
                 print('test');
               },
+              splashColor: Colors.transparent,
+              hoverColor: Colors.transparent,
               child: Column(
                 children: [
                   SizedBox(

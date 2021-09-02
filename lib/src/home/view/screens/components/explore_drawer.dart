@@ -1,6 +1,6 @@
 import 'package:andrious/src/view.dart';
 
-import '../utils/auth_dialog.dart';
+export 'package:andrious/src/home/view/utils/auth_dialog.dart';
 
 class ExploreDrawer extends StatefulWidget {
   const ExploreDrawer({
