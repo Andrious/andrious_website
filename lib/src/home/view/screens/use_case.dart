@@ -4,10 +4,13 @@
 
 import 'package:andrious/src/view.dart';
 
-class UseCaseExample extends WebPageBase {
-  const UseCaseExample({Key? key}) : super(key: key);
+class UseCaseExample extends WebPage<UseCaseExample> {
+  UseCaseExample({Key? key}) : super(key: key);
   static const image =
       'https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F2.jpg?alt=media';
+
+  @override
+  String get title => 'Use Case';
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) => AppBar(
@@ -38,16 +41,16 @@ class UseCaseExample extends WebPageBase {
             padding: const EdgeInsets.all(80),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Divider(),
-                SizedBox(
+              children: <Widget>[
+                const Divider(),
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
                   'Use Case Scenarios',
-                  style: TextStyle(fontSize: 48),
+                  style: TextStyle(fontSize: isSmallScreen ? 24 : 48),
                 ),
-                Divider(),
+                const Divider(),
                 Text(
                   '''
 Help me help you to build the mobile app that you want. 
@@ -101,11 +104,11 @@ Additional Alternate Scenarios:
 See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be many, more lengthy and complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better. 
                   ''',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: isSmallScreen ? 16 : 24,
                   ),
                   textAlign: TextAlign.justify,
                 ),
-                BottomBar(),
+                if (!isSmallScreen) const BottomBar(),
               ],
             ),
           ),

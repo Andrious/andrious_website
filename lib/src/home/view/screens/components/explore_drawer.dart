@@ -111,7 +111,7 @@ class _ExploreDrawerState extends State<ExploreDrawer> {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute<void>(
                                     fullscreenDialog: true,
-                                    builder: (context) => const HomePage(),
+                                    builder: (context) => HomePage(),
                                   ),
                                 );
                               }).catchError((Object error) {

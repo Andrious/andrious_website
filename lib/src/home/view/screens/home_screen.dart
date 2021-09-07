@@ -5,7 +5,32 @@
 import 'package:andrious/src/view.dart';
 
 class HomeScreen extends WebPageBase {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(controller: HomeScreenController(), key: key);
+
+  @override
+  Widget? child(BuildContext context) {
+    // TODO: implement child
+    throw UnimplementedError();
+  }
+}
+
+class HomeScreenController extends WebPageBaseController {
+  //
+  @override
+  void initWidget() {
+    //
+    scrollController?.addListener(() {
+      final double offset = scrollController!.positions.last.pixels;
+      if (offset > _lastOffset) {
+        print('scrolling down');
+      } else {
+        print('scrolling up');
+      }
+      _lastOffset = offset;
+    });
+  }
+
+  double _lastOffset = 0;
 
   @override
   Widget? child(BuildContext context) => null;
@@ -21,7 +46,8 @@ class HomeScreen extends WebPageBase {
     return ScrollyWidget(
       showDebugConsole: true,
       guidelinePosition: GuidelinePosition.center,
-      opacity: 0.5,
+//      opacity: 0.5,
+      opacity: 0,
       panels: panelList,
       panelProgressCallback: (activePanelNumber, progress, func) {
         //
@@ -126,37 +152,50 @@ class HomeScreen extends WebPageBase {
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) =>
-//      ResponsiveWidget.isSmallScreen(context)
-      true
-          ? AppBar(
-              backgroundColor:
-                  Theme.of(context).bottomAppBarColor.withOpacity(opacity),
-              elevation: 0,
-              centerTitle: true,
-              actions: const [
-                IconButton(
-                  icon: Icon(Icons.brightness_6),
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: AppTheme.toggleMode,
-                ),
-              ],
-              title: Text(
-                'Andrious Solutions Ltd.',
-                style: TextStyle(
-                  color: Colors.blueGrey[100],
-                  fontSize: 20,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 3,
-                ),
-              ),
-            )
-          : PreferredSize(
-              preferredSize: Size(screenSize!.width, 1000),
-              child: TopBarContents(opacity),
-            );
+  PreferredSizeWidget? appBar(BuildContext context) => isSmallScreen!
+      ? AppBar(
+          backgroundColor:
+              Theme.of(context).bottomAppBarColor.withOpacity(opacity!),
+          elevation: 0,
+          centerTitle: true,
+          actions: const [
+            IconButton(
+              icon: Icon(Icons.brightness_6),
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: AppTheme.toggleMode,
+            ),
+          ],
+          title: Text(
+            'Andrious Solutions Ltd.',
+            style: TextStyle(
+              color: Colors.blueGrey[100],
+              fontSize: 20,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w400,
+              letterSpacing: 3,
+            ),
+          ),
+        )
+      : PreferredSize(
+          preferredSize: Size(screenSize!.width, 1000),
+          child: TopBarContents(opacity!),
+        );
+
+  Color? onBackgroundColor() {
+    MaterialColor materialColor = const MaterialColor(0xFF7FFF00, {
+      50: Color(0xFFF9FFF3),
+      100: Color(0xFFF3FFE6),
+      200: Color(0xFFDFFFC0),
+      300: Color(0xFFCBFF97),
+      400: Color(0xFFA6FF4D),
+      500: Color(0xFF7FFF00),
+      600: Color(0xFF72E300),
+      700: Color(0xFF4D9900),
+      800: Color(0xFF3A7300),
+      900: Color(0xFF254A00),
+    });
+  }
 }
 
 List<Widget> panelList = [];

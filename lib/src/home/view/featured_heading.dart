@@ -32,7 +32,7 @@ class FeaturedHeading extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Mobile, Web and Desktop Development - All in Flutter',
+                  'Mobile, Web and Desktop Development',
                   textAlign: TextAlign.end,
                   style: Theme.of(context).primaryTextTheme.subtitle1,
                 ),

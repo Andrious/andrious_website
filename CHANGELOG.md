@@ -1,4 +1,7 @@
 
+## 1.5.0
+ September 06, 2021
+- Introduce 'small screen' pages
 
 ## 1.4.2
  September 02, 2021

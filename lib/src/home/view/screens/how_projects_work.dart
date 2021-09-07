@@ -4,8 +4,8 @@
 
 import 'package:andrious/src/view.dart';
 
-class HowProjectsWork extends WebPage {
-  const HowProjectsWork({Key? key}) : super(key: key);
+class HowProjectsWork extends WebPage<HowProjectsWork> {
+  HowProjectsWork({Key? key}) : super(key: key);
 
   @override
   // Screen's title

@@ -1,19 +1,17 @@
 import 'package:andrious/src/view.dart';
 
-// void main() {
-//   runApp(
-//     EasyDynamicThemeWidget(
-//       child: const MyApp(),
-//     ),
-//   );
-// }
-
 void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
 
 class MyApp extends AppStatefulWidget {
   MyApp({Key? key}) : super(key: key);
   @override
   AppState createView() => _MyAppState();
+
+  /// Set whether the app is to use a 'small screen' or not.
+  static bool inSmallScreen = true;
+
+  ///
+  static bool get useSmallScreen => App.inDebugger && inSmallScreen;
 }
 
 class _MyAppState extends AppState {
@@ -25,11 +23,15 @@ class _MyAppState extends AppState {
           theme: lightThemeData,
           darkTheme: darkThemeData,
           routerDelegate: AppRouterDelegate(routes: {
-            '/': (BuildContext context) => const HomePage(),
-            '/projects_work': (BuildContext context) => const HowProjectsWork(),
-            '/paradox': (BuildContext context) => const ProgrammingParadox(),
-            '/use_case': (context) => const UseCaseExample(),
-            '/disclosure': (context) => const InitialDisclosure(),
+            '/': (BuildContext context) =>
+                MyApp.useSmallScreen ? HomePageSmall() : HomePage(),
+            // '/': (BuildContext context) =>
+            //     MyApp.useSmallScreen ? HomeScreen() : HomePage(),
+//            '/': (BuildContext context) => HomePage(),
+            '/projects_work': (BuildContext context) => HowProjectsWork(),
+            '/paradox': (BuildContext context) => ProgrammingParadox(),
+            '/use_case': (context) => UseCaseExample(),
+            '/disclosure': (context) => InitialDisclosure(),
           }),
           routeInformationParser: AppRouteInformationParser(),
         );

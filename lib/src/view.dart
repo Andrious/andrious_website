@@ -28,7 +28,8 @@ export 'package:andrious/src/app/view/html_behaviour.dart';
 export 'package:andrious/src/app/view/utils/iframe_widget.dart';
 export 'package:andrious/src/app/view/utils/authentication.dart';
 export 'package:andrious/src/app/view/utils/theme_data.dart';
-export 'package:andrious/src/app/view/utils/scaffold_screens.dart';
+export 'package:andrious/src/app/view/utils/basic_widgets.dart';
+export 'package:andrious/src/app/view/screens/template/scaffold_screens.dart';
 export 'package:andrious/src/app/view/utils/hyperlink.dart';
 
 /// Utility pages - home level
@@ -46,6 +47,7 @@ export 'package:andrious/main.dart';
 export 'package:andrious/src/home/view/pages/main_page.dart';
 export 'package:andrious/src/home/view/pages/unknown.dart';
 
+export 'package:andrious/src/home/view/screens/home_page_small.dart';
 export 'package:andrious/src/home/view/screens/home_screen.dart';
 export 'package:andrious/src/home/view/screens/home_page.dart';
 export 'package:easy_dynamic_theme/easy_dynamic_theme.dart';

@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          const UseCaseExample(),
+          UseCaseExample(),
           Container(),
           Container(),
         ],

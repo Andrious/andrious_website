@@ -4,32 +4,34 @@
 
 import 'package:andrious/src/view.dart';
 
-class ProgrammingParadox extends WebPage {
-  const ProgrammingParadox({Key? key}) : super(key: key);
+class ProgrammingParadox extends WebPage<ProgrammingParadox> {
+  ProgrammingParadox({Key? key})
+      : super(
+          key: key,
+          accessBar: false,
+        );
 
   @override
   // TODO: implement title
   String get title => 'The Programming Paradox';
 
   @override
-  List<Widget>? children04(BuildContext context) {
-    final _screenSize = screenSize!;
-    return [
-      Container(
-        margin: const EdgeInsets.fromLTRB(300, 50, 300, 150),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(30)),
-        padding: const EdgeInsets.all(30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              'The Programming Paradox',
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(height: 18),
-            Text(
-              '''
+  List<Widget>? children04(BuildContext context) => [
+        Container(
+          margin: const EdgeInsets.fromLTRB(300, 50, 300, 150),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(30)),
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text(
+                'The Programming Paradox',
+                style: TextStyle(fontSize: 24),
+              ),
+              SizedBox(height: 18),
+              Text(
+                '''
             There's something amazing about computer programming languages:
             They're such versatile and multifaceted scriptic tools. You can literally write 
             three separate programs, each in three different ways using the same language, 
@@ -66,11 +68,10 @@ class ProgrammingParadox extends WebPage {
             or horrible code that performs the exact same thing! Programming is 
             complicated and time-consuming. It's best you know this right now!
             ''',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
-      )
-    ];
-  }
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+        )
+      ];
 }

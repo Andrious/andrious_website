@@ -4,30 +4,17 @@
 
 import 'package:andrious/src/view.dart';
 
-class HomePage extends WebPage<HomePage> {
-  HomePage({Key? key}) : super(key: key);
+class HomePageSmall extends WebPage<HomePageSmall> {
+  HomePageSmall({Key? key})
+      : super(controller: HomePageSmallController<HomePageSmall>(), key: key);
 
   @override
   String get title => 'Andrious Solutions Ltd.';
 
   @override
-  List<Widget> children01(BuildContext context) {
-    final Size _screenSize = screenSize!;
-    return [
-      FeaturedHeading(
-        screenSize: _screenSize,
-      ),
-      FeaturedTiles(screenSize: _screenSize)
-    ];
-  }
-
-  @override
   List<Widget> children04(BuildContext context) {
-    final Size _screenSize = screenSize!;
-    final List<Widget> children = [];
-    children.add(DestinationHeading(screenSize: _screenSize));
-    children.add(const DestinationCarousel());
-    return children;
+    final con = controller as HomePageSmallController;
+    return con.children04(context);
   }
 
   @override
@@ -62,4 +49,35 @@ class HomePage extends WebPage<HomePage> {
               preferredSize: Size(screenSize!.width, 1000),
               child: TopBarContents(opacity),
             );
+}
+
+class HomePageSmallController<T> extends WebPageController {
+  //
+  @override
+  void initWidget() {
+    //
+    paradox = ProgrammingParadox();
+    useCase = UseCaseExample();
+
+    scrollController?.addListener(() {
+      final offset = scrollController!.offset;
+      if (offset > _lastOffset) {
+        // print('Down: $offset');
+      } else {
+        // print('Up: $offset');
+      }
+      _lastOffset = offset;
+    });
+  }
+
+  late ProgrammingParadox paradox;
+  late UseCaseExample useCase;
+  double _lastOffset = 0;
+
+  List<Widget> children04(BuildContext context) {
+    final List<Widget> children = [];
+    children.addAll(paradox.children04(context)!);
+    children.add(useCase.child(context));
+    return children;
+  }
 }

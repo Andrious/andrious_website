@@ -4,8 +4,8 @@
 
 import 'package:andrious/src/view.dart';
 
-class InitialDisclosure extends WebPage {
-  const InitialDisclosure({Key? key}) : super(key: key);
+class InitialDisclosure extends WebPage<InitialDisclosure> {
+  InitialDisclosure({Key? key}) : super(key: key);
 
   @override
   // Screen's title
@@ -21,7 +21,7 @@ class InitialDisclosure extends WebPage {
             height: _screenSize!.height * 0.45,
             width: _screenSize.width,
             child: Image.asset(
-              'assets/images/earhNetworked.jpg',
+              'assets/images/earthNetworked.jpg',
               fit: BoxFit.cover,
             ),
           ),
