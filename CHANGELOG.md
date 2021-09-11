@@ -1,4 +1,8 @@
 
+## 1.6.0
+ September 11, 2021
+- Introduce My Medium
+
 ## 1.5.0
  September 06, 2021
 - Introduce 'small screen' pages

@@ -6,6 +6,9 @@
 
 export 'package:flutter/material.dart' hide runApp;
 
+/// Utilities
+export 'package:url_launcher/url_launcher.dart';
+
 /// MVC framework
 export 'package:mvc_application/view.dart' hide AppMenu;
 

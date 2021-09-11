@@ -25,7 +25,8 @@ class HomePage extends WebPage<HomePage> {
   List<Widget> children04(BuildContext context) {
     final Size _screenSize = screenSize!;
     final List<Widget> children = [];
-    children.add(DestinationHeading(screenSize: _screenSize));
+//    children.add(DestinationHeading(screenSize: _screenSize));
+    children.add(SizedBox(height: screenSize!.height * 0.10));
     children.add(const DestinationCarousel());
     return children;
   }

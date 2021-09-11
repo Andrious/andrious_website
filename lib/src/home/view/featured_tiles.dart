@@ -18,7 +18,8 @@ class FeaturedTiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveWidget.isSmallScreen(context)
+    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+    return smallScreen
         ? Padding(
             padding: EdgeInsets.only(top: screenSize.height / 50),
             child: SizedBox(width: screenSize.width / 15),

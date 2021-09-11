@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.5.0
+version: 1.6.0
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -23,6 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # https://pub.dev/packages/url_launcher/
+  url_launcher: ^6.0.0
 
   # https://github.com/mdg-iitr/scrollytell
   scrollytell: #^1.0.0
@@ -38,7 +41,7 @@ dependencies:
   gap: ^2.0.0
 
   # https://pub.dev/packages/provider/
-  provider: ^5.0.0
+  provider: ^6.0.0
 
   # https://pub.dev/packages/mvc_application/
   mvc_application: #^7.0.0
@@ -54,14 +57,19 @@ dependencies:
   # https://pub.dev/packages/google_fonts/
   google_fonts: ^2.0.0
 
-  carousel_slider: ^4.0.0-nullsafety.0
+  # https://pub.dev/packages/carousel_slider/
+  carousel_slider: ^4.0.0
 
+  # https://pub.dev/packages/easy_dynamic_theme/
   easy_dynamic_theme: ^2.0.0
 
+  # https://pub.dev/packages/firebase_core/
   firebase_core: ^1.0.0
 
-  firebase_auth: ^1.0.0
+  # https://pub.dev/packages/firebase_auth/
+  firebase_auth: ^3.0.0
 
+  # https://pub.dev/packages/google_sign_in/
   google_sign_in: ^5.0.0
 
 dev_dependencies:
@@ -90,6 +98,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/carousel/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

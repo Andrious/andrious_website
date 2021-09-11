@@ -78,6 +78,22 @@ class HomePageSmallController<T> extends WebPageController {
     final List<Widget> children = [];
     children.addAll(paradox.children04(context)!);
     children.add(useCase.child(context));
+    children.add(
+      const Padding(
+        padding: EdgeInsets.only(bottom: 32),
+        child: Text(
+          'My Technical Articles',
+          style: TextStyle(
+//            color: Colors.blueGrey[100],
+            fontSize: 20,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w400,
+            letterSpacing: 3,
+          ),
+        ),
+      ),
+    );
+    children.add(const DestinationCarousel());
     return children;
   }
 }
