@@ -18,37 +18,35 @@ class HomePageSmall extends WebPage<HomePageSmall> {
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) =>
-//      ResponsiveWidget.isSmallScreen(context)
-      isSmallScreen
-          ? AppBar(
-              backgroundColor:
-                  Theme.of(context).bottomAppBarColor.withOpacity(opacity),
-              elevation: 0,
-              centerTitle: true,
-              actions: const [
-                IconButton(
-                  icon: Icon(Icons.brightness_6),
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: AppTheme.toggleMode,
-                ),
-              ],
-              title: Text(
-                title,
-                style: TextStyle(
-                  color: Colors.blueGrey[100],
-                  fontSize: 20,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 3,
-                ),
-              ),
-            )
-          : PreferredSize(
-              preferredSize: Size(screenSize!.width, 1000),
-              child: TopBarContents(opacity),
-            );
+  PreferredSizeWidget? appBar(BuildContext context) => isSmallScreen
+      ? AppBar(
+          backgroundColor:
+              Theme.of(context).bottomAppBarColor.withOpacity(opacity),
+          elevation: 0,
+          centerTitle: true,
+          actions: const [
+            IconButton(
+              icon: Icon(Icons.brightness_6),
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: AppTheme.toggleMode,
+            ),
+          ],
+          title: Text(
+            title,
+            style: TextStyle(
+              color: Colors.blueGrey[100],
+              fontSize: 20,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w400,
+              letterSpacing: 3,
+            ),
+          ),
+        )
+      : PreferredSize(
+          preferredSize: Size(screenSize!.width, 1000),
+          child: TopBarContents(opacity),
+        );
 }
 
 class HomePageSmallController<T> extends WebPageController {
@@ -84,7 +82,6 @@ class HomePageSmallController<T> extends WebPageController {
         child: Text(
           'My Technical Articles',
           style: TextStyle(
-//            color: Colors.blueGrey[100],
             fontSize: 20,
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.w400,
@@ -94,6 +91,18 @@ class HomePageSmallController<T> extends WebPageController {
       ),
     );
     children.add(const DestinationCarousel());
+    children.add(
+      const Text(
+        'My contribution to the Flutter community',
+        style: TextStyle(
+          fontSize: 20,
+          fontFamily: 'Montserrat',
+          fontWeight: FontWeight.w400,
+          letterSpacing: 3,
+        ),
+      ),
+    );
+    children.add(DartPackages());
     return children;
   }
 }

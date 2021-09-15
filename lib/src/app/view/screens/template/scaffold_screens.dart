@@ -29,6 +29,8 @@ class ScaffoldScreenWidget extends BasicStatefulWidget {
 }
 
 abstract class ScaffoldScreenController extends ControllerMVC {
+  ScaffoldScreenController([StateMVC? state]) : super(state);
+
   /// Provide a appBar
   PreferredSizeWidget? appBar(BuildContext context);
 
@@ -75,18 +77,20 @@ abstract class ScaffoldScreenController extends ControllerMVC {
   String? restorationId;
 
   BasicStatefulWidget? widget;
-  Size? screenSize;
-  double? opacity;
+
+  late Size screenSize;
+  late double opacity;
 
   Widget build(BuildContext context) {
-    widget = state!.widget as BasicStatefulWidget?;
-    screenSize = widget!.screenSize;
-    opacity = widget!.opacity;
+    //
+    screenSize = MediaQuery.of(context).size;
+    widget = state?.widget as BasicStatefulWidget?;
+    opacity = widget?.opacity ?? 0;
     return Scaffold(
       appBar: appBar(context) ??
           PreferredSize(
-              preferredSize: Size(screenSize!.width, 1000),
-              child: TopBarContents(opacity!)),
+              preferredSize: Size(screenSize.width, 1000),
+              child: TopBarContents(opacity)),
       body: body(context),
       drawer: drawer(context),
       onDrawerChanged: onDrawerChanged(context),

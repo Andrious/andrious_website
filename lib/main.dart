@@ -12,7 +12,7 @@ class MyApp extends AppStatefulWidget {
   AppState createView() => _MyAppState();
 
   /// Set whether the app is to use a 'small screen' or not.
-  static bool inSmallScreen = true;
+  static bool inSmallScreen = false;
 
   ///
   static bool get useSmallScreen => App.inDebugger && inSmallScreen;
@@ -26,9 +26,16 @@ class _MyAppState extends AppState {
           title: 'Andrious Solutions',
           theme: lightThemeData,
           darkTheme: darkThemeData,
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            I10nDelegate(),
+          ],
+          supportedLocales: I10n.supportedLocales,
           routerDelegate: AppRouterDelegate(routes: {
-            '/': (BuildContext context) =>
-                MyApp.useSmallScreen ? HomePageSmall() : HomePage(),
+            '/': (BuildContext context) => HomePageSmall(),
+//                MyApp.useSmallScreen ? HomePageSmall() : HomePage(),
             // '/': (BuildContext context) =>
             //     MyApp.useSmallScreen ? HomeScreen() : HomePage(),
 //            '/': (BuildContext context) => HomePage(),
@@ -57,6 +64,7 @@ class _MyAppState extends AppState {
   // }
 }
 
+//ignore: avoid_classes_with_only_static_members
 class AppTheme {
   /// Set the app's theme mode.
   static ThemeMode mode([String? themeMode]) {

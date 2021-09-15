@@ -7,7 +7,8 @@ class DestinationCarousel extends StatefulWidget {
   _DestinationCarouselState createState() => _DestinationCarouselState();
 }
 
-class _DestinationCarouselState extends State<DestinationCarousel> {
+class _DestinationCarouselState extends State<DestinationCarousel>
+    with WebPageBaseMixin {
   //
   final String imagePath = 'assets/images/carousel';
 
@@ -374,7 +375,7 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
                   browse = true;
                 }
                 if (browse) {
-                  await _browse(url);
+                  await uriBrowse(url);
                 }
                 setState(() {
                   _controller.nextPage();
@@ -383,94 +384,6 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
             },
           ),
         ),
-        // AspectRatio(
-        //   aspectRatio: 17 / 8,
-        //   child: Center(
-        //     heightFactor: 1,
-        //     child: Align(
-        //       alignment: Alignment.bottomCenter,
-        //       child: Padding(
-        //         padding: EdgeInsets.only(
-        //           left: screenWidth,
-        //           right: screenWidth,
-        //         ),
-        //         child: Card(
-        //           elevation: 5,
-        //           child: Padding(
-        //             padding: EdgeInsets.only(
-        //               top: screenHeight,
-        //               bottom: screenHeight,
-        //             ),
-        //             child: Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //               children: [
-        //                 for (int i = 0; i < _places.length; i++)
-        //                   Column(
-        //                     mainAxisSize: MainAxisSize.min,
-        //                     children: [
-        //                       InkWell(
-        //                         splashColor: Colors.transparent,
-        //                         hoverColor: Colors.transparent,
-        //                         onHover: (value) {
-        //                           setState(() {
-        //                             value
-        //                                 ? _isHovering[i] = true
-        //                                 : _isHovering[i] = false;
-        //                           });
-        //                         },
-        //                         onTap: () {
-        //                           _controller.animateToPage(i);
-        //                         },
-        //                         child: Padding(
-        //                           padding: EdgeInsets.only(
-        //                               top: screenSize.height / 80,
-        //                               bottom: screenSize.height / 90),
-        //                           child: Text(
-        //                             _places[i],
-        //                             style: TextStyle(
-        //                               color: _isHovering[i]
-        //                                   ? Theme.of(context)
-        //                                       .primaryTextTheme
-        //                                       .button!
-        //                                       .decorationColor
-        //                                   : Theme.of(context)
-        //                                       .primaryTextTheme
-        //                                       .button!
-        //                                       .color,
-        //                             ),
-        //                           ),
-        //                         ),
-        //                       ),
-        //                       Visibility(
-        //                         maintainSize: true,
-        //                         maintainAnimation: true,
-        //                         maintainState: true,
-        //                         visible: _isSelected[i],
-        //                         child: AnimatedOpacity(
-        //                           duration: const Duration(milliseconds: 400),
-        //                           opacity: _isSelected[i] ? 1 : 0,
-        //                           child: Container(
-        //                             height: 5,
-        //                             decoration: const BoxDecoration(
-        //                               color: Colors.blueGrey,
-        //                               borderRadius: BorderRadius.all(
-        //                                 Radius.circular(10),
-        //                               ),
-        //                             ),
-        //                             width: screenSize.width / 10,
-        //                           ),
-        //                         ),
-        //                       )
-        //                     ],
-        //                   ),
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
@@ -488,42 +401,5 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
       widgets.add(widget);
     });
     return widgets;
-  }
-
-  Future<bool> _browse(
-    String? url, {
-    bool? forceSafariVC,
-    bool? forceWebView,
-    bool? enableJavaScript,
-    bool? enableDomStorage,
-    bool? universalLinksOnly,
-    Map<String, String>? headers,
-    Brightness? statusBarBrightness,
-    String? webOnlyWindowName,
-  }) async {
-    //
-    bool browse;
-    //   if (await canLaunch(url)) {
-    if (url == null) {
-      browse = false;
-    } else {
-      try {
-        await launch(
-          url,
-          forceSafariVC: forceSafariVC,
-          forceWebView: forceWebView ?? false,
-          enableJavaScript: enableJavaScript ?? false,
-          enableDomStorage: enableDomStorage ?? false,
-          universalLinksOnly: universalLinksOnly ?? false,
-          headers: headers ?? const <String, String>{},
-          statusBarBrightness: statusBarBrightness,
-          webOnlyWindowName: webOnlyWindowName,
-        );
-        browse = true;
-      } catch (e) {
-        browse = false;
-      }
-    }
-    return browse;
   }
 }

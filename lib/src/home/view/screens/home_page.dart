@@ -26,41 +26,53 @@ class HomePage extends WebPage<HomePage> {
     final Size _screenSize = screenSize!;
     final List<Widget> children = [];
 //    children.add(DestinationHeading(screenSize: _screenSize));
-    children.add(SizedBox(height: screenSize!.height * 0.10));
+//    children.add(SizedBox(height: screenSize!.height * 0.10));
+    children.add(
+      const Padding(
+        padding: EdgeInsets.only(top: 30, bottom: 20),
+        child: Text(
+          'My Technical Articles',
+          style: TextStyle(
+            fontSize: 20,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w400,
+            letterSpacing: 3,
+          ),
+        ),
+      ),
+    );
     children.add(const DestinationCarousel());
     return children;
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) =>
-//      ResponsiveWidget.isSmallScreen(context)
-      isSmallScreen
-          ? AppBar(
-              backgroundColor:
-                  Theme.of(context).bottomAppBarColor.withOpacity(opacity),
-              elevation: 0,
-              centerTitle: true,
-              actions: const [
-                IconButton(
-                  icon: Icon(Icons.brightness_6),
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: AppTheme.toggleMode,
-                ),
-              ],
-              title: Text(
-                title,
-                style: TextStyle(
-                  color: Colors.blueGrey[100],
-                  fontSize: 20,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 3,
-                ),
-              ),
-            )
-          : PreferredSize(
-              preferredSize: Size(screenSize!.width, 1000),
-              child: TopBarContents(opacity),
-            );
+  PreferredSizeWidget? appBar(BuildContext context) => isSmallScreen
+      ? AppBar(
+          backgroundColor:
+              Theme.of(context).bottomAppBarColor.withOpacity(opacity),
+          elevation: 0,
+          centerTitle: true,
+          actions: const [
+            IconButton(
+              icon: Icon(Icons.brightness_6),
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: AppTheme.toggleMode,
+            ),
+          ],
+          title: Text(
+            title,
+            style: TextStyle(
+              color: Colors.blueGrey[100],
+              fontSize: 20,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w400,
+              letterSpacing: 3,
+            ),
+          ),
+        )
+      : PreferredSize(
+          preferredSize: Size(screenSize!.width, 1000),
+          child: TopBarContents(opacity),
+        );
 }

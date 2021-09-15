@@ -4,7 +4,7 @@
 
 import 'package:andrious/src/view.dart';
 
-abstract class WebPageBase extends ScaffoldScreenWidget {
+abstract class WebPageBase extends ScaffoldScreenWidget with WebPageBaseMixin {
   WebPageBase({WebPageBaseController? controller, Key? key})
       : super(controller ?? _WebPageBaseController(), key: key);
 
@@ -22,6 +22,11 @@ abstract class WebPageBase extends ScaffoldScreenWidget {
 }
 
 abstract class WebPageBaseController extends ScaffoldScreenController {
+  WebPageBaseController([StateMVC? state]) : super(state) {
+    _controller = ScrollController();
+  }
+  late ScrollController _controller;
+
   //
   /// The 'child' widget containing the core of the screen's content.
   Widget? child(BuildContext context);
@@ -31,24 +36,28 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
 
   /// Provide the body of the webpage
   @override
-  Widget body(BuildContext context) => WebScrollbar(
-        color: Colors.blueGrey,
-        backgroundColor: Colors.blueGrey.withOpacity(0.3),
-        width: 16,
-        heightFraction: 0.3,
-        controller: scrollController!,
-        child: SingleChildScrollView(
-          controller: scrollController!,
-          physics: physics ?? const ClampingScrollPhysics(),
-          child: child(context) ?? Container(),
-        ),
-      );
+  Widget body(BuildContext context) {
+    return WebScrollbar(
+      color: Colors.blueGrey,
+      backgroundColor: Colors.blueGrey.withOpacity(0.3),
+      width: 16,
+      heightFraction: 0.3,
+      controller: scrollController ?? _controller,
+      child: SingleChildScrollView(
+        controller: scrollController ?? _controller,
+        physics: physics ?? const ClampingScrollPhysics(),
+        child: child(context) ?? Center(child: Container()),
+      ),
+    );
+  }
 
   /// The State object's Scroll Controller
   ScrollController? get scrollController {
     if (_scrollController == null) {
-      final BasicState? webPageState = state as BasicState;
-      _scrollController = webPageState?.scrollController;
+      final _state = state;
+      if (_state != null) {
+        _scrollController = (_state as BasicState).scrollController;
+      }
     }
     return _scrollController;
   }
@@ -107,6 +116,8 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
 }
 
 class _WebPageBaseController extends WebPageBaseController {
+  _WebPageBaseController([StateMVC? state]) : super(state);
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;
 
@@ -116,5 +127,46 @@ class _WebPageBaseController extends WebPageBaseController {
   @override
   void initWidget() {
     // TODO: implement initWidget
+  }
+}
+
+/// Containing standard functionality for a typical webpage.
+mixin WebPageBaseMixin {
+  //
+  Future<bool> uriBrowse(
+    String? uri, {
+    bool? forceSafariVC,
+    bool? forceWebView,
+    bool? enableJavaScript,
+    bool? enableDomStorage,
+    bool? universalLinksOnly,
+    Map<String, String>? headers,
+    Brightness? statusBarBrightness,
+    String? webOnlyWindowName,
+  }) async {
+    //
+    bool browse;
+    //   if (await canLaunch(url)) {
+    if (uri == null) {
+      browse = false;
+    } else {
+      try {
+        await launch(
+          uri,
+          forceSafariVC: forceSafariVC,
+          forceWebView: forceWebView ?? false,
+          enableJavaScript: enableJavaScript ?? false,
+          enableDomStorage: enableDomStorage ?? false,
+          universalLinksOnly: universalLinksOnly ?? false,
+          headers: headers ?? const <String, String>{},
+          statusBarBrightness: statusBarBrightness,
+          webOnlyWindowName: webOnlyWindowName,
+        );
+        browse = true;
+      } catch (e) {
+        browse = false;
+      }
+    }
+    return browse;
   }
 }

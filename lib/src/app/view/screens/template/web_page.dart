@@ -72,9 +72,14 @@ abstract class WebPage<T> extends WebPageBase {
     } catch (ex) {
       widgets = null;
     }
-    if (widgets != null) {
+    if (widgets != null && widgets.isNotEmpty) {
       /// children03
-      children.add(Stack(children: widgets));
+      children.add(
+        Stack(
+          fit: StackFit.passthrough,
+          children: widgets,
+        ),
+      );
     }
     try {
       /// children04
@@ -82,14 +87,16 @@ abstract class WebPage<T> extends WebPageBase {
     } catch (ex) {
       widgets = null;
     }
-    if (widgets != null) {
+    if (widgets != null && widgets.isNotEmpty) {
       children.addAll(widgets);
     }
     return children;
   }
 
+  /// Main content
   List<Widget>? children04(BuildContext context) => null;
 
+  /// Website's header
   List<Widget>? children03(BuildContext context) {
     List<Widget>? widgets;
     try {
@@ -106,7 +113,7 @@ abstract class WebPage<T> extends WebPageBase {
           fit: BoxFit.cover,
         ),
       ),
-      if (widgets != null)
+      if (widgets != null && widgets.isNotEmpty)
         Column(
           /// children02
           children: widgets,
@@ -124,10 +131,8 @@ abstract class WebPage<T> extends WebPageBase {
     }
     return [
       if (!isSmallScreen && accessBar)
-        FloatingQuickAccessBar(
-          screenSize: _screenSize,
-        ),
-      if (widgets != null)
+        FloatingQuickAccessBar(screenSize: _screenSize),
+      if (widgets != null && widgets.isNotEmpty)
         Column(
           /// children01
           children: widgets,
@@ -152,6 +157,7 @@ abstract class WebPage<T> extends WebPageBase {
   Widget child(BuildContext context) {
     List<Widget> widgets;
     try {
+      /// children05
       widgets = children05(context);
     } catch (ex) {
       widgets = [];
@@ -172,6 +178,7 @@ abstract class WebPage<T> extends WebPageBase {
   static bool? _smallScreen;
 }
 
+/// Controller
 class WebPageController<T extends WebPageBase> extends WebPageBaseController {
   //
   @override
@@ -186,7 +193,8 @@ class WebPageController<T extends WebPageBase> extends WebPageBaseController {
   PreferredSizeWidget? appBar(BuildContext context) => _widget?.appBar(context);
 
   @override
-  Widget? child(BuildContext context) => _widget?.child(context) ?? Container();
+  Widget? child(BuildContext context) =>
+      _widget?.child(context) ?? Center(child: Container());
 
   @override
   void initWidget() {

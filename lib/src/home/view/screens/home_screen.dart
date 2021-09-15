@@ -22,9 +22,9 @@ class HomeScreenController extends WebPageBaseController {
     scrollController?.addListener(() {
       final double offset = scrollController!.positions.last.pixels;
       if (offset > _lastOffset) {
-        print('scrolling down');
+//        print('scrolling down');
       } else {
-        print('scrolling up');
+//        print('scrolling up');
       }
       _lastOffset = offset;
     });
@@ -155,7 +155,7 @@ class HomeScreenController extends WebPageBaseController {
   PreferredSizeWidget? appBar(BuildContext context) => isSmallScreen!
       ? AppBar(
           backgroundColor:
-              Theme.of(context).bottomAppBarColor.withOpacity(opacity!),
+              Theme.of(context).bottomAppBarColor.withOpacity(opacity),
           elevation: 0,
           centerTitle: true,
           actions: const [
@@ -178,8 +178,8 @@ class HomeScreenController extends WebPageBaseController {
           ),
         )
       : PreferredSize(
-          preferredSize: Size(screenSize!.width, 1000),
-          child: TopBarContents(opacity!),
+          preferredSize: Size(screenSize.width, 1000),
+          child: TopBarContents(opacity),
         );
 
   Color? onBackgroundColor() {

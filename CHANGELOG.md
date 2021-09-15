@@ -1,4 +1,8 @@
 
+## 1.7.0
+ September 15, 2021
+- c
+
 ## 1.6.0
  September 11, 2021
 - Introduce My Medium

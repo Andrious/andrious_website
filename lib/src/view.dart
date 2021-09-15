@@ -42,7 +42,7 @@ export 'package:andrious/src/home/view/utils/info_text.dart';
 export 'package:andrious/src/home/view/screens/components/bottom_bar.dart';
 
 /// Webpage templates
-export 'package:andrious/src/home/view/screens/template/andrious_web_page.dart';
+export 'package:andrious/src/app/view/screens/template/web_page.dart';
 export 'package:andrious/src/app/view/screens/template/webpage_base.dart';
 
 /// Webpages
@@ -50,6 +50,7 @@ export 'package:andrious/main.dart';
 export 'package:andrious/src/home/view/pages/main_page.dart';
 export 'package:andrious/src/home/view/pages/unknown.dart';
 
+/// Screens
 export 'package:andrious/src/home/view/screens/home_page_small.dart';
 export 'package:andrious/src/home/view/screens/home_screen.dart';
 export 'package:andrious/src/home/view/screens/home_page.dart';
@@ -64,6 +65,7 @@ export 'package:andrious/src/home/view/screens/components/floating_quick_access_
 export 'package:andrious/src/home/view/screens/components/top_bar_contents.dart';
 
 /// Specific Screens
+export 'package:andrious/src/home/view/screens/dart_packages.dart';
 export 'package:andrious/src/home/view/screens/programming_paradox.dart';
 export 'package:andrious/src/home/view/screens/use_case.dart';
 export 'package:andrious/src/home/view/screens/initial_disclosure_agreement.dart';

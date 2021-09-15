@@ -1,5 +1,3 @@
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-
 import 'package:andrious/src/view.dart';
 
 class TopBarContents extends StatefulWidget {
@@ -27,10 +25,10 @@ class _TopBarContentsState extends State<TopBarContents> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    final _screenSize = MediaQuery.of(context).size;
 
     return PreferredSize(
-      preferredSize: Size(screenSize.width, 1000),
+      preferredSize: Size(_screenSize.width, 1000),
       child: Container(
         color: Theme.of(context).bottomAppBarColor.withOpacity(widget.opacity),
         child: Padding(
