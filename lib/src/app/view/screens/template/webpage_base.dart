@@ -4,7 +4,8 @@
 
 import 'package:andrious/src/view.dart';
 
-abstract class WebPageBase extends ScaffoldScreenWidget with WebPageBaseMixin {
+abstract class WebPageBase extends ScaffoldScreenWidget
+    with WebPageFeaturesMixin {
   WebPageBase({WebPageBaseController? controller, Key? key})
       : super(controller ?? _WebPageBaseController(), key: key);
 
@@ -131,7 +132,7 @@ class _WebPageBaseController extends WebPageBaseController {
 }
 
 /// Containing standard functionality for a typical webpage.
-mixin WebPageBaseMixin {
+mixin WebPageFeaturesMixin {
   //
   Future<bool> uriBrowse(
     String? uri, {

@@ -1,7 +1,19 @@
 
+## 1.8.0
+ September 19, 2021
+- class ArticlesGrid extends WebPage<ArticlesGrid>
+- FloatingQuickAccessBar(screen: this);
+- _screenSize = screenSize ?? MediaQuery.of(context).size;
+- const Hyperlink(this.child, this.url, {Key? key}) : super(key: key);
+- final BasicState? basicState = StateSet.to<BasicState>();
+
+## 1.7.0+2
+ September 15, 2021
+- flutter run --release -d chrome
+
 ## 1.7.0
  September 15, 2021
-- c
+- Introduce Dart Packages
 
 ## 1.6.0
  September 11, 2021

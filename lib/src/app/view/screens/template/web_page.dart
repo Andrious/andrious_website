@@ -76,7 +76,6 @@ abstract class WebPage<T> extends WebPageBase {
       /// children03
       children.add(
         Stack(
-          fit: StackFit.passthrough,
           children: widgets,
         ),
       );
@@ -98,6 +97,7 @@ abstract class WebPage<T> extends WebPageBase {
 
   /// Website's header
   List<Widget>? children03(BuildContext context) {
+    final _screenSize = screenSize ?? MediaQuery.of(context).size;
     List<Widget>? widgets;
     try {
       widgets = children02(context);
@@ -106,8 +106,8 @@ abstract class WebPage<T> extends WebPageBase {
     }
     return [
       SizedBox(
-        height: screenSize!.height * 0.45,
-        width: screenSize!.width,
+        height: _screenSize.height * 0.45,
+        width: _screenSize.width,
         child: Image.asset(
           coverImage ?? 'assets/images/earthNetworked.jpg',
           fit: BoxFit.cover,
@@ -122,7 +122,7 @@ abstract class WebPage<T> extends WebPageBase {
   }
 
   List<Widget>? children02(BuildContext context) {
-    final Size _screenSize = screenSize!;
+    final _screenSize = screenSize ?? MediaQuery.of(context).size;
     List<Widget>? widgets;
     try {
       widgets = children01(context);
@@ -130,8 +130,7 @@ abstract class WebPage<T> extends WebPageBase {
       widgets = null;
     }
     return [
-      if (!isSmallScreen && accessBar)
-        FloatingQuickAccessBar(screenSize: _screenSize),
+      if (!isSmallScreen && accessBar) FloatingQuickAccessBar(screen: this),
       if (widgets != null && widgets.isNotEmpty)
         Column(
           /// children01
@@ -155,6 +154,7 @@ abstract class WebPage<T> extends WebPageBase {
 
   @override
   Widget child(BuildContext context) {
+    final _screenSize = screenSize ?? MediaQuery.of(context).size;
     List<Widget> widgets;
     try {
       /// children05
@@ -164,7 +164,7 @@ abstract class WebPage<T> extends WebPageBase {
     }
     if (bottomBar) {
       widgets.addAll([
-        SizedBox(height: screenSize!.height / 10),
+        SizedBox(height: _screenSize.height / 10),
         const BottomBar(),
       ]);
     }

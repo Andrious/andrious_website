@@ -41,7 +41,7 @@ class HomePage extends WebPage<HomePage> {
         ),
       ),
     );
-    children.add(const DestinationCarousel());
+    children.add(ArticleCarousel());
     return children;
   }
 

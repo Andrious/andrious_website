@@ -11,6 +11,9 @@ class DartPackages extends StatelessWidget {
         super(key: key);
   final DartPackagesController con;
 
+  ///Scroll to position
+  static const double offset = 6000;
+
   @override
   Widget build(BuildContext context) => LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) =>
@@ -21,26 +24,28 @@ class DartPackages extends StatelessWidget {
             maxWidth: constraints.maxWidth,
             maxHeight: constraints.maxHeight,
           ),
-          child: GridView.builder(
-            padding: const EdgeInsets.all(8),
-            shrinkWrap: true,
-            itemCount: con.packages.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 2 : 3,
-              childAspectRatio: 5 / 4,
-              crossAxisSpacing: 10,
-            ),
-            itemBuilder: (context, index) => DartCard(
-              image: con.packages[index],
-              uri: con.webPages[con.packages[index]]!,
-              height: constraints.maxHeight * 0.3,
+          child: Material(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(8),
+              shrinkWrap: true,
+              itemCount: con.packages.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 2 : 3,
+                childAspectRatio: 5 / 4,
+                crossAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index) => DartCard(
+                image: con.packages[index],
+                uri: con.webPages[con.packages[index]]!,
+                height: constraints.maxHeight * 0.3,
+              ),
             ),
           ),
         ),
       );
 }
 
-class DartCard extends StatelessWidget with WebPageBaseMixin {
+class DartCard extends StatelessWidget with WebPageFeaturesMixin {
   const DartCard({
     required this.image,
     required this.uri,

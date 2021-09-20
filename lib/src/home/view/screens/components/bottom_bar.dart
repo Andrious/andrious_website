@@ -29,7 +29,10 @@ class BottomBar extends StatelessWidget {
                 ),
                 BottomBarColumn(
                   heading: 'HELP',
-                  s1: 'Payment',
+                  s1: 'How Projects Really Work',
+                  onPressedS1: () {
+                    AppRouterDelegate.nextRoute('/projects_work');
+                  },
                   s2: 'Disclosure Agreement',
                   onPressedS2: () {
                     AppRouterDelegate.nextRoute('/disclosure');

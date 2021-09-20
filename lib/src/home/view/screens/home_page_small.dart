@@ -18,7 +18,7 @@ class HomePageSmall extends WebPage<HomePageSmall> {
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => isSmallScreen
+  PreferredSizeWidget? appBar(BuildContext context) => true //isSmallScreen
       ? AppBar(
           backgroundColor:
               Theme.of(context).bottomAppBarColor.withOpacity(opacity),
@@ -54,8 +54,9 @@ class HomePageSmallController<T> extends WebPageController {
   @override
   void initWidget() {
     //
+    projects = HowProjectsWork();
+    useCase = UseCaseExample(bottomBar: false);
     paradox = ProgrammingParadox();
-    useCase = UseCaseExample();
 
     scrollController?.addListener(() {
       final offset = scrollController!.offset;
@@ -68,32 +69,49 @@ class HomePageSmallController<T> extends WebPageController {
     });
   }
 
-  late ProgrammingParadox paradox;
+  late HowProjectsWork projects;
   late UseCaseExample useCase;
+  late ProgrammingParadox paradox;
   double _lastOffset = 0;
 
   List<Widget> children04(BuildContext context) {
     final List<Widget> children = [];
-    children.addAll(paradox.children04(context)!);
+    children.addAll(projects.children05(context));
+    children.add(projects.popup(context));
     children.add(useCase.child(context));
+    children.addAll(paradox.children04(context)!);
     children.add(
-      const Padding(
-        padding: EdgeInsets.only(bottom: 32),
-        child: Text(
-          'My Technical Articles',
-          style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w400,
-            letterSpacing: 3,
-          ),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 32),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Text(
+              'My Technical Articles',
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w400,
+                letterSpacing: 3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 270, right: 200),
+              child: IconButton(
+                icon: const Icon(Icons.grid_on),
+                onPressed: () {
+                  AppRouterDelegate.nextRoute('/articles');
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
-    children.add(const DestinationCarousel());
+    children.add(const ArticleCarousel());
     children.add(
       const Text(
-        'My contribution to the Flutter community',
+        'My contribution to the Flutter community so far',
         style: TextStyle(
           fontSize: 20,
           fontFamily: 'Montserrat',

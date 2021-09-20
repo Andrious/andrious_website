@@ -5,7 +5,11 @@
 import 'package:andrious/src/view.dart';
 
 class UseCaseExample extends WebPage<UseCaseExample> {
-  UseCaseExample({Key? key}) : super(key: key);
+  UseCaseExample({Key? key, bool? bottomBar})
+      : super(key: key, bottomBar: bottomBar ?? true);
+
+  static const double offset = 2000;
+
   static const image =
       'https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F2.jpg?alt=media';
 
@@ -104,11 +108,11 @@ Additional Alternate Scenarios:
 See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be many, more lengthy and complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better. 
                   ''',
                   style: TextStyle(
-                    fontSize: isSmallScreen ? 16 : 24,
+                    fontSize: isSmallScreen ? 16 : 18,
                   ),
                   textAlign: TextAlign.justify,
                 ),
-                if (!isSmallScreen) const BottomBar(),
+                if (!isSmallScreen && bottomBar) const BottomBar(),
               ],
             ),
           ),

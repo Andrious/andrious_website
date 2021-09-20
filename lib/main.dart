@@ -43,6 +43,7 @@ class _MyAppState extends AppState {
             '/paradox': (BuildContext context) => ProgrammingParadox(),
             '/use_case': (context) => UseCaseExample(),
             '/disclosure': (context) => InitialDisclosure(),
+            '/articles': (context) => ArticlesGrid(),
           }),
           routeInformationParser: AppRouteInformationParser(),
         );

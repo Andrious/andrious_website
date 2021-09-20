@@ -27,7 +27,7 @@ class InitialDisclosure extends WebPage<InitialDisclosure> {
           ),
           Column(
             children: [
-              FloatingQuickAccessBar(screenSize: _screenSize),
+              FloatingQuickAccessBar(screen: this),
               Iframe(
                 height: '1000',
                 width: '640',

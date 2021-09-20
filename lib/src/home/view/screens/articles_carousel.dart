@@ -1,47 +1,156 @@
+// Copyright 2021 Andrious Solutions Ltd. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 import 'package:andrious/src/view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class DestinationCarousel extends StatefulWidget {
-  const DestinationCarousel({Key? key}) : super(key: key);
+class ArticleCarousel extends StatefulWidget {
+  const ArticleCarousel({Key? key}) : super(key: key);
+
+  /// Scroll to position
+  static const double offset = 5200;
+
   @override
-  _DestinationCarouselState createState() => _DestinationCarouselState();
+  State createState() => _ArticleCarouselState();
 }
 
-class _DestinationCarouselState extends State<DestinationCarousel>
-    with WebPageBaseMixin {
+class _ArticleCarouselState extends State<ArticleCarousel>
+    with WebPageFeaturesMixin {
   //
-  final String imagePath = 'assets/images/carousel';
-
-  late Map<String, dynamic> webPages;
-
-  late CarouselController _controller;
-
-  final List<bool> _isSelected = [
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
-
+  late CarouselController _carouselController;
+  late ArticlesController _con;
   int _current = 0;
   bool tapTwo = false;
 
   @override
   void initState() {
     super.initState();
+    _carouselController = CarouselController();
+    _con = ArticlesController();
+  }
 
-    _controller = CarouselController();
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+    final screenWidth =
+        smallScreen ? screenSize.width / 8 : screenSize.width / 8;
+    final screenHeight =
+        smallScreen ? screenSize.height / 25 : screenSize.height / 50;
+    final imageSliders = _generateImageTiles(_con.webPages);
+    final _webPages = _con.webPages.keys.toList();
+    return Stack(
+      children: [
+        CarouselSlider(
+          items: imageSliders,
+          options: CarouselOptions(
+            height: 450,
+            aspectRatio: 18 / 8,
+            scrollPhysics: ResponsiveWidget.isSmallScreen(context)
+                ? const PageScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            enlargeCenterPage: true,
+            autoPlay: !tapTwo,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _current = index;
+                tapTwo = false;
+                // for (int i = 0; i < imageSliders.length; i++) {
+                //   if (i == index) {
+                //     _isSelected[i] = true;
+                //   } else {
+                //     _isSelected[i] = false;
+                //   }
+                // }
+              });
+            },
+          ),
+          carouselController: _carouselController,
+        ),
+        // AspectRatio(
+        //   aspectRatio: 18 / 8,
+        //   child: Center(
+        //     child: Text(
+        //       places[_current],
+        //       style: TextStyle(
+        //         letterSpacing: 8,
+        //         fontFamily: 'Electrolize',
+        //         fontSize: screenSize.width / 25,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        AspectRatio(
+          aspectRatio: 16 / 8,
+          child: InkWell(
+            splashColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            onTap: () async {
+              if (!tapTwo) {
+                tapTwo = true;
+                await _carouselController.animateToPage(_current);
+                _carouselController.stopAutoPlay();
+              } else {
+                tapTwo = false;
+                await _con.browse(
+                  context: this.context,
+                  index: _current,
+                  webPage: this,
+                );
+                // final free = _con.webPages[_webPages[_current]][0];
+                // final url = _con.webPages[_webPages[_current]][1];
+                // bool browse;
+                // if (!free) {
+                //   browse = await showBox(
+                //     context: context,
+                //     contentPadding: const EdgeInsets.all(10),
+                //     text: '''
+                //     This article is behind a paywall on Medium.com.
+                //     If you're a member, it's free. If not, you may wish to cancel.
+                //     ''',
+                //     button01: Option(text: 'Continue', result: true),
+                //     press01: () => browse = true,
+                //   );
+                // } else {
+                //   browse = true;
+                // }
+                // if (browse) {
+                //   await uriBrowse(url);
+                // }
+                setState(() {
+                  _carouselController.nextPage();
+                });
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
 
-    webPages = {
-      // 'assets/images/asia.jpg',
-      // 'assets/images/africa.jpg',
-      // 'assets/images/how_projects_work.jpg',
-      // 'assets/images/south_america.jpg',
-      // 'assets/images/australia.jpg',
-      // 'assets/images/antarctica.jpg',
+  List<Widget> _generateImageTiles(Map<String, dynamic> map) {
+    final List<Widget> widgets = [];
+    map.forEach((image, url) {
+      final widget = ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.asset(
+          image,
+          fit: BoxFit.cover,
+        ),
+      );
+      widgets.add(widget);
+    });
+    return widgets;
+  }
+}
+
+class ArticlesController {
+  factory ArticlesController() => _this ??= ArticlesController._();
+  //
+  ArticlesController._() {
+    _webPages = {
       '$imagePath/medium01.jpg': [
         false,
         'https://medium.com/flutter-community/mixin-state-objects-part-2-bdc3b8881b9'
@@ -203,7 +312,7 @@ class _DestinationCarouselState extends State<DestinationCarousel>
         'https://medium.com/follow-flutter/bazaar-in-mvc-41e1c960b5c5'
       ],
       '$imagePath/medium41.jpg': [
-        false,
+        true,
         'https://medium.com/flutter-community/shrine-in-mvc-7984e08d8e6b'
       ],
       '$imagePath/medium42.jpg': [
@@ -291,115 +400,49 @@ class _DestinationCarouselState extends State<DestinationCarousel>
         'https://andrious.medium.com/store-and-read-your-apps-preferences-4139e836cfe9'
       ],
     };
+    _articles = _webPages.keys.toList(growable: false);
   }
+  //
+  static ArticlesController? _this;
 
-  @override
-  Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final smallScreen = ResponsiveWidget.isSmallScreen(context);
-    final screenWidth =
-        smallScreen ? screenSize.width / 8 : screenSize.width / 8;
-    final screenHeight =
-        smallScreen ? screenSize.height / 25 : screenSize.height / 50;
-    final imageSliders = _generateImageTiles(webPages);
-    final _webPages = webPages.keys.toList();
-    return Stack(
-      children: [
-        CarouselSlider(
-          items: imageSliders,
-          options: CarouselOptions(
-            height: 450,
-            aspectRatio: 18 / 8,
-            scrollPhysics: ResponsiveWidget.isSmallScreen(context)
-                ? const PageScrollPhysics()
-                : const NeverScrollableScrollPhysics(),
-            enlargeCenterPage: true,
-            autoPlay: !tapTwo,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _current = index;
-                tapTwo = false;
-                // for (int i = 0; i < imageSliders.length; i++) {
-                //   if (i == index) {
-                //     _isSelected[i] = true;
-                //   } else {
-                //     _isSelected[i] = false;
-                //   }
-                // }
-              });
-            },
-          ),
-          carouselController: _controller,
-        ),
-        // AspectRatio(
-        //   aspectRatio: 18 / 8,
-        //   child: Center(
-        //     child: Text(
-        //       places[_current],
-        //       style: TextStyle(
-        //         letterSpacing: 8,
-        //         fontFamily: 'Electrolize',
-        //         fontSize: screenSize.width / 25,
-        //         color: Colors.white,
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        AspectRatio(
-          aspectRatio: 16 / 8,
-          child: InkWell(
-            splashColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            onTap: () async {
-              if (!tapTwo) {
-                tapTwo = true;
-                await _controller.animateToPage(_current);
-                _controller.stopAutoPlay();
-              } else {
-                tapTwo = false;
-                final free = webPages[_webPages[_current]][0];
-                final url = webPages[_webPages[_current]][1];
-                bool browse;
-                if (!free) {
-                  browse = await showBox(
-                    context: context,
-                    contentPadding: const EdgeInsets.all(10),
-                    text: '''
+  final String imagePath = 'assets/images/carousel';
+
+  /// List of article images
+  List<String> get articles => _articles;
+  late List<String> _articles;
+
+  /// Map of article webpages
+  Map<String, dynamic> get webPages => _webPages;
+  late Map<String, dynamic> _webPages;
+
+  Future<void> browse({
+    required BuildContext context,
+    required int index,
+    required WebPageFeaturesMixin webPage,
+  }) async {
+    //
+    final free = webPages[_articles[index]][0];
+
+    final url = webPages[_articles[index]][1];
+
+    bool browse;
+
+    if (!free) {
+      browse = await showBox(
+        context: context,
+        contentPadding: const EdgeInsets.all(10),
+        text: '''
                     This article is behind a paywall on Medium.com.
                     If you're a member, it's free. If not, you may wish to cancel.
                     ''',
-                    button01: Option(text: 'Continue', result: true),
-                    press01: () => browse = true,
-                  );
-                } else {
-                  browse = true;
-                }
-                if (browse) {
-                  await uriBrowse(url);
-                }
-                setState(() {
-                  _controller.nextPage();
-                });
-              }
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  List<Widget> _generateImageTiles(Map<String, dynamic> map) {
-    final List<Widget> widgets = [];
-    map.forEach((image, url) {
-      final widget = ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Image.asset(
-          image,
-          fit: BoxFit.cover,
-        ),
+        button01: Option(text: 'Continue', result: true),
+        press01: () => browse = true,
       );
-      widgets.add(widget);
-    });
-    return widgets;
+    } else {
+      browse = true;
+    }
+    if (browse) {
+      await webPage.uriBrowse(url);
+    }
   }
 }

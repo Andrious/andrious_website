@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Hyperlink extends StatelessWidget {
-  const Hyperlink(this.text, this.url, {Key? key}) : super(key: key);
-  final Text? text;
+  const Hyperlink(this.child, this.url, {Key? key}) : super(key: key);
+  final Widget? child;
   final String? url;
 
   @override
@@ -26,7 +26,7 @@ class Hyperlink extends StatelessWidget {
           decoration: const BoxDecoration(
             border: Border(bottom: BorderSide()),
           ),
-          child: text ?? const Text('   '),
+          child: child ?? const Text('   '),
         ),
       );
 }

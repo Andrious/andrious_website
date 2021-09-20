@@ -21,25 +21,25 @@ abstract class BasicStatefulWidget extends StatefulWidget {
 
   /// Determine the current screen size.
   Size? get screenSize {
-    final BasicState? basicState = state as BasicState;
+    final BasicState? basicState = StateSet.to<BasicState>();
     return basicState?._screenSize;
   }
 
   /// The State object's Scroll Controller
   ScrollController? get scrollController {
-    final BasicState? basicState = state as BasicState;
+    final BasicState? basicState = StateSet.to<BasicState>();
     return basicState?.scrollController;
   }
 
   /// The State object's Scroll Position
   double get scrollPosition {
-    final BasicState? basicState = state as BasicState;
+    final BasicState? basicState = StateSet.to<BasicState>();
     return basicState?._scrollPosition ?? 0;
   }
 
   /// The State object's current opacity.
   double get opacity {
-    final BasicState? basicState = state as BasicState;
+    final BasicState? basicState = StateSet.to<BasicState>();
     return basicState?._opacity ?? 0;
   }
 
@@ -62,6 +62,11 @@ class BasicState extends StateMVC<BasicStatefulWidget> with StateSet {
     widget.initWidget();
   }
 
+  @override
+  void deactivate() {
+    super.deactivate();
+  }
+
   /// Call the parent's build() function to make this work.
   @override
   Widget build(BuildContext context) {
@@ -79,5 +84,10 @@ class BasicState extends StateMVC<BasicStatefulWidget> with StateSet {
     setState(() {
       _scrollPosition = scrollController.offset;
     });
+    assert(() {
+      //ignore: avoid_print
+      print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$_scrollPosition');
+      return true;
+    }());
   }
 }

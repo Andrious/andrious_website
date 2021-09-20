@@ -12,9 +12,6 @@ export 'package:url_launcher/url_launcher.dart';
 /// MVC framework
 export 'package:mvc_application/view.dart' hide AppMenu;
 
-/// Scrolly Tell
-export 'package:scrollytell/scrollytell.dart';
-
 /// Navigation
 export 'package:andrious/src/app/view/app_navigator.dart';
 
@@ -28,12 +25,13 @@ export 'package:google_fonts/google_fonts.dart';
 export 'package:andrious/src/app/view/html_behaviour.dart';
 
 /// Utility pages - app level
-export 'package:andrious/src/app/view/utils/iframe_widget.dart';
 export 'package:andrious/src/app/view/utils/authentication.dart';
-export 'package:andrious/src/app/view/utils/theme_data.dart';
 export 'package:andrious/src/app/view/utils/basic_widgets.dart';
-export 'package:andrious/src/app/view/screens/template/scaffold_screens.dart';
 export 'package:andrious/src/app/view/utils/hyperlink.dart';
+export 'package:andrious/src/app/view/utils/iframe_widget.dart';
+export 'package:andrious/src/app/view/screens/template/scaffold_screens.dart';
+export 'package:andrious/src/app/view/utils/theme_data.dart';
+export 'package:andrious/src/app/view/utils/scrollytell.dart';
 
 /// Utility pages - home level
 export 'package:andrious/src/home/view/utils/responsive.dart';
@@ -51,23 +49,26 @@ export 'package:andrious/src/home/view/pages/main_page.dart';
 export 'package:andrious/src/home/view/pages/unknown.dart';
 
 /// Screens
+export 'package:andrious/src/home/view/screens/articles_carousel.dart';
+export 'package:andrious/src/home/view/screens/articles_grid.dart';
+export 'package:andrious/src/home/view/screens/home_page.dart';
 export 'package:andrious/src/home/view/screens/home_page_small.dart';
 export 'package:andrious/src/home/view/screens/home_screen.dart';
-export 'package:andrious/src/home/view/screens/home_page.dart';
 export 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-export 'package:andrious/src/home/view/utils/web_scrollbar.dart';
-export 'package:andrious/src/home/view/carousel.dart';
+
 export 'package:andrious/src/home/view/destination_heading.dart';
-export 'package:andrious/src/home/view/screens/components/explore_drawer.dart';
 export 'package:andrious/src/home/view/featured_heading.dart';
 export 'package:andrious/src/home/view/featured_tiles.dart';
+export 'package:andrious/src/home/view/utils/web_scrollbar.dart';
+
+export 'package:andrious/src/home/view/screens/components/explore_drawer.dart';
 export 'package:andrious/src/home/view/screens/components/floating_quick_access_bar.dart';
 export 'package:andrious/src/home/view/screens/components/top_bar_contents.dart';
 
 /// Specific Screens
 export 'package:andrious/src/home/view/screens/dart_packages.dart';
+export 'package:andrious/src/home/view/screens/home_page.dart';
+export 'package:andrious/src/home/view/screens/how_projects_work.dart';
+export 'package:andrious/src/home/view/screens/initial_disclosure_agreement.dart';
 export 'package:andrious/src/home/view/screens/programming_paradox.dart';
 export 'package:andrious/src/home/view/screens/use_case.dart';
-export 'package:andrious/src/home/view/screens/initial_disclosure_agreement.dart';
-export 'package:andrious/src/home/view/screens/how_projects_work.dart';
-export 'package:andrious/src/home/view/screens/home_page.dart';
