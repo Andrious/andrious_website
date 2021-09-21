@@ -49,7 +49,10 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
   }
 
   Widget popup(BuildContext context, {double? fontSize}) {
+    final _smallScreen = ResponsiveWidget.isSmallScreen(context);
     final _screenSize = MediaQuery.of(context).size;
+    final _textStyle = TextStyle(fontSize: fontSize ?? 14);
+    final _treeSwing = Text('Tree Swing', style: _textStyle);
     return Center(
       child: Container(
 //        margin: const EdgeInsets.fromLTRB(200, 50, 200, 150),
@@ -60,7 +63,6 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
           _screenSize.height * 0.2,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.circular(30),
         ),
         padding: const EdgeInsets.all(30),
@@ -74,27 +76,20 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
             ),
             const SizedBox(height: 2),
             Row(children: [
-              Text(
-                'My concern is the first two pictures and the last picture in this famous ',
-                style: TextStyle(fontSize: fontSize ?? 14),
-//                      textAlign: TextAlign.justify,
+              Flexible(
+                flex: 2,
+                child: Text(
+                  'My concern is the first two pictures and the last picture in the famous cartoon:',
+                  style: _textStyle,
+                ),
               ),
               Flexible(
-                child: Hyperlink(
-                    Text(
-                      'Tree Swing',
-                      style: TextStyle(fontSize: fontSize ?? 14),
-                    ),
-                    'https://archive.is/FgxPK'),
-              ),
-              Text(
-                ' cartoon.',
-                style: TextStyle(fontSize: fontSize ?? 14),
+                child: Hyperlink(_treeSwing, 'https://archive.is/FgxPK'),
               ),
             ]),
             Text(
               "Simply put, 'garbage in; garbage out.' We have to clarify the requirements right from the start.",
-              style: TextStyle(fontSize: fontSize ?? 14),
+              style: _textStyle,
             ),
             Row(children: [
               Image.asset(
@@ -107,13 +102,13 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               Expanded(
                 child: Text(
                   'The ‘5 Whys’ exercise is a good start. Conceived years ago by the Toyota Motor Corporation, it came about to help find the root cause to a problem. You simply ask ‘why?’ repeatedly to every answer to the previous question. The trick is to first establish the question that describes the basic overall problem you wish to address. Note, it doesn’t always have to be 5 why’s. It’ll likely be more but, at times, even less.',
-                  style: TextStyle(fontSize: fontSize ?? 14),
+                  style: _textStyle,
                 ),
               ),
             ]),
             Text(
               'Also, there is the common trap of seemingly identifying the root cause when further why’s would have revealed it’s really not. Finally, make it a point to have other team members try it separately--different people using ‘5 Whys‘ may come up with different answers for the same problem. You will have to consolidate them with yours and try again.',
-              style: TextStyle(fontSize: fontSize ?? 14),
+              style: _textStyle,
             ),
             Image.asset(
               'assets/images/five_whys.png',
@@ -125,7 +120,7 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
             Row(children: [
               Text(
                 'Writing some ',
-                style: TextStyle(fontSize: fontSize ?? 14),
+                style: _textStyle,
               ),
               TextButton(
                 onPressed: () {
@@ -143,7 +138,7 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               Expanded(
                 child: Text(
                   ' will then pin down how a possible solution would work.',
-                  style: TextStyle(fontSize: fontSize ?? 14),
+                  style: _textStyle,
                 ),
               ),
             ]),

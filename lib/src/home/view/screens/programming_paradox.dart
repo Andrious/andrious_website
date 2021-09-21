@@ -30,7 +30,8 @@ class ProgrammingParadox extends WebPage<ProgrammingParadox> {
           _screenSize.height * 0.2,
         ),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(30)),
+          borderRadius: BorderRadius.circular(30),
+        ),
         padding: const EdgeInsets.all(30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

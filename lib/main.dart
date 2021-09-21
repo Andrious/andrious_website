@@ -15,7 +15,7 @@ class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
   AppState createView() => _MyAppState();
 
   /// Set whether the app is to use a 'small screen' or not.
-  static bool inSmallScreen = true;
+  static bool inSmallScreen = false;
 
   /// Determine if running on a desktop or on a phone or tablet
   static bool get useSmallScreen => App.inDebugger && inSmallScreen;

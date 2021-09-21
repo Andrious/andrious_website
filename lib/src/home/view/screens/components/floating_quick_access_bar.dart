@@ -13,12 +13,12 @@ class FloatingQuickAccessBar extends StatefulWidget {
 class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
   List<Widget> rowElements = [];
 
-  List<IconData> icons = [
-    Icons.location_on,
-    Icons.date_range,
-    Icons.people,
-    Icons.wb_sunny
-  ];
+  // List<IconData> icons = [
+  //   Icons.location_on,
+  //   Icons.date_range,
+  //   Icons.people,
+  //   Icons.wb_sunny
+  // ];
 
   @override
   void initState() {
@@ -56,63 +56,64 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
           left: smallScreen ? _screenSize.width / 12 : _screenSize.width / 5,
           right: smallScreen ? _screenSize.width / 12 : _screenSize.width / 5,
         ),
-        child: smallScreen
-            ? Column(
-                children: [
-                  ...Iterable<int>.generate(items.length).map(
-                    (int pageIndex) => Padding(
-                      padding: EdgeInsets.only(top: _screenSize.height / 80),
-                      child: Card(
-                        color: Theme.of(context).cardColor,
-                        elevation: 4,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              top: _screenSize.height / 45,
-                              bottom: _screenSize.height / 45,
-                              left: _screenSize.width / 20),
-                          child: Row(
-                            children: [
-                              Icon(
-                                icons[pageIndex],
-                                color: Theme.of(context).iconTheme.color,
-                              ),
-                              SizedBox(width: _screenSize.width / 20),
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                onTap: () =>
-                                    _animateTo(pages[items[pageIndex]]!),
-                                child: Text(
-                                  items[pageIndex],
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .primaryTextTheme
-                                          .button!
-                                          .color,
-                                      fontSize: 16),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : Card(
-                elevation: 5,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: _screenSize.height / 50,
-                    bottom: _screenSize.height / 50,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: generateRowElements(_screenSize),
-                  ),
-                ),
-              ),
+        // child: smallScreen
+        //     ? Column(
+        //         children: [
+        //           ...Iterable<int>.generate(items.length).map(
+        //             (int pageIndex) => Padding(
+        //               padding: EdgeInsets.only(top: _screenSize.height / 80),
+        //               child: Card(
+        //                 color: Theme.of(context).cardColor,
+        //                 elevation: 4,
+        //                 child: Padding(
+        //                   padding: EdgeInsets.only(
+        //                       top: _screenSize.height / 45,
+        //                       bottom: _screenSize.height / 45,
+        //                       left: _screenSize.width / 20),
+        //                   child: Row(
+        //                     children: [
+        //                       Icon(
+        //                         icons[pageIndex],
+        //                         color: Theme.of(context).iconTheme.color,
+        //                       ),
+        //                       SizedBox(width: _screenSize.width / 20),
+        //                       InkWell(
+        //                         splashColor: Colors.transparent,
+        //                         hoverColor: Colors.transparent,
+        //                         onTap: () =>
+        //                             _animateTo(pages[items[pageIndex]]!),
+        //                         child: Text(
+        //                           items[pageIndex],
+        //                           style: TextStyle(
+        //                               color: Theme.of(context)
+        //                                   .primaryTextTheme
+        //                                   .button!
+        //                                   .color,
+        //                               fontSize: 16),
+        //                         ),
+        //                       ),
+        //                     ],
+        //                   ),
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       )
+        //     :
+        child: Card(
+          elevation: 5,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: _screenSize.height / 50,
+              bottom: _screenSize.height / 50,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: generateRowElements(_screenSize),
+            ),
+          ),
+        ),
       ),
     );
   }

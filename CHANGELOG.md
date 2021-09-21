@@ -1,4 +1,12 @@
 
+## 1.10.0
+ September 21, 2021
+- // List<IconData> icons = [
+- _textStyle = TextStyle(fontSize: fontSize ?? 14);
+- Remove FloatingQuickAccessBar(screen: this) from disclosure_agreement
+- static bool inSmallScreen = false;
+- Remove color  Colors.white, BoxDecoration( BorderRadius.circular(30),
+
 ## 1.9.0
  September 20, 2021
 - static Future<bool> browseUri(String? uri) async {

@@ -41,7 +41,8 @@ class UseCaseExample extends WebPage<UseCaseExample> {
           Container(
             margin: const EdgeInsets.fromLTRB(100, 250, 100, 100),
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(30)),
+              borderRadius: BorderRadius.circular(30),
+            ),
             padding: const EdgeInsets.all(80),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
