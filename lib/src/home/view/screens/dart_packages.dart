@@ -12,7 +12,7 @@ class DartPackages extends StatelessWidget {
   final DartPackagesController con;
 
   ///Scroll to position
-  static const double offset = 6000;
+  static const double offset = 5600;
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(

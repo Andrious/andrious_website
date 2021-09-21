@@ -6,16 +6,30 @@ import 'package:andrious/src/view.dart';
 
 void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
 
-class MyApp extends AppStatefulWidget {
-  MyApp({Key? key}) : super(key: key);
+class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
+  factory MyApp({Key? key}) => _this ??= MyApp._(key);
+  MyApp._(Key? key) : super(key: key);
+  static MyApp? _this;
+
   @override
   AppState createView() => _MyAppState();
 
   /// Set whether the app is to use a 'small screen' or not.
-  static bool inSmallScreen = false;
+  static bool inSmallScreen = true;
 
-  ///
+  /// Determine if running on a desktop or on a phone or tablet
   static bool get useSmallScreen => App.inDebugger && inSmallScreen;
+
+  /// Supply a ready-means to browse the Internet.
+  static Future<bool> browseUri(String? uri) async {
+    bool browse;
+    if (uri == null) {
+      browse = false;
+    } else {
+      browse = await _this!.uriBrowse(uri);
+    }
+    return browse;
+  }
 }
 
 class _MyAppState extends AppState {

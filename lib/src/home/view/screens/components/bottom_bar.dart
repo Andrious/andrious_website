@@ -42,11 +42,18 @@ class BottomBar extends StatelessWidget {
                     AppRouterDelegate.nextRoute('/paradox');
                   },
                 ),
-                const BottomBarColumn(
+                BottomBarColumn(
                   heading: 'SOCIAL',
                   s1: 'Twitter',
-                  s2: 'Facebook',
+                  s2: 'LinkedIn',
+                  onPressedS2: () {
+                    MyApp.browseUri('https://www.linkedin.com/in/gregtfperry/');
+                  },
                   s3: 'YouTube',
+                  onPressedS3: () {
+                    MyApp.browseUri(
+                        'https://www.youtube.com/channel/UCRrXfoeIX-vpGTc89PDltOA/');
+                  },
                 ),
                 if (!smallScreen)
                   Container(

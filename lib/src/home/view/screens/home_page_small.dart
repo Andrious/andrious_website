@@ -86,22 +86,26 @@ class HomePageSmallController<T> extends WebPageController {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const Text(
-              'My Technical Articles',
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w400,
-                letterSpacing: 3,
+            const Flexible(
+              child: Text(
+                'My Technical Articles',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 3,
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 270, right: 200),
-              child: IconButton(
-                icon: const Icon(Icons.grid_on),
-                onPressed: () {
-                  AppRouterDelegate.nextRoute('/articles');
-                },
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 270, right: 200),
+                child: IconButton(
+                  icon: const Icon(Icons.grid_on),
+                  onPressed: () {
+                    AppRouterDelegate.nextRoute('/articles');
+                  },
+                ),
               ),
             ),
           ],

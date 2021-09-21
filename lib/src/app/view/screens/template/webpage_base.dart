@@ -171,3 +171,22 @@ mixin WebPageFeaturesMixin {
     return browse;
   }
 }
+
+class FractionallySizedWidget extends StatelessWidget {
+  const FractionallySizedWidget({
+    Key? key,
+    required this.widthFactor,
+    required this.child,
+  }) : super(key: key);
+  final double widthFactor;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Expanded(
+        child: FractionallySizedBox(
+          alignment: Alignment.centerLeft,
+          widthFactor: widthFactor,
+          child: child,
+        ),
+      );
+}

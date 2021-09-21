@@ -1,4 +1,9 @@
 
+## 1.9.0
+ September 20, 2021
+- static Future<bool> browseUri(String? uri) async {
+- margin: EdgeInsets.fromLTRB(_screenSize.width * 0.15,
+
 ## 1.8.0
  September 19, 2021
 - class ArticlesGrid extends WebPage<ArticlesGrid>

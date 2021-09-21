@@ -9,7 +9,7 @@ class ArticleCarousel extends StatefulWidget {
   const ArticleCarousel({Key? key}) : super(key: key);
 
   /// Scroll to position
-  static const double offset = 5200;
+  static const double offset = 5000;
 
   @override
   State createState() => _ArticleCarouselState();

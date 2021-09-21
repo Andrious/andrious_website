@@ -11,29 +11,37 @@ class ProgrammingParadox extends WebPage<ProgrammingParadox> {
           accessBar: false,
         );
   // Scroll to position
-  static const double offset = 4200;
+  static const double offset = 3600;
 
   @override
   // TODO: implement title
   String get title => 'The Programming Paradox';
 
   @override
-  List<Widget>? children04(BuildContext context) => [
-        Container(
-          margin: const EdgeInsets.fromLTRB(300, 50, 300, 150),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(30)),
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'The Programming Paradox',
-                style: TextStyle(fontSize: 24),
-              ),
-              SizedBox(height: 18),
-              Text(
-                '''
+  List<Widget>? children04(BuildContext context) {
+    final _screenSize = MediaQuery.of(context).size;
+    return [
+      Container(
+//          margin: const EdgeInsets.fromLTRB(300, 50, 300, 150),
+        margin: EdgeInsets.fromLTRB(
+          _screenSize.width * 0.15,
+          _screenSize.height * 0.2,
+          _screenSize.width * 0.15,
+          _screenSize.height * 0.2,
+        ),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(30)),
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              'The Programming Paradox',
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 18),
+            Text(
+              '''
             Computer programming languages are amazing if you think about it:
             They're such versatile and multifaceted scriptic tools. You can literally write 
             three separate programs, each in three different ways using the same language, 
@@ -41,51 +49,57 @@ class ProgrammingParadox extends WebPage<ProgrammingParadox> {
             
             However, there's a big problem with computer programming languages: 
             They're such versatile and multifaceted scriptic tools. You can literally write 
-            three separate programs, each in three different ways using the same language, 
-            and yet all three will essentially do the same thing. 
+            three separate programs, each in three different ways using the same 
+            programming language and yet all three will essentially do the same thing. 
             
             If you had hired Michael Crichton and two other novelists to write a story
-            about resurrected dinosaurs running amok on some deserted island, 
-            you'd get three different novels. The same goes for three separate
-            programs written by three separate programmers. Each program may do 
-            exactly the same thing, but each can be programmed completely different
-            --- and yet all three are written in the very same programming language! 
+            in English about resurrected dinosaurs running amok on some deserted island, 
+            you'd get three different novels. The same goes for three separate programs 
+            written in the same programming language by three separate programmers.
+            Each program may do exactly the same thing, but each can be programmed 
+            differently! 
             
             This was by design. Computer programming languages are to be the answer
             to all things, you see. They're to be applied to every industry, to ever field,
             to any situation, and adaptive to every circumstance. Thus, there's
             almost always more than one way to essentially do the same thing. 
             They're very diversified tools! However, that strength reveals a weakness. 
-            It's left to we mortals to then apply such capability in a uniform and 
-            effective fashion. It's helps us use it, but we're not up to the task.
+            It's far too easy for we mere mortals to each then apply their own unique 
+            approach to the code it's almost impossible to share a uniform approach
+            without compromising efficiency. Programming languages really highlights
+            'the wheat from the chaff' when it comes to programmers.
             
-            Picking one standard approach would hamper its greatest strength, 
-            but allowing any approach can make for learning curves and overruns. 
-            After all, time is money to those who are paying for computer programs.
-            Of course, there are those who don't believe in all this, but are not 
-            willing to find out. I mean, who wants to hire three programmers to 
-            write the same program?! Ironically, many do just that in a way when they
-            have to hire another programmer to fix the mess left by the first 
-            programmer(s). 
+            Picking one standard approach would hamper its adaptivity, 
+            but allowing any approach can make maintainability a nightmare---
+            resulting in learning curves and overruns. Time is money after all 
+            for those who are paying for these computer programs.
             
-            I mean, do you want three different mechanics, to work on
-            your car's engine in three different ways?? Maybe different in the 
-            degree of efficiency, but not in application. Anyway, that's pretty much
-            impossible when it comes to car engines---pieces only fit in a certain way.
-            That's not the case for the scriptic tool that is a computer programming
+            Now, some will not believe what I'm saying here, and who wants to 
+            hire three programmers to write the same program to find out?! 
+            Ironically, many find out in the end anyway when they have to hire 
+            another programmer to fix the mess left by the first two. 
+            
+            It is a rather unnerving fact, isn't? I mean, who wants three different 
+            mechanics, to work on your car's engine in three different ways?? 
+            Pretty much impossible, of course, when it comes to car engines---
+            pieces only fit in a certain way. Unfortunately, many think that's the
+            case as well when it comes to computer programs. Far from it. Maybe
+            different in the degree of efficiency,
+            In the case for the scriptic tool that is a computer programming
             language. True, the degree of efficiency may vary with every application,
             but the fact remains: there's usually more than one way to put pieces
             together!
             
             Put another way, programming languages allow you to write magnificent
             code and programming languages allow you to write horrible code to 
-            perform the exact same thing! Programming is complicated and 
+            perform essentially the exact same thing! Programming is complicated and 
             time-consuming. It's best you know this right now!
             ''',
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-        )
-      ];
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+      )
+    ];
+  }
 }
