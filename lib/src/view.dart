@@ -4,13 +4,11 @@
 
 /// Flutter framework
 
-export 'package:flutter/material.dart' hide runApp;
-
 /// Utilities
 export 'package:url_launcher/url_launcher.dart';
 
 /// MVC framework
-export 'package:mvc_application/view.dart' hide AppMenu;
+export 'package:mvc_application/view.dart' hide AppMenu; //, runApp;
 
 /// Navigation
 export 'package:andrious/src/app/view/app_navigator.dart';
@@ -23,6 +21,7 @@ export 'package:google_fonts/google_fonts.dart';
 
 /// App level code
 export 'package:andrious/src/app/view/html_behaviour.dart';
+export 'package:auto_size_text/auto_size_text.dart';
 
 /// Utility pages - app level
 export 'package:andrious/src/app/view/utils/authentication.dart';

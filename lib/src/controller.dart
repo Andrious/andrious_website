@@ -3,7 +3,10 @@
 // found in the LICENSE file.
 
 /// Flutter framework
-export 'package:flutter/material.dart' hide runApp;
+
+export 'package:andrious/src/app/controller/app_controller.dart'
+    hide AppController, runApp;
 
 /// MVC framework
-export 'package:mvc_application/controller.dart';
+// hide runApp as it's not compatible with Flutter Web
+export 'package:mvc_application/controller.dart' hide AppController, runApp;

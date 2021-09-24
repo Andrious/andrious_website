@@ -45,9 +45,11 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
 
   @override
   Widget build(BuildContext context) {
-    final _screenSize = MediaQuery.of(context).size;
+//    final _screenSize = MediaQuery.of(context).size;
+    final _screenSize = MyApp.screenSize;
     // Determine if displayed in a small screen.
-    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+//    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+    final smallScreen = MyApp.inSmallScreen;
     return Center(
       heightFactor: 1,
       child: Padding(

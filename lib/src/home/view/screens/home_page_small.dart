@@ -115,7 +115,7 @@ class HomePageSmallController<T> extends WebPageController {
     children.add(const ArticleCarousel());
     children.add(
       const Text(
-        'My contribution to the Flutter community so far',
+        'My Contribution to the Flutter Community',
         style: TextStyle(
           fontSize: 20,
           fontFamily: 'Montserrat',

@@ -1,0 +1,27 @@
+
+In the two files, web/index.html, the firebase SDK has to be explicitly inserted!
+https://firebase.flutter.dev/docs/installation/web/#add-firebase-sdks
+
+  <title>andrious</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+<script type="module">
+    // Import the functions you need from the SDKs you need import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-xhGqjXGnK9169RsSnn1DjjF4lt9oGGo",
+      authDomain: "andrious-solutions-ltd-website.firebaseapp.com",
+      projectId: "andrious-solutions-ltd-website",
+      storageBucket: "andrious-solutions-ltd-website.appspot.com",
+      messagingSenderId: "851900427720",
+      appId: "1:851900427720:web:ebb85d03a4b6c4c7a1e4fd"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>

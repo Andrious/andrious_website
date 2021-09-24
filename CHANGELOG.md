@@ -1,4 +1,12 @@
 
+## 1.11.0
+ September 24, 2021
+- final smallScreen = MyApp.inSmallScreen;
+- controller.dart' hide AppController, runApp;
+- firebase_installation.txt
+- final _screenSize = MyApp.screenSize;
+- AutoSizeText(
+
 ## 1.10.0
  September 21, 2021
 - // List<IconData> icons = [

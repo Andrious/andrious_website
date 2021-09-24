@@ -28,36 +28,46 @@ class UseCaseExample extends WebPage<UseCaseExample> {
       );
 
   @override
-  Widget child(BuildContext context) => Stack(
-        children: <Widget>[
-          Container(
-            height: 300,
-            width: double.infinity,
-            child: Image.asset(
-              'assets/images/phone_mist.jpg',
-              fit: BoxFit.cover,
-            ),
+  Widget child(BuildContext context) {
+//    final _smallScreen = ResponsiveWidget.isSmallScreen(context);
+    final _smallScreen = MyApp.inSmallScreen;
+    final _screenSize = MyApp.screenSize;
+    return Stack(
+      children: <Widget>[
+        Container(
+          height: 300,
+          width: double.infinity,
+          child: Image.asset(
+            'assets/images/phone_mist.jpg',
+            fit: BoxFit.cover,
           ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(100, 250, 100, 100),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            padding: const EdgeInsets.all(80),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Divider(),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Use Case Scenarios',
-                  style: TextStyle(fontSize: isSmallScreen ? 24 : 48),
-                ),
-                const Divider(),
-                Text(
-                  '''
+        ),
+        Container(
+//          margin: const EdgeInsets.fromLTRB(100, 250, 100, 100),
+          margin: EdgeInsets.fromLTRB(
+            _screenSize.width * (_smallScreen ? 0.1 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.3 : 0.35),
+            _screenSize.width * (_smallScreen ? 0.1 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.1 : 0.2),
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding: const EdgeInsets.all(80),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Divider(),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Use Case Scenarios',
+                style: TextStyle(fontSize: isSmallScreen ? 24 : 48),
+              ),
+              const Divider(),
+              Text(
+                '''
 Help me help you to build the mobile app that you want. 
 
 To give us a better idea, we are going to write up some Use Case Scenarios. They're 'little stories' essentially detailing how the app is suppose to work. They'll help better convey your idea, and help us develop your app faster.
@@ -108,17 +118,18 @@ Additional Alternate Scenarios:
 
 See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be many, more lengthy and complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better. 
                   ''',
-                  style: TextStyle(
-                    fontSize: isSmallScreen ? 16 : 18,
-                  ),
-                  textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: isSmallScreen ? 16 : 18,
                 ),
-                if (!isSmallScreen && bottomBar) const BottomBar(),
-              ],
-            ),
+                textAlign: TextAlign.justify,
+              ),
+              if (!isSmallScreen && bottomBar) const BottomBar(),
+            ],
           ),
-        ],
-      );
+        ),
+      ],
+    );
+  }
 }
 
 // class UseCaseExample extends StatelessWidget {

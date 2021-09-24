@@ -15,7 +15,8 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
 
   @override
   List<Widget> children05(BuildContext context) {
-    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+//    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+    final smallScreen = MyApp.inSmallScreen;
     final _screenSize = MediaQuery.of(context).size;
     return [
       Stack(
@@ -49,18 +50,20 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
   }
 
   Widget popup(BuildContext context, {double? fontSize}) {
-    final _smallScreen = ResponsiveWidget.isSmallScreen(context);
-    final _screenSize = MediaQuery.of(context).size;
+//    final _smallScreen = ResponsiveWidget.isSmallScreen(context);
+    final _smallScreen = MyApp.inSmallScreen;
+//    final _screenSize = MediaQuery.of(context).size;
+    final _screenSize = MyApp.screenSize;
     final _textStyle = TextStyle(fontSize: fontSize ?? 14);
     final _treeSwing = Text('Tree Swing', style: _textStyle);
     return Center(
       child: Container(
 //        margin: const EdgeInsets.fromLTRB(200, 50, 200, 150),
         margin: EdgeInsets.fromLTRB(
-          _screenSize.width * 0.15,
-          _screenSize.height * 0.2,
-          _screenSize.width * 0.15,
-          _screenSize.height * 0.2,
+          _screenSize.width * (_smallScreen ? 0.2 : 0.15),
+          _screenSize.height * (_smallScreen ? 0.15 : 0.2),
+          _screenSize.width * (_smallScreen ? 0.2 : 0.15),
+          _screenSize.height * (_smallScreen ? 0.15 : 0.2),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
@@ -94,8 +97,8 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
             Row(children: [
               Image.asset(
                 'assets/images/three_trees.jpg',
-                height: _screenSize.height * 0.3,
-                width: _screenSize.width * 0.25,
+                height: _screenSize.height * (_smallScreen ? 0.3 : 0.3),
+                width: _screenSize.width * (_smallScreen ? 0.3 : 0.25),
                 fit: BoxFit.fill,
                 alignment: Alignment.centerLeft,
               ),
@@ -112,8 +115,8 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
             ),
             Image.asset(
               'assets/images/five_whys.png',
-              height: _screenSize.height * 0.4,
-              width: _screenSize.width * 0.45,
+              height: _screenSize.height * (_smallScreen ? 0.45 : 0.55),
+              width: _screenSize.width * (_smallScreen ? 0.55 : 0.65),
               fit: BoxFit.fill,
               alignment: Alignment.centerLeft,
             ),
@@ -135,7 +138,8 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
                   ),
                 ),
               ),
-              Expanded(
+              Flexible(
+                flex: 2,
                 child: Text(
                   ' will then pin down how a possible solution would work.',
                   style: _textStyle,

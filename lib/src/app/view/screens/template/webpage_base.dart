@@ -110,7 +110,7 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
       _smallScreen = true;
     } else {
       _smallScreen =
-          MyApp.useSmallScreen || MediaQuery.of(context).size.width < 800;
+          MyApp.inSmallScreen || MediaQuery.of(context).size.width < 800;
     }
     return _smallScreen;
   }

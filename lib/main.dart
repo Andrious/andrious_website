@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:andrious/src/controller.dart';
+
+// Has a conditional import for runApp()
 import 'package:andrious/src/view.dart';
 
 void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
@@ -14,11 +17,39 @@ class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
   @override
   AppState createView() => _MyAppState();
 
-  /// Set whether the app is to use a 'small screen' or not.
-  static bool inSmallScreen = false;
+  /// Return the screen size the app is running on.
+  static Size get screenSize => _screenSize!;
+  static Size? _screenSize;
 
+  /// Set whether the app is to use a 'small screen' or not.
   /// Determine if running on a desktop or on a phone or tablet
-  static bool get useSmallScreen => App.inDebugger && inSmallScreen;
+  static bool get asSmallScreen => App.inDebugger && false;
+
+  /// Return the bool value indicating if running in a small screen or not.
+  static bool get inSmallScreen => _inSmallScreen;
+  static bool _inSmallScreen = false;
+
+  /// Determine if the app is running on a 'small screen' or not.
+  static bool isSmallScreen({BuildContext? context, Size? size}) {
+    bool smallScreen = asSmallScreen;
+    final Size? screenSize = sizeScreen(context: context, size: size);
+    if (screenSize != null) {
+      smallScreen = screenSize.width < 800;
+    }
+    _inSmallScreen = smallScreen;
+    return smallScreen;
+  }
+
+  static Size? sizeScreen({BuildContext? context, Size? size}) {
+    Size? screenSize;
+    if (context != null) {
+      screenSize = MediaQuery.of(context).size;
+    } else if (size != null) {
+      screenSize = size;
+    }
+    _screenSize = screenSize;
+    return screenSize;
+  }
 
   /// Supply a ready-means to browse the Internet.
   static Future<bool> browseUri(String? uri) async {

@@ -32,12 +32,14 @@ class _ArticleCarouselState extends State<ArticleCarousel>
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+//    final screenSize = MediaQuery.of(context).size;
+    final _screenSize = MyApp.screenSize;
+//    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+    final _smallScreen = MyApp.inSmallScreen;
     final screenWidth =
-        smallScreen ? screenSize.width / 8 : screenSize.width / 8;
+        _smallScreen ? _screenSize.width / 8 : _screenSize.width / 8;
     final screenHeight =
-        smallScreen ? screenSize.height / 25 : screenSize.height / 50;
+        _smallScreen ? _screenSize.height / 25 : _screenSize.height / 50;
     final imageSliders = _generateImageTiles(_con.webPages);
     final _webPages = _con.webPages.keys.toList();
     return Stack(
@@ -47,7 +49,7 @@ class _ArticleCarouselState extends State<ArticleCarousel>
           options: CarouselOptions(
             height: 450,
             aspectRatio: 18 / 8,
-            scrollPhysics: ResponsiveWidget.isSmallScreen(context)
+            scrollPhysics: _smallScreen
                 ? const PageScrollPhysics()
                 : const NeverScrollableScrollPhysics(),
             enlargeCenterPage: true,

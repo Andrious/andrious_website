@@ -6,7 +6,8 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Determine the screen's size.
-    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+//    final smallScreen = ResponsiveWidget.isSmallScreen(context);
+    final smallScreen = MyApp.inSmallScreen;
     return Container(
       padding: const EdgeInsets.all(30),
       color: Theme.of(context).bottomAppBarColor,

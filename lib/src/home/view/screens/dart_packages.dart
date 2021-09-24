@@ -30,7 +30,7 @@ class DartPackages extends StatelessWidget {
               shrinkWrap: true,
               itemCount: con.packages.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 2 : 3,
+                crossAxisCount: MyApp.inSmallScreen ? 2 : 3,
                 childAspectRatio: 5 / 4,
                 crossAxisSpacing: 10,
               ),

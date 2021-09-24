@@ -71,7 +71,11 @@ class BasicState extends StateMVC<BasicStatefulWidget> with StateSet {
   @override
   Widget build(BuildContext context) {
     //
+
     _screenSize = MediaQuery.of(context).size;
+
+    /// Determine if the app is running in a small screen.
+    MyApp.isSmallScreen(size: _screenSize);
 
     _opacity = _scrollPosition < _screenSize.height * 0.40
         ? _scrollPosition / (_screenSize.height * 0.40)
