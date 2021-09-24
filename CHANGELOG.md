@@ -1,5 +1,5 @@
 
-## 1.11.0+2
+## 1.11.0+4
  September 24, 2021
 - final smallScreen = MyApp.inSmallScreen;
 - controller.dart' hide AppController, runApp;
