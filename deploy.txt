@@ -1,6 +1,25 @@
 ::@ECHO OFF
 
 GOTO exit
+
+flutter build web --release // To build in the build/web
+
+flutter run -d chrome --web-renderer html // to run the app
+
+flutter build web --web-renderer html --release // to generate a production build
+
+HTML renderer: when the app is running in a mobile browser.
+CanvasKit renderer: when the app is running in a desktop browser.
+
+ref:
+https://blog.usejournal.com/beginners-guide-to-flutter-web-set-up-to-deployment-39c967d7dfae
+
+cd build/web
+git add .
+git commit -m "Must have a message"
+git remote add
+git push -u origin master
+
 IF "%1"=="" GOTO exit
 flutter build web
 copy build/web/*.* web/
