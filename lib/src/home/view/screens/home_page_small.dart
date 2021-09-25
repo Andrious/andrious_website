@@ -77,8 +77,8 @@ class HomePageSmallController<T> extends WebPageController {
   List<Widget> children04(BuildContext context) {
     final _smallScreen = MyApp.inSmallScreen;
     final List<Widget> children = [];
-    children.addAll(projects.children05(context));
-    children.add(projects.popup(context));
+    children.addAll(projects.children05(context, showPopup: false));
+    children.add(projects.popup(context, showLink: false));
     children.add(useCase.child(context));
     children.addAll(paradox.children04(context)!);
     children.add(

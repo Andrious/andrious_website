@@ -1,4 +1,9 @@
 
+## 1.13.0
+ September 25, 2021
+- fit: _smallScreen ? BoxFit.fill : BoxFit.cover,
+- child: InteractiveViewer(
+
 ## 1.12.0
  September 25, 2021
 - _screenSize.width * (_smallScreen ? 0 : 0.2),

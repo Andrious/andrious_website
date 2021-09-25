@@ -26,24 +26,26 @@ class _ArticleCarouselState extends State<ArticleCarousel>
   @override
   void initState() {
     super.initState();
+    _screenSize = MyApp.screenSize;
+    _smallScreen = MyApp.inSmallScreen;
     _carouselController = CarouselController();
     _con = ArticlesController();
   }
 
+  late Size _screenSize;
+  late bool _smallScreen;
+
   @override
   Widget build(BuildContext context) {
-    final _screenSize = MyApp.screenSize;
-    final _smallScreen = MyApp.inSmallScreen;
     final screenWidth =
         _smallScreen ? _screenSize.width / 8 : _screenSize.width / 8;
     final screenHeight =
         _smallScreen ? _screenSize.height / 25 : _screenSize.height / 50;
-    final imageSliders = _generateImageTiles(_con.webPages);
     final _webPages = _con.webPages.keys.toList();
     return Stack(
       children: [
         CarouselSlider(
-          items: imageSliders,
+          items: _generateImageTiles(_con.webPages),
           options: CarouselOptions(
             height: 450,
             aspectRatio: 18 / 8,
@@ -96,7 +98,7 @@ class _ArticleCarouselState extends State<ArticleCarousel>
         borderRadius: BorderRadius.circular(8),
         child: Image.asset(
           image,
-          fit: BoxFit.cover,
+          fit: _smallScreen ? BoxFit.fill : BoxFit.cover,
         ),
       );
       widgets.add(widget);

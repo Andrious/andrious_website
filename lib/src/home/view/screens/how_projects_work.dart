@@ -14,45 +14,58 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
   String get title => 'How Projects Really Work';
 
   @override
-  List<Widget> children05(BuildContext context) {
+  List<Widget> children05(BuildContext context, {bool showPopup = true}) {
 //    final smallScreen = ResponsiveWidget.isSmallScreen(context);
-    final smallScreen = MyApp.inSmallScreen;
+    final _smallScreen = MyApp.inSmallScreen;
     final _screenSize = MediaQuery.of(context).size;
+    final _howProjectsWork = Image.asset(
+      'assets/images/how_projects_work.jpg',
+    );
     return [
       Stack(
         children: [
-          Center(
-            child: SizedBox(
-              height: _screenSize.height * 0.99,
-              width: _screenSize.width * 0.99,
-              child: InkWell(
-                splashColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                onTap: () {
-                  setState(() {
-                    _Content.visible = !_Content.visible;
-                  });
-                },
-                child: Image.asset(
-                  'assets/images/how_projects_work.jpg',
+          if (_smallScreen)
+            Center(
+              child: InteractiveViewer(
+                maxScale: 3,
+                minScale: 1,
+                child: _howProjectsWork,
+              ),
+            ),
+          if (!_smallScreen)
+            Center(
+              child: SizedBox(
+                height: _screenSize.height * 0.99,
+                width: _screenSize.width * 0.99,
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  onTap: () {
+                    if (showPopup) {
+                      setState(() {
+                        _Content.visible = !_Content.visible;
+                      });
+                    }
+                  },
+                  child: _howProjectsWork,
                 ),
               ),
             ),
-          ),
-          Visibility(
-            visible: _Content.visible,
-            // Method is below. Allowing to be called separately.
-            child: popup(context, fontSize: smallScreen ? 14 : 18),
-          ),
+          if (showPopup)
+            Visibility(
+              visible: _Content.visible,
+              // Method is below. Allowing to be called separately.
+              child: popup(context, fontSize: 18),
+            ),
         ],
       ),
     ];
   }
 
-  Widget popup(BuildContext context, {double? fontSize}) {
+  Widget popup(BuildContext context, {double? fontSize, bool showLink = true}) {
     final _smallScreen = MyApp.inSmallScreen;
     final _screenSize = MyApp.screenSize;
-    final _textStyle = TextStyle(fontSize: fontSize ?? 14);
+    final _textStyle = TextStyle(fontSize: fontSize ?? 16);
     final _treeSwing = Text('Tree Swing', style: _textStyle);
     return Center(
       child: Container(
@@ -76,39 +89,24 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 2),
-            Row(children: [
-              Flexible(
-                flex: 2,
-                child: Text(
-                  'My concern is the first two pictures and the last picture in the famous cartoon:',
-                  style: _textStyle,
-                ),
-              ),
-              Flexible(
-                child: Hyperlink(_treeSwing, 'https://archive.is/FgxPK'),
-              ),
-            ]),
+            Text(
+              'My concern is the first two pictures and the last picture in the famous cartoon:',
+              style: _textStyle,
+            ),
+            Hyperlink(_treeSwing, 'https://archive.is/FgxPK'),
+            Image.asset(
+              'assets/images/three_trees.jpg',
+              height: _screenSize.height * (_smallScreen ? 0.50 : 0.3),
+              width: _screenSize.width * (_smallScreen ? 1 : 0.25),
+              fit: BoxFit.fill,
+//              alignment: Alignment.centerLeft,
+            ),
             Text(
               "Simply put, 'garbage in; garbage out.' We have to clarify the requirements right from the start.",
               style: _textStyle,
             ),
-            Row(children: [
-              Image.asset(
-                'assets/images/three_trees.jpg',
-                height: _screenSize.height * (_smallScreen ? 0.65 : 0.3),
-                width: _screenSize.width * (_smallScreen ? 0.45 : 0.25),
-                fit: BoxFit.fill,
-                alignment: Alignment.centerLeft,
-              ),
-              Expanded(
-                child: Text(
-                  'The ‘5 Whys’ exercise is a good start. Conceived years ago by the Toyota Motor Corporation, it came about to help find the root cause to a problem. You simply ask ‘why?’ repeatedly to every answer to the previous question. The trick is to first establish the question that describes the basic overall problem you wish to address. Note, it doesn’t always have to be 5 why’s. It’ll likely be more but, at times, even less.',
-                  style: _textStyle,
-                ),
-              ),
-            ]),
             Text(
-              'Also, there is the common trap of seemingly identifying the root cause when further why’s would have revealed it’s really not. Finally, make it a point to have other team members try it separately--different people using ‘5 Whys‘ may come up with different answers for the same problem. You will have to consolidate them with yours and try again.',
+              "The ‘5 Whys’ exercise is a good start. Conceived years ago by the Toyota Motor Corporation, it came about to help find the root cause to a problem. You simply ask ‘why?’ repeatedly to every answer to the previous question. The trick is to first establish the question that describes the basic overall problem you wish to address.\n\nNote, it doesn't always have to be 5 why’s. It’ll likely be more but, at times, even less. Also, there is the common trap of seemingly identifying the root cause when further why’s would have revealed it’s really not. Finally, make it a point to have other team members try it separately--different people using ‘5 Whys‘ may come up with different answers for the same problem. You will have to consolidate them with yours and try again.",
               style: _textStyle,
             ),
             Image.asset(
@@ -116,13 +114,13 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               height: _screenSize.height * (_smallScreen ? 0.55 : 0.55),
               width: _screenSize.width * (_smallScreen ? 1 : 0.65),
               fit: BoxFit.fill,
-              alignment: Alignment.centerLeft,
+//              alignment: Alignment.centerLeft,
             ),
-            Row(children: [
-              Text(
-                'Writing some ',
-                style: _textStyle,
-              ),
+            Text(
+              "Writing some 'Use Case Scenarios' will then pin down how a possible solution would work:",
+              style: _textStyle,
+            ),
+            if (showLink)
               TextButton(
                 onPressed: () {
                   AppRouterDelegate.nextRoute('/use_case');
@@ -136,14 +134,6 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
                   ),
                 ),
               ),
-              Flexible(
-                flex: 2,
-                child: Text(
-                  ' will then pin down how a possible solution would work.',
-                  style: _textStyle,
-                ),
-              ),
-            ]),
           ],
         ),
       ),

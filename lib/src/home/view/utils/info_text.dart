@@ -5,10 +5,12 @@ class InfoText extends StatelessWidget {
     Key? key,
     required this.type,
     required this.text,
+    this.fontSize = 16,
     this.selectable = false,
   }) : super(key: key);
   final String type;
   final String text;
+  final double fontSize;
   final bool selectable;
 
   @override
@@ -16,7 +18,7 @@ class InfoText extends StatelessWidget {
     //
     final style = TextStyle(
       color: Colors.blueGrey[100],
-      fontSize: 16,
+      fontSize: fontSize,
     );
 
     Widget _text;
@@ -43,7 +45,7 @@ class InfoText extends StatelessWidget {
             '$type: ',
             style: TextStyle(
               color: Colors.blueGrey[300],
-              fontSize: 16,
+              fontSize: fontSize,
             ),
           ),
         Flexible(child: _text)
