@@ -25,15 +25,15 @@ class ProgrammingParadox extends WebPage<ProgrammingParadox> {
       Container(
 //          margin: const EdgeInsets.fromLTRB(300, 50, 300, 150),
         margin: EdgeInsets.fromLTRB(
-          _screenSize.width * (_smallScreen ? 0.15 : 0.2),
-          _screenSize.height * (_smallScreen ? 0.2 : 0.25),
-          _screenSize.width * (_smallScreen ? 0.15 : 0.2),
-          _screenSize.height * (_smallScreen ? 0.2 : 0.25),
+          _screenSize.width * (_smallScreen ? 0 : 0.2),
+          _screenSize.height * (_smallScreen ? 0.1 : 0.25),
+          _screenSize.width * (_smallScreen ? 0.0 : 0.2),
+          _screenSize.height * (_smallScreen ? 0.1 : 0.25),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
         ),
-        padding: const EdgeInsets.all(30),
+        padding: EdgeInsets.all(_smallScreen ? 10 : 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [

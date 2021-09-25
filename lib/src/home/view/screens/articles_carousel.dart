@@ -32,9 +32,7 @@ class _ArticleCarouselState extends State<ArticleCarousel>
 
   @override
   Widget build(BuildContext context) {
-//    final screenSize = MediaQuery.of(context).size;
     final _screenSize = MyApp.screenSize;
-//    final smallScreen = ResponsiveWidget.isSmallScreen(context);
     final _smallScreen = MyApp.inSmallScreen;
     final screenWidth =
         _smallScreen ? _screenSize.width / 8 : _screenSize.width / 8;
@@ -58,32 +56,11 @@ class _ArticleCarouselState extends State<ArticleCarousel>
               setState(() {
                 _current = index;
                 tapTwo = false;
-                // for (int i = 0; i < imageSliders.length; i++) {
-                //   if (i == index) {
-                //     _isSelected[i] = true;
-                //   } else {
-                //     _isSelected[i] = false;
-                //   }
-                // }
               });
             },
           ),
           carouselController: _carouselController,
         ),
-        // AspectRatio(
-        //   aspectRatio: 18 / 8,
-        //   child: Center(
-        //     child: Text(
-        //       places[_current],
-        //       style: TextStyle(
-        //         letterSpacing: 8,
-        //         fontFamily: 'Electrolize',
-        //         fontSize: screenSize.width / 25,
-        //         color: Colors.white,
-        //       ),
-        //     ),
-        //   ),
-        // ),
         AspectRatio(
           aspectRatio: 16 / 8,
           child: InkWell(
@@ -101,26 +78,6 @@ class _ArticleCarouselState extends State<ArticleCarousel>
                   index: _current,
                   webPage: this,
                 );
-                // final free = _con.webPages[_webPages[_current]][0];
-                // final url = _con.webPages[_webPages[_current]][1];
-                // bool browse;
-                // if (!free) {
-                //   browse = await showBox(
-                //     context: context,
-                //     contentPadding: const EdgeInsets.all(10),
-                //     text: '''
-                //     This article is behind a paywall on Medium.com.
-                //     If you're a member, it's free. If not, you may wish to cancel.
-                //     ''',
-                //     button01: Option(text: 'Continue', result: true),
-                //     press01: () => browse = true,
-                //   );
-                // } else {
-                //   browse = true;
-                // }
-                // if (browse) {
-                //   await uriBrowse(url);
-                // }
                 setState(() {
                   _carouselController.nextPage();
                 });

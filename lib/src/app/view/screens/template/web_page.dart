@@ -10,6 +10,7 @@ abstract class WebPage<T> extends WebPageBase {
     Key? key,
     WebPageController? controller,
     this.coverImage,
+    this.coverBanner = true,
     this.accessBar = true,
     this.bottomBar = true,
     List<Widget>? Function(BuildContext context)? persistentFooterButtons,
@@ -58,6 +59,7 @@ abstract class WebPage<T> extends WebPageBase {
             key: key);
 
   final String? coverImage;
+  final bool coverBanner;
   final bool accessBar;
   final bool bottomBar;
 
@@ -105,14 +107,15 @@ abstract class WebPage<T> extends WebPageBase {
       widgets = null;
     }
     return [
-      SizedBox(
-        height: _screenSize.height * 0.45,
-        width: _screenSize.width,
-        child: Image.asset(
-          coverImage ?? 'assets/images/earthNetworked.jpg',
-          fit: BoxFit.cover,
+      if (!isSmallScreen && coverBanner)
+        SizedBox(
+          height: _screenSize.height * 0.45,
+          width: _screenSize.width,
+          child: Image.asset(
+            coverImage ?? 'assets/images/earthNetworked.jpg',
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
       if (widgets != null && widgets.isNotEmpty)
         Column(
           /// children02

@@ -75,6 +75,7 @@ class HomePageSmallController<T> extends WebPageController {
   double _lastOffset = 0;
 
   List<Widget> children04(BuildContext context) {
+    final _smallScreen = MyApp.inSmallScreen;
     final List<Widget> children = [];
     children.addAll(projects.children05(context));
     children.add(projects.popup(context));
@@ -84,28 +85,25 @@ class HomePageSmallController<T> extends WebPageController {
       Padding(
         padding: const EdgeInsets.only(bottom: 32),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: _smallScreen
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.spaceAround,
           children: [
-            const Flexible(
-              child: Text(
-                'My Technical Articles',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 3,
-                ),
+            Text(
+              _smallScreen ? 'Technical Articles' : 'My Technical Articles',
+              style: const TextStyle(
+                fontSize: 24,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w400,
+//                letterSpacing: 3,
               ),
             ),
             Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 270, right: 200),
-                child: IconButton(
-                  icon: const Icon(Icons.grid_on),
-                  onPressed: () {
-                    AppRouterDelegate.nextRoute('/articles');
-                  },
-                ),
+              child: IconButton(
+                icon: const Icon(Icons.grid_on),
+                onPressed: () {
+                  AppRouterDelegate.nextRoute('/articles');
+                },
               ),
             ),
           ],
@@ -114,9 +112,11 @@ class HomePageSmallController<T> extends WebPageController {
     );
     children.add(const ArticleCarousel());
     children.add(
-      const Text(
-        'My Contribution to the Flutter Community',
-        style: TextStyle(
+      Text(
+        _smallScreen
+            ? 'My Own Contribution'
+            : 'My Contribution to the Flutter Community',
+        style: const TextStyle(
           fontSize: 20,
           fontFamily: 'Montserrat',
           fontWeight: FontWeight.w400,

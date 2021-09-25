@@ -45,15 +45,15 @@ class UseCaseExample extends WebPage<UseCaseExample> {
         Container(
 //          margin: const EdgeInsets.fromLTRB(100, 250, 100, 100),
           margin: EdgeInsets.fromLTRB(
-            _screenSize.width * (_smallScreen ? 0.1 : 0.2),
-            _screenSize.height * (_smallScreen ? 0.3 : 0.35),
-            _screenSize.width * (_smallScreen ? 0.1 : 0.2),
+            _screenSize.width * (_smallScreen ? 0.0 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.55 : 0.35),
+            _screenSize.width * (_smallScreen ? 0.0 : 0.2),
             _screenSize.height * (_smallScreen ? 0.1 : 0.2),
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
           ),
-          padding: const EdgeInsets.all(80),
+          padding: EdgeInsets.all(_smallScreen ? 5 : 80),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

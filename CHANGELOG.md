@@ -1,4 +1,9 @@
 
+## 1.12.0
+ September 25, 2021
+- _screenSize.width * (_smallScreen ? 0 : 0.2),
+- if (!isSmallScreen && coverBanner)
+
 ## 1.11.0+4
  September 24, 2021
 - final smallScreen = MyApp.inSmallScreen;

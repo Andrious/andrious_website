@@ -8,7 +8,8 @@ import 'package:flutter/rendering.dart';
 enum GuidelinePosition { top, center, bottom }
 
 class ScrollyWidget extends StatefulWidget {
-  ScrollyWidget({
+  const ScrollyWidget({
+    Key? key,
     required this.panels,
     this.panelStartCallback,
     this.panelEndCallback,
@@ -19,12 +20,13 @@ class ScrollyWidget extends StatefulWidget {
     this.guidelinePosition = GuidelinePosition.top,
     this.showDebugConsole = false,
     this.stickyChartIndex,
-  })  : assert(panels != null, "The list of panels cannot be null."),
+  })  : assert(panels != null, 'The list of panels cannot be null.'),
         assert(
             panelStartCallback != null ||
                 panelEndCallback != null ||
                 panelProgressCallback != null,
-            "At least one of the panelStartCallback, panelProgressCallback, panelEndCallback must be non-null.");
+            'At least one of the panelStartCallback, panelProgressCallback, panelEndCallback must be non-null.'),
+        super(key: key);
 
   /// Called When Panel top coincides with guideline.
   ///
@@ -230,89 +232,88 @@ class _ScrollyWidgetState extends State<ScrollyWidget> {
 
   @override
   Widget build(BuildContext context) =>
-    // The stack paints its children in order with the first child being at the bottom.
+      // The stack paints its children in order with the first child being at the bottom.
 
-    Stack(
-      key: _stackKey,
-      children: <Widget>[
-        Positioned(
-          child: _overLayWidget!,
-        ),
-        CustomScrollView(
-          controller: _scrollController,
-          //TODO: (Later) Provide flexibility to directly input sliverList
-          slivers: <Widget>[
-            SliverList(
-              delegate:
-                  SliverChildBuilderDelegate((BuildContext context, int index) {
-                if (widget.stickyChartIndex != null &&
-                    index == widget.stickyChartIndex! - 1) {
-                  return Opacity(
-                    opacity: widget.opacity,
-                    child: PanelWidget(
-                      key: _keys[index],
-                      rawPanel: widget.panels![index],
-                      visible: _stickyVisibility,
-                    ),
-                  );
-                } else {
-                  return Opacity(
-                    opacity: widget.opacity,
-                    child: PanelWidget(
-                      key: _keys[index],
-                      rawPanel: widget.panels![index],
-                      visible: true,
-                    ),
-                  );
-                }
-              }, childCount: widget.panels!.length),
-            ),
-            widget.lastPanelForceComplete
-                ? SliverFillRemaining()
-                : SliverToBoxAdapter(
-                    child: Container(),
-                  )
-          ],
-        ),
-        Visibility(
-          visible: widget.showDebugConsole,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              color: Colors.grey,
-              width: 100,
-              child: Text(
-                  'active panel : $_activePanelIndex \nprogress : $_progress'),
+      Stack(
+        key: _stackKey,
+        children: <Widget>[
+          Positioned(
+            child: _overLayWidget!,
+          ),
+          CustomScrollView(
+            controller: _scrollController,
+            //TODO: (Later) Provide flexibility to directly input sliverList
+            slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  if (widget.stickyChartIndex != null &&
+                      index == widget.stickyChartIndex! - 1) {
+                    return Opacity(
+                      opacity: widget.opacity,
+                      child: PanelWidget(
+                        key: _keys[index],
+                        rawPanel: widget.panels![index],
+                        visible: _stickyVisibility,
+                      ),
+                    );
+                  } else {
+                    return Opacity(
+                      opacity: widget.opacity,
+                      child: PanelWidget(
+                        key: _keys[index],
+                        rawPanel: widget.panels![index],
+                        visible: true,
+                      ),
+                    );
+                  }
+                }, childCount: widget.panels!.length),
+              ),
+              widget.lastPanelForceComplete
+                  ? SliverFillRemaining()
+                  : SliverToBoxAdapter(
+                      child: Container(),
+                    )
+            ],
+          ),
+          Visibility(
+            visible: widget.showDebugConsole,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                color: Colors.grey,
+                width: 100,
+                child: Text(
+                    'active panel : $_activePanelIndex \nprogress : $_progress'),
+              ),
             ),
           ),
-        ),
-        Visibility(
-          visible: widget.showDebugConsole,
-          child: Align(
-            // Display a long line across the screen.
-            alignment: _getAlignment(),
-            child: Divider(
-              height: 0,
-              color: Colors.black87,
-              thickness: 1.0,
+          Visibility(
+            visible: widget.showDebugConsole,
+            child: Align(
+              // Display a long line across the screen.
+              alignment: _getAlignment(),
+              child: Divider(
+                height: 0,
+                color: Colors.black87,
+                thickness: 1.0,
+              ),
             ),
-          ),
-        )
-      ],
-    );
-
+          )
+        ],
+      );
 
   void _getHeight() {
     final List<State?> states = List.generate(
         widget.panels!.length, (index) => _keys[index].currentState);
 
     final List<RenderBox?> boxes = List.generate(widget.panels!.length,
-        (index) => states[index]?.context?.findRenderObject() as RenderBox?);
+        (index) => states[index]?.context.findRenderObject() as RenderBox?);
 
     setState(() {
       _panelHeights = List.generate(widget.panels!.length, (index) {
         if (_panelHeights[index] == null) {
-          return boxes[index]?.size?.height;
+          return boxes[index]?.size.height;
         } else {
           return _panelHeights[index];
         }
@@ -328,7 +329,7 @@ class _ScrollyWidgetState extends State<ScrollyWidget> {
     _calculatePanelPrefixHeight();
   }
 
-  _getNullIndex() {
+  int _getNullIndex() {
     for (var i = 0; i < _panelHeights.length; i++) {
       if (_panelHeights[i] == null) {
         return i;
@@ -353,7 +354,7 @@ class _ScrollyWidgetState extends State<ScrollyWidget> {
     });
   }
 
-  _getStackHeight() {
+  void _getStackHeight() {
     final context = _stackKey.currentContext;
 
     double bias;
@@ -378,7 +379,7 @@ class _ScrollyWidgetState extends State<ScrollyWidget> {
     });
   }
 
-  _getAlignment() {
+  Alignment _getAlignment() {
     Alignment alignment;
     if (widget.guidelinePosition == GuidelinePosition.bottom) {
       alignment = Alignment.bottomCenter;
@@ -392,7 +393,7 @@ class _ScrollyWidgetState extends State<ScrollyWidget> {
 }
 
 class PanelWidget extends StatefulWidget {
-  PanelWidget({Key? key, Widget? rawPanel, bool? visible})
+  const PanelWidget({Key? key, Widget? rawPanel, bool? visible})
       : rawPanel = rawPanel,
         visible = visible,
         super(key: key);
