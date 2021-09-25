@@ -5,9 +5,9 @@
 import 'package:andrious/src/view.dart';
 
 class UseCaseExample extends WebPage<UseCaseExample> {
-  UseCaseExample({Key? key, bool? bottomBar})
+  UseCaseExample({Key? key, this.banner = true, bool? bottomBar})
       : super(key: key, bottomBar: bottomBar ?? true);
-
+  final bool banner;
   static const double offset = 2000;
 
   static const image =
@@ -34,14 +34,15 @@ class UseCaseExample extends WebPage<UseCaseExample> {
     final _screenSize = MyApp.screenSize;
     return Stack(
       children: <Widget>[
-        Container(
-          height: 300,
-          width: double.infinity,
-          child: Image.asset(
-            'assets/images/phone_mist.jpg',
-            fit: BoxFit.cover,
+        if (banner)
+          Container(
+            height: 300,
+            width: double.infinity,
+            child: Image.asset(
+              'assets/images/phone_mist.jpg',
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
         Container(
 //          margin: const EdgeInsets.fromLTRB(100, 250, 100, 100),
           margin: EdgeInsets.fromLTRB(

@@ -55,9 +55,9 @@ class HomePageSmallController<T> extends WebPageController {
   void initWidget() {
     //
     projects = HowProjectsWork();
-    useCase = UseCaseExample(bottomBar: false);
+    useCase = UseCaseExample(banner: false, bottomBar: false);
     paradox = ProgrammingParadox();
-
+    disclose = InitialDisclosure(banner: false);
     scrollController?.addListener(() {
       final offset = scrollController!.offset;
       if (offset > _lastOffset) {
@@ -72,6 +72,7 @@ class HomePageSmallController<T> extends WebPageController {
   late HowProjectsWork projects;
   late UseCaseExample useCase;
   late ProgrammingParadox paradox;
+  late InitialDisclosure disclose;
   double _lastOffset = 0;
 
   List<Widget> children04(BuildContext context) {
@@ -125,6 +126,7 @@ class HomePageSmallController<T> extends WebPageController {
       ),
     );
     children.add(DartPackages());
+    children.addAll(disclose.children05(context));
     return children;
   }
 }

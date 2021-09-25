@@ -1,4 +1,8 @@
 
+## 1.14.0
+ September 25, 2021
+- disclose = InitialDisclosure(banner: false);
+
 ## 1.13.0
  September 25, 2021
 - fit: _smallScreen ? BoxFit.fill : BoxFit.cover,
