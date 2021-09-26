@@ -23,10 +23,13 @@ abstract class WebPageBase extends ScaffoldScreenWidget
 }
 
 abstract class WebPageBaseController extends ScaffoldScreenController {
-  WebPageBaseController([StateMVC? state]) : super(state) {
-    _controller = ScrollController();
-  }
-  late ScrollController _controller;
+  WebPageBaseController({
+    StateMVC? state,
+    this.physics,
+  })  : _controller = ScrollController(),
+        super(state);
+  ScrollPhysics? physics;
+  final ScrollController _controller;
 
   //
   /// The 'child' widget containing the core of the screen's content.
@@ -72,8 +75,6 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
     super.dispose();
   }
 
-  ScrollPhysics? physics;
-
   @override
   List<Widget>? persistentFooterButtons(BuildContext context) => null;
 
@@ -117,7 +118,7 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
 }
 
 class _WebPageBaseController extends WebPageBaseController {
-  _WebPageBaseController([StateMVC? state]) : super(state);
+  _WebPageBaseController([StateMVC? state]) : super(state: state);
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;

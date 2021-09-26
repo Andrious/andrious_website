@@ -27,12 +27,14 @@ class InitialDisclosure extends WebPage<InitialDisclosure> {
           ),
         ),
       if (_smallScreen)
-        InteractiveViewer(
-          maxScale: 3,
-          minScale: 1,
-          child: Image.asset(
-            'assets/images/disclosure.png',
-            fit: BoxFit.cover,
+        SizedBox(
+          child: InteractiveViewer(
+            maxScale: 3,
+            minScale: 1,
+            child: Image.asset(
+              'assets/images/disclosure.png',
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       if (!_smallScreen)

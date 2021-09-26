@@ -6,7 +6,10 @@ import 'package:andrious/src/view.dart';
 
 class HomePageSmall extends WebPage<HomePageSmall> {
   HomePageSmall({Key? key})
-      : super(controller: HomePageSmallController<HomePageSmall>(), key: key);
+      : super(
+            controller: HomePageSmallController<HomePageSmall>(
+                physics: const AlwaysScrollableScrollPhysics()),
+            key: key);
 
   @override
   String get title => 'Andrious Solutions Ltd.';
@@ -50,7 +53,8 @@ class HomePageSmall extends WebPage<HomePageSmall> {
 }
 
 class HomePageSmallController<T> extends WebPageController {
-  //
+  HomePageSmallController({StateMVC? state, ScrollPhysics? physics})
+      : super(state: state, physics: physics);
   @override
   void initWidget() {
     //

@@ -183,7 +183,11 @@ abstract class WebPage<T> extends WebPageBase {
 
 /// Controller
 class WebPageController<T extends WebPageBase> extends WebPageBaseController {
-  //
+  WebPageController({
+    StateMVC? state,
+    ScrollPhysics? physics,
+  }) : super(state: state, physics: physics);
+
   @override
   void initState() {
     _widget = state!.widget as T?;
@@ -226,7 +230,7 @@ class _WebPageController<T> extends WebPageController {
     bool? endDrawerEnableOpenDragGesture,
     String? restorationId,
     ScrollPhysics? physics,
-  }) {
+  }) : super(physics: physics) {
     this.backgroundColor = backgroundColor;
     this.resizeToAvoidBottomInset = resizeToAvoidBottomInset;
     this.primary = primary;
@@ -238,7 +242,6 @@ class _WebPageController<T> extends WebPageController {
     this.drawerEnableOpenDragGesture = drawerEnableOpenDragGesture;
     this.endDrawerEnableOpenDragGesture = endDrawerEnableOpenDragGesture;
     this.restorationId = restorationId;
-    this.physics = physics;
   }
 
   final List<Widget>? Function(BuildContext context)? _persistentFooterButtons;
