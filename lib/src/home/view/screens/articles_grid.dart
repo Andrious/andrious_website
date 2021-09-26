@@ -26,8 +26,13 @@ class ArticlesGrid extends WebPage<ArticlesGrid> {
         ),
         child: Material(
           child: GridView.builder(
-            padding: const EdgeInsets.all(8),
-            shrinkWrap: MyApp.inSmallScreen,
+            padding: EdgeInsets.only(
+                top: 8,
+                left: 8,
+                bottom: 8,
+                right: MyApp.inSmallScreen ? 90 : 8),
+            primary: false,
+            shrinkWrap: true,
             itemCount: con.articles.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,

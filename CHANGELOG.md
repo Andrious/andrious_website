@@ -1,4 +1,9 @@
 
+
+## 1.14.2+4
+ September 26, 2021
+- right: MyApp.inSmallScreen ? 90 : 8
+
 ## 1.14.2+3
  September 26, 2021
 - shrinkWrap: MyApp.inSmallScreen,
