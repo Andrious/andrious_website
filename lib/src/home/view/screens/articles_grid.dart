@@ -24,19 +24,23 @@ class ArticlesGrid extends WebPage<ArticlesGrid> {
             maxHeight: constraints.maxHeight,
           ),
           child: Material(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(8),
-              shrinkWrap: true,
-              itemCount: con.articles.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
-                childAspectRatio: 5 / 4,
-                crossAxisSpacing: 10,
-              ),
-              itemBuilder: (BuildContext context, int index) => ArticleImage(
-                con,
-                index: index,
-                constraints: constraints,
+            child: SingleChildScrollView(
+              primary: false,
+              child: GridView.builder(
+                padding: const EdgeInsets.all(8),
+                shrinkWrap: true,
+                itemCount: con.articles.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:
+                      ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
+                  childAspectRatio: 5 / 4,
+                  crossAxisSpacing: 10,
+                ),
+                itemBuilder: (BuildContext context, int index) => ArticleImage(
+                  con,
+                  index: index,
+                  constraints: constraints,
+                ),
               ),
             ),
           ),

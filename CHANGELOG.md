@@ -1,4 +1,8 @@
 
+## 1.14.2+2
+ September 26, 2021
+- SingleChildScrollView(primary: false, child: GridView.builder(
+
 ## 1.14.2
  September 25, 2021
 - if (banner && !_smallScreen)

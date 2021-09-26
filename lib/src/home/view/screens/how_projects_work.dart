@@ -35,7 +35,7 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
           if (!_smallScreen)
             Center(
               child: SizedBox(
-                height: _screenSize.height * 0.99,
+                height: _screenSize.height,
                 width: _screenSize.width * 0.99,
                 child: InkWell(
                   splashColor: Colors.transparent,
