@@ -60,7 +60,7 @@ class HomePageSmallController<T> extends WebPageController {
   void initWidget() {
     //
     projects = HowProjectsWork();
-    useCase = UseCaseExample(banner: !MyApp.inSmallScreen, bottomBar: false);
+    useCase = UseCaseExample(bottomBar: false);
     paradox = ProgrammingParadox();
     disclose = InitialDisclosure(banner: false);
     scrollController?.addListener(() {
