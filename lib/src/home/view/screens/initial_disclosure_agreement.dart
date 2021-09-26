@@ -26,17 +26,17 @@ class InitialDisclosure extends WebPage<InitialDisclosure> {
             fit: BoxFit.cover,
           ),
         ),
-      if (_smallScreen)
-        SizedBox(
-          child: InteractiveViewer(
-            maxScale: 3,
-            minScale: 1,
-            child: Image.asset(
-              'assets/images/disclosure.png',
-              fit: BoxFit.cover,
-            ),
+//      if (_smallScreen)
+      SizedBox(
+        child: InteractiveViewer(
+          maxScale: 3,
+          minScale: 1,
+          child: Image.asset(
+            'assets/images/disclosure.png',
+            fit: BoxFit.cover,
           ),
         ),
+      ),
       if (!_smallScreen)
         Iframe(
           height: '1000',
