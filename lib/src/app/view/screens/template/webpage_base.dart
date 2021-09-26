@@ -40,20 +40,18 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
 
   /// Provide the body of the webpage
   @override
-  Widget body(BuildContext context) {
-    return WebScrollbar(
-      color: Colors.blueGrey,
-      backgroundColor: Colors.blueGrey.withOpacity(0.3),
-      width: 16,
-      heightFraction: 0.3,
-      controller: scrollController ?? _controller,
-      child: SingleChildScrollView(
+  Widget body(BuildContext context) => WebScrollbar(
+        color: Colors.blueGrey,
+        backgroundColor: Colors.blueGrey.withOpacity(0.3),
+        width: 16,
+        heightFraction: 0.3,
         controller: scrollController ?? _controller,
-        physics: physics ?? const ClampingScrollPhysics(),
-        child: child(context) ?? Center(child: Container()),
-      ),
-    );
-  }
+        child: SingleChildScrollView(
+          controller: scrollController ?? _controller,
+          physics: physics ?? const ClampingScrollPhysics(),
+          child: child(context) ?? Center(child: Container()),
+        ),
+      );
 
   /// The State object's Scroll Controller
   ScrollController? get scrollController {
