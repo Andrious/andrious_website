@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:andrious/main.dart';
 import 'package:andrious/src/view.dart';
 
 class HomePageSmall extends WebPage<HomePageSmall> {
@@ -59,7 +60,7 @@ class HomePageSmallController<T> extends WebPageController {
   void initWidget() {
     //
     projects = HowProjectsWork();
-    useCase = UseCaseExample(banner: false, bottomBar: false);
+    useCase = UseCaseExample(banner: !MyApp.inSmallScreen, bottomBar: false);
     paradox = ProgrammingParadox();
     disclose = InitialDisclosure(banner: false);
     scrollController?.addListener(() {
