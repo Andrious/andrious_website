@@ -1,4 +1,8 @@
 
+## 1.14.3+6
+ September 26, 2021
+- Remove Material from GridView
+
 ## 1.14.3+5
  September 26, 2021
 - _margin = MyApp.screenSize.width * 0.2;
