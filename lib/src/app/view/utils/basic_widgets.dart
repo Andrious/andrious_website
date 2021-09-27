@@ -95,3 +95,55 @@ class BasicState extends StateMVC<BasicStatefulWidget> with StateSet {
     }());
   }
 }
+
+/// Popup window
+/// Provides an animated popup.
+class PopupPage extends WebPage<PopupPage> {
+  PopupPage({Key? key, required this.builder}) : super(key: key);
+  final WidgetBuilder builder;
+
+  @override
+  String get title => '';
+
+  @override
+  Widget child(BuildContext context) => builder(context);
+
+  /// Create a popup window
+  static Future<T?> window<T>(
+    BuildContext parentContext,
+    WidgetBuilder child, {
+    Curve? curve,
+  }) async {
+    final T? result = await Navigator.of(parentContext).push<T>(
+      PageRouteBuilder<T>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            PopupPage(builder: (_) => child(parentContext)),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final rectAnimation = _createTween(parentContext)
+              .chain(CurveTween(curve: curve ?? Curves.ease))
+              .animate(animation);
+          return Stack(
+            children: [
+              PositionedTransition(rect: rectAnimation, child: child),
+            ],
+          );
+        },
+      ),
+    );
+    return result;
+  }
+
+  /// Define the transition used in the animation
+  ///
+  //todo: If context is null?
+  static Tween<RelativeRect> _createTween(BuildContext context) {
+    final box = context.findRenderObject() as RenderBox;
+    final rect = box.localToGlobal(Offset.zero) & box.size;
+    final relativeRect =
+        RelativeRect.fromSize(rect, MediaQuery.of(context).size);
+    return RelativeRectTween(
+      begin: relativeRect,
+      end: RelativeRect.fill,
+    );
+  }
+}

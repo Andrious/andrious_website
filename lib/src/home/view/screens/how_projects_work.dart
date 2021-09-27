@@ -7,6 +7,8 @@ import 'package:andrious/src/view.dart';
 class HowProjectsWork extends WebPage<HowProjectsWork> {
   HowProjectsWork({Key? key}) : super(key: key);
 
+  final String _projectsImage = 'assets/images/how_projects_work.jpg';
+
   static const double offset = 200;
 
   @override
@@ -15,12 +17,9 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
 
   @override
   List<Widget> children05(BuildContext context, {bool showPopup = true}) {
-//    final smallScreen = ResponsiveWidget.isSmallScreen(context);
     final _smallScreen = MyApp.inSmallScreen;
     final _screenSize = MediaQuery.of(context).size;
-    final _howProjectsWork = Image.asset(
-      'assets/images/how_projects_work.jpg',
-    );
+    final _howProjectsWork = Image.asset(_projectsImage);
     return [
       Stack(
         children: [
@@ -41,10 +40,22 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
                   splashColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   onTap: () {
-                    if (showPopup) {
-                      setState(() {
-                        _Content.visible = !_Content.visible;
-                      });
+                    if (_smallScreen) {
+                      PopupPage.window<void>(
+                        context,
+                        (_) => Center(
+                          child: Image.asset(
+                            _projectsImage,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    } else {
+                      if (showPopup) {
+                        setState(() {
+                          _Content.visible = !_Content.visible;
+                        });
+                      }
                     }
                   },
                   child: _howProjectsWork,

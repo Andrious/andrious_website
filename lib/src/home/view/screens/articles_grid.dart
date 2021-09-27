@@ -67,80 +67,21 @@ class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: () async {
-          await Navigator.of(context).push<void>(
-            _popupWindow(
-              context,
-              con: con,
-              index: index,
-            ),
-          );
-        },
+        onTap: () => PopupPage.window<void>(context, browser),
         child: Image.asset(
           con.articles[index],
           fit: BoxFit.contain,
         ),
       );
 
-  /// Create a popup window
-  Route<void> _popupWindow(
-    BuildContext parentContext, {
-    required ArticlesController con,
-    required int index,
-  }) =>
-      PageRouteBuilder<void>(
-        pageBuilder: (context, animation, secondaryAnimation) => _PopupPage(
-          con: con,
-          index: index,
-          webPage: this,
-        ),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final rectAnimation = _createTween(parentContext)
-              .chain(CurveTween(curve: Curves.ease))
-              .animate(animation);
-          return Stack(
-            children: [
-              PositionedTransition(rect: rectAnimation, child: child),
-            ],
-          );
-        },
-      );
-
-  /// Define the transition used in the animation
-  Tween<RelativeRect> _createTween(BuildContext context) {
-    final windowSize = MediaQuery.of(context).size;
-    final box = context.findRenderObject() as RenderBox;
-    final rect = box.localToGlobal(Offset.zero) & box.size;
-    final relativeRect = RelativeRect.fromSize(rect, windowSize);
-    return RelativeRectTween(
-      begin: relativeRect,
-      end: RelativeRect.fill,
-    );
-  }
-}
-
-class _PopupPage extends WebPage<_PopupPage> {
-  _PopupPage({
-    required this.con,
-    required this.index,
-    required this.webPage,
-  });
-  final ArticlesController con;
-  final int index;
-  final WebPageFeaturesMixin webPage;
-
-  @override
-  String get title => '';
-
-  @override
-  Widget child(BuildContext context) => Center(
+  Widget browser(BuildContext context) => Center(
         child: Material(
           child: InkWell(
             onTap: () async {
               await con.browse(
                 context: context,
                 index: index,
-                webPage: webPage,
+                webPage: this,
               );
             },
             child: Image.asset(
