@@ -40,7 +40,11 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
                   splashColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   onTap: () {
-                    if (_smallScreen) {
+                    if (showPopup) {
+                      setState(() {
+                        _Content.visible = !_Content.visible;
+                      });
+                    } else {
                       PopupPage.window<void>(
                         context,
                         (_) => Center(
@@ -50,12 +54,6 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
                           ),
                         ),
                       );
-                    } else {
-                      if (showPopup) {
-                        setState(() {
-                          _Content.visible = !_Content.visible;
-                        });
-                      }
                     }
                   },
                   child: _howProjectsWork,
@@ -78,6 +76,8 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
     final _screenSize = MyApp.screenSize;
     final _textStyle = TextStyle(fontSize: fontSize ?? 16);
     final _treeSwing = Text('Tree Swing', style: _textStyle);
+    const String _threeTreesImage = 'assets/images/three_trees.jpg';
+    const String _fiveWhysImage = 'assets/images/five_whys.png';
     return Center(
       child: Container(
 //        margin: const EdgeInsets.fromLTRB(200, 50, 200, 150),
@@ -105,12 +105,22 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               style: _textStyle,
             ),
             Hyperlink(_treeSwing, 'https://archive.is/FgxPK'),
-            Image.asset(
-              'assets/images/three_trees.jpg',
-              height: _screenSize.height * (_smallScreen ? 0.50 : 0.3),
-              width: _screenSize.width * (_smallScreen ? 1 : 0.25),
-              fit: BoxFit.fill,
-//              alignment: Alignment.centerLeft,
+            InkWell(
+              onTap: () => PopupPage.window<void>(
+                context,
+                (_) => Center(
+                  child: Image.asset(
+                    _threeTreesImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              child: Image.asset(
+                _threeTreesImage,
+                height: _screenSize.height * 0.3,
+                width: _screenSize.width * (_smallScreen ? 1 : 0.25),
+                fit: BoxFit.fill,
+              ),
             ),
             Text(
               "Simply put, 'garbage in; garbage out.' We have to clarify the requirements right from the start.",
@@ -120,12 +130,23 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               "The ‘5 Whys’ exercise is a good start. Conceived years ago by the Toyota Motor Corporation, it came about to help find the root cause to a problem. You simply ask ‘why?’ repeatedly to every answer to the previous question. The trick is to first establish the question that describes the basic overall problem you wish to address.\n\nNote, it doesn't always have to be 5 why’s. It’ll likely be more but, at times, even less. Also, there is the common trap of seemingly identifying the root cause when further why’s would have revealed it’s really not. Finally, make it a point to have other team members try it separately--different people using ‘5 Whys‘ may come up with different answers for the same problem. You will have to consolidate them with yours and try again.",
               style: _textStyle,
             ),
-            Image.asset(
-              'assets/images/five_whys.png',
-              height: _screenSize.height * (_smallScreen ? 0.55 : 0.55),
-              width: _screenSize.width * (_smallScreen ? 1 : 0.65),
-              fit: BoxFit.fill,
+            InkWell(
+              onTap: () => PopupPage.window<void>(
+                context,
+                (_) => Center(
+                  child: Image.asset(
+                    _fiveWhysImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              child: Image.asset(
+                _fiveWhysImage,
+                height: _screenSize.height * (_smallScreen ? 0.55 : 0.55),
+                width: _screenSize.width * (_smallScreen ? 1 : 0.65),
+                fit: BoxFit.fill,
 //              alignment: Alignment.centerLeft,
+              ),
             ),
             Text(
               "Writing some 'Use Case Scenarios' will then pin down how a possible solution would work:",

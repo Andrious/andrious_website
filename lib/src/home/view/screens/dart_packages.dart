@@ -32,6 +32,8 @@ class DartPackages extends StatelessWidget {
           maxHeight: constraints.maxHeight,
         ),
         child: GridView.builder(
+          primary: false,
+          physics: const NeverScrollableScrollPhysics(),
           padding:
               EdgeInsets.only(top: 8, left: _margin, bottom: 8, right: _margin),
           shrinkWrap: true,

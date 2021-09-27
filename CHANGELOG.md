@@ -1,4 +1,10 @@
 
+## 1.16.0
+ September 27, 2021
+- physics: const NeverScrollableScrollPhysics()
+- const String _threeTreesImage = 'assets/images/three_trees.jpg';
+- const String _fiveWhysImage = 'assets/images/five_whys.png';
+
 ## 1.15.0
  September 27, 2021
 - PopupPage.window<void>(context, ownScreen);
