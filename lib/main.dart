@@ -17,6 +17,17 @@ class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
   @override
   AppState createView() => _MyAppState();
 
+  /// Is the phone orientated in Portrait
+  static bool get inPortrait => _orientation == Orientation.portrait;
+
+  /// Is the phone orientated in Landscape
+  static bool get inLandscape => _orientation == Orientation.landscape;
+
+  /// Determine the phone's orientation
+  static Orientation orientation(BuildContext context) =>
+      _orientation = MediaQuery.of(context).orientation;
+  static Orientation? _orientation;
+
   /// Return the screen size the app is running on.
   static Size get screenSize => _screenSize!;
   static Size? _screenSize;

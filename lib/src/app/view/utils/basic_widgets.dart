@@ -71,6 +71,7 @@ class BasicState extends StateMVC<BasicStatefulWidget> with StateSet {
   @override
   Widget build(BuildContext context) {
     //
+    MyApp.orientation(context);
 
     _screenSize = MediaQuery.of(context).size;
 

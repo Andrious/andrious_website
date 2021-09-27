@@ -68,18 +68,18 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
   Widget popup(BuildContext context, {double? fontSize, bool showLink = true}) {
     final _smallScreen = MyApp.inSmallScreen;
     final _screenSize = MyApp.screenSize;
+    final _landscape = MyApp.inLandscape;
     final _textStyle = TextStyle(fontSize: fontSize ?? 16);
     final _treeSwing = Text('Tree Swing', style: _textStyle);
     const String _threeTreesImage = 'assets/images/three_trees.jpg';
     const String _fiveWhysImage = 'assets/images/five_whys.png';
     return Center(
       child: Container(
-//        margin: const EdgeInsets.fromLTRB(200, 50, 200, 150),
         margin: EdgeInsets.fromLTRB(
           _screenSize.width * (_smallScreen ? 0 : 0.15),
           _screenSize.height * (_smallScreen ? 0 : 0.2),
-          _screenSize.width * (_smallScreen ? 0 : 0.15),
-          _screenSize.height * (_smallScreen ? 0 : 0.2),
+          _screenSize.width * (_smallScreen ? (_landscape ? 1 : 0) : 0.15),
+          _screenSize.height * (_smallScreen ? (_landscape ? 1 : 0.5) : 0.2),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),

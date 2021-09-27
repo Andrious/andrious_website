@@ -1,4 +1,8 @@
 
+## 1.19.0
+ September 27, 2021
+- MyApp.orientation(context);
+
 ## 1.18.0
  September 27, 2021
 - padding: EdgeInsets.all(_smallScreen ? 0 : 40),
