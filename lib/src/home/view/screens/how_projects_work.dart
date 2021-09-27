@@ -18,48 +18,42 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
   @override
   List<Widget> children05(BuildContext context, {bool showPopup = true}) {
     final _smallScreen = MyApp.inSmallScreen;
-    final _screenSize = MediaQuery.of(context).size;
     final _howProjectsWork = Image.asset(_projectsImage);
     return [
       Stack(
         children: [
-          if (_smallScreen)
-            Center(
-              child: InteractiveViewer(
-                maxScale: 3,
-                minScale: 1,
+          Center(
+            child: InkWell(
+              splashColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              onTap: !_smallScreen
+                  ? null
+                  : () {
+                      if (showPopup) {
+                        setState(() {
+                          _Content.visible = !_Content.visible;
+                        });
+                      } else {
+                        PopupPage.window<void>(
+                          context,
+                          (_) => Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(_smallScreen ? 0 : 40),
+                              child: Image.asset(
+                                _projectsImage,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+              child: Padding(
+                padding: EdgeInsets.all(_smallScreen ? 0 : 40),
                 child: _howProjectsWork,
               ),
             ),
-          if (!_smallScreen)
-            Center(
-              child: SizedBox(
-                height: _screenSize.height,
-                width: _screenSize.width * 0.99,
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  onTap: () {
-                    if (showPopup) {
-                      setState(() {
-                        _Content.visible = !_Content.visible;
-                      });
-                    } else {
-                      PopupPage.window<void>(
-                        context,
-                        (_) => Center(
-                          child: Image.asset(
-                            _projectsImage,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  child: _howProjectsWork,
-                ),
-              ),
-            ),
+          ),
           if (showPopup)
             Visibility(
               visible: _Content.visible,
@@ -117,7 +111,7 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               ),
               child: Image.asset(
                 _threeTreesImage,
-                height: _screenSize.height * 0.3,
+                height: _screenSize.height * 0.4,
                 width: _screenSize.width * (_smallScreen ? 1 : 0.25),
                 fit: BoxFit.fill,
               ),
@@ -142,7 +136,7 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               ),
               child: Image.asset(
                 _fiveWhysImage,
-                height: _screenSize.height * (_smallScreen ? 0.55 : 0.55),
+                height: _screenSize.height * (_smallScreen ? 0.4 : 0.55),
                 width: _screenSize.width * (_smallScreen ? 1 : 0.65),
                 fit: BoxFit.fill,
 //              alignment: Alignment.centerLeft,

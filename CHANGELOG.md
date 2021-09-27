@@ -1,9 +1,12 @@
 
+## 1.18.0
+ September 27, 2021
+- padding: EdgeInsets.all(_smallScreen ? 0 : 40),
+
 ## 1.17.0
  September 27, 2021
 - Fixed five_whys.png
 - padding: const EdgeInsets.all(8),
-
 
 ## 1.16.0
  September 27, 2021
