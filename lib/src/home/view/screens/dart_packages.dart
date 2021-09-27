@@ -18,7 +18,7 @@ class DartPackages extends StatelessWidget {
   Widget build(BuildContext context) {
     double _right;
     if (MyApp.inSmallScreen) {
-      _right = MyApp.screenSize.width * 0.90;
+      _right = MyApp.screenSize.width * 0.3;
     } else {
       _right = 8;
     }
