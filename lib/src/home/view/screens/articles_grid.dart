@@ -14,44 +14,36 @@ class ArticlesGrid extends WebPage<ArticlesGrid> {
   String get title => 'My Technical Articles';
 
   @override
-  Widget child(BuildContext context) {
-    double _margin;
-    if (MyApp.inSmallScreen) {
-      _margin = MyApp.screenSize.width * 0.1;
-    } else {
-      _margin = 8;
-    }
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) =>
-          ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: constraints.minWidth,
-          minHeight: constraints.minHeight,
-          maxWidth: constraints.maxWidth,
-          maxHeight: constraints.maxHeight,
-        ),
-        child: Material(
-          child: GridView.builder(
-            padding: EdgeInsets.only(
-                top: 8, left: _margin, bottom: 8, right: _margin),
-            primary: false,
-            shrinkWrap: true,
-            itemCount: con.articles.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
-              childAspectRatio: 5 / 4,
-              crossAxisSpacing: 10,
-            ),
-            itemBuilder: (BuildContext context, int index) => ArticleImage(
-              con,
-              index: index,
-              constraints: constraints,
+  Widget child(BuildContext context) => LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) =>
+            ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: constraints.minWidth,
+            minHeight: constraints.minHeight,
+            maxWidth: constraints.maxWidth,
+            maxHeight: constraints.maxHeight,
+          ),
+          child: Material(
+            child: GridView.builder(
+              primary: false,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(8),
+              shrinkWrap: true,
+              itemCount: con.articles.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
+                childAspectRatio: 5 / 4,
+                crossAxisSpacing: 10,
+              ),
+              itemBuilder: (BuildContext context, int index) => ArticleImage(
+                con,
+                index: index,
+                constraints: constraints,
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {

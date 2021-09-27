@@ -15,43 +15,34 @@ class DartPackages extends StatelessWidget {
   static const double offset = 5600;
 
   @override
-  Widget build(BuildContext context) {
-    double _margin;
-    if (MyApp.inSmallScreen) {
-      _margin = MyApp.screenSize.width * 0.1;
-    } else {
-      _margin = 8;
-    }
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) =>
-          ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: constraints.minWidth,
-          minHeight: constraints.minHeight,
-          maxWidth: constraints.maxWidth,
-          maxHeight: constraints.maxHeight,
-        ),
-        child: GridView.builder(
-          primary: false,
-          physics: const NeverScrollableScrollPhysics(),
-          padding:
-              EdgeInsets.only(top: 8, left: _margin, bottom: 8, right: _margin),
-          shrinkWrap: true,
-          itemCount: con.packages.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: MyApp.inSmallScreen ? 2 : 3,
-            childAspectRatio: 5 / 4,
-            crossAxisSpacing: 10,
+  Widget build(BuildContext context) => LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) =>
+            ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: constraints.minWidth,
+            minHeight: constraints.minHeight,
+            maxWidth: constraints.maxWidth,
+            maxHeight: constraints.maxHeight,
           ),
-          itemBuilder: (context, index) => DartCard(
-            image: con.packages[index],
-            uri: con.webPages[con.packages[index]]!,
-            height: constraints.maxHeight * 0.3,
+          child: GridView.builder(
+            primary: false,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(8),
+            shrinkWrap: true,
+            itemCount: con.packages.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: MyApp.inSmallScreen ? 2 : 3,
+              childAspectRatio: 5 / 4,
+              crossAxisSpacing: 10,
+            ),
+            itemBuilder: (context, index) => DartCard(
+              image: con.packages[index],
+              uri: con.webPages[con.packages[index]]!,
+              height: constraints.maxHeight * 0.3,
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class DartCard extends StatelessWidget with WebPageFeaturesMixin {
