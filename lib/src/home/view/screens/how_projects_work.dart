@@ -39,9 +39,13 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
                           (_) => Center(
                             child: Padding(
                               padding: EdgeInsets.all(_smallScreen ? 0 : 40),
-                              child: Image.asset(
-                                _projectsImage,
-                                fit: BoxFit.cover,
+                              child: InteractiveViewer(
+                                maxScale: 3,
+                                minScale: 1,
+                                child: Image.asset(
+                                  _projectsImage,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),

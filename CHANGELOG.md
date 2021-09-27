@@ -1,4 +1,8 @@
 
+## 1.20.0
+ September 27, 2021
+- child: InteractiveViewer(
+
 ## 1.19.0
  September 27, 2021
 - MyApp.orientation(context);
