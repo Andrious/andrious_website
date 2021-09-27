@@ -15,6 +15,12 @@ class ArticlesGrid extends WebPage<ArticlesGrid> {
 
   @override
   Widget child(BuildContext context) {
+    double _right;
+    if (MyApp.inSmallScreen) {
+      _right = MyApp.screenSize.width * 0.90;
+    } else {
+      _right = 8;
+    }
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) =>
           ConstrainedBox(
@@ -26,11 +32,7 @@ class ArticlesGrid extends WebPage<ArticlesGrid> {
         ),
         child: Material(
           child: GridView.builder(
-            padding: EdgeInsets.only(
-                top: 8,
-                left: 8,
-                bottom: 8,
-                right: MyApp.inSmallScreen ? 90 : 8),
+            padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: _right),
             primary: false,
             shrinkWrap: true,
             itemCount: con.articles.length,
