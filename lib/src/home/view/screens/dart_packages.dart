@@ -16,11 +16,11 @@ class DartPackages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _right;
+    double _margin;
     if (MyApp.inSmallScreen) {
-      _right = MyApp.screenSize.width * 0.3;
+      _margin = MyApp.screenSize.width * 0.2;
     } else {
-      _right = 8;
+      _margin = 8;
     }
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) =>
@@ -33,7 +33,8 @@ class DartPackages extends StatelessWidget {
         ),
         child: Material(
           child: GridView.builder(
-            padding: EdgeInsets.only(top: 8, left: 8, bottom: 8, right: _right),
+            padding: EdgeInsets.only(
+                top: 8, left: _margin, bottom: 8, right: _margin),
             shrinkWrap: true,
             itemCount: con.packages.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
