@@ -17,7 +17,7 @@ class ArticlesGrid extends WebPage<ArticlesGrid> {
   Widget child(BuildContext context) {
     double _margin;
     if (MyApp.inSmallScreen) {
-      _margin = MyApp.screenSize.width * 0.15;
+      _margin = MyApp.screenSize.width * 0.1;
     } else {
       _margin = 8;
     }
