@@ -107,9 +107,13 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               onTap: () => PopupPage.window<void>(
                 context,
                 (_) => Center(
-                  child: Image.asset(
-                    _threeTreesImage,
-                    fit: BoxFit.cover,
+                  child: InteractiveViewer(
+                    maxScale: 3,
+                    minScale: 1,
+                    child: Image.asset(
+                      _threeTreesImage,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
@@ -132,9 +136,13 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
               onTap: () => PopupPage.window<void>(
                 context,
                 (_) => Center(
-                  child: Image.asset(
-                    _fiveWhysImage,
-                    fit: BoxFit.cover,
+                  child: InteractiveViewer(
+                    maxScale: 3,
+                    minScale: 1,
+                    child: Image.asset(
+                      _fiveWhysImage,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
@@ -143,7 +151,6 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
                 height: _screenSize.height * (_smallScreen ? 0.4 : 0.55),
                 width: _screenSize.width * (_smallScreen ? 1 : 0.65),
                 fit: BoxFit.fill,
-//              alignment: Alignment.centerLeft,
               ),
             ),
             Text(
