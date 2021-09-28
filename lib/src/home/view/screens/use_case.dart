@@ -29,7 +29,6 @@ class UseCaseExample extends WebPage<UseCaseExample> {
 
   @override
   Widget child(BuildContext context) {
-//    final _smallScreen = ResponsiveWidget.isSmallScreen(context);
     final _smallScreen = MyApp.inSmallScreen;
     final _screenSize = MyApp.screenSize;
     return Stack(
@@ -44,11 +43,10 @@ class UseCaseExample extends WebPage<UseCaseExample> {
             ),
           ),
         Container(
-//          margin: const EdgeInsets.fromLTRB(100, 250, 100, 100),
           margin: EdgeInsets.fromLTRB(
-            _screenSize.width * (_smallScreen ? 0 : 0.2),
-            _screenSize.height * (_smallScreen ? 0 : 0.35),
-            _screenSize.width * (_smallScreen ? 1 : 0.2),
+            _screenSize.width * (_smallScreen ? 0.1 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.01 : 0.35),
+            _screenSize.width * (_smallScreen ? 0.1 : 0.1),
             _screenSize.height * (_smallScreen ? 0.1 : 0.2),
           ),
           decoration: BoxDecoration(

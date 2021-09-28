@@ -1,4 +1,8 @@
 
+## 1.22.0
+ September 27, 2021
+- _screenSize.height * (_smallScreen ? 0.01 : 0.35),
+
 ## 1.21.0
  September 27, 2021
 - _screenSize.height * (_smallScreen ? 0 : 0.35),
