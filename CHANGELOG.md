@@ -1,5 +1,5 @@
 
-## 1.22.0
+## 1.22.0+2
  September 27, 2021
 - _screenSize.height * (_smallScreen ? 0.01 : 0.35),
 

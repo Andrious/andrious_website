@@ -44,9 +44,9 @@ class UseCaseExample extends WebPage<UseCaseExample> {
           ),
         Container(
           margin: EdgeInsets.fromLTRB(
-            _screenSize.width * (_smallScreen ? 0.1 : 0.2),
+            _screenSize.width * (_smallScreen ? 0 : 0.2),
             _screenSize.height * (_smallScreen ? 0.01 : 0.35),
-            _screenSize.width * (_smallScreen ? 0.1 : 0.1),
+            _screenSize.width * (_smallScreen ? 0 : 0.1),
             _screenSize.height * (_smallScreen ? 0.1 : 0.2),
           ),
           decoration: BoxDecoration(
