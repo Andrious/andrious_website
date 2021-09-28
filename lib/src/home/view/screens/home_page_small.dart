@@ -118,16 +118,32 @@ class HomePageSmallController<T> extends WebPageController {
     );
     children.add(const ArticleCarousel());
     children.add(
-      Text(
-        _smallScreen
-            ? 'My Own Contribution'
-            : 'My Contribution to the Flutter Community',
-        style: const TextStyle(
-          fontSize: 20,
-          fontFamily: 'Montserrat',
-          fontWeight: FontWeight.w400,
-          letterSpacing: 3,
-        ),
+      Row(
+        mainAxisAlignment: _smallScreen
+            ? MainAxisAlignment.start
+            : MainAxisAlignment.spaceAround,
+        children: [
+          Text(
+            _smallScreen
+                ? 'My Own Contribution'
+                : 'My Contribution to the Flutter Community',
+            style: const TextStyle(
+              fontSize: 20,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w400,
+              letterSpacing: 3,
+            ),
+          ),
+          if (_smallScreen)
+            Flexible(
+              child: IconButton(
+                icon: const Icon(Icons.grid_on),
+                onPressed: () {
+                  AppRouterDelegate.nextRoute('/packages');
+                },
+              ),
+            ),
+        ],
       ),
     );
     children.add(DartPackages());

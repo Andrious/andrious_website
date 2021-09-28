@@ -95,17 +95,39 @@ class _MyAppState extends AppState {
             // '/': (BuildContext context) =>
             //     MyApp.useSmallScreen ? HomeScreen() : HomePage(),
 //            '/': (BuildContext context) => HomePage(),
-            '/projects_work': (BuildContext context) => HowProjectsWork(),
-            '/paradox': (BuildContext context) => ProgrammingParadox(),
-            '/use_case': (context) => UseCaseExample(),
-            '/disclosure': (context) => InitialDisclosure(),
-            '/articles': (context) => ArticlesGrid(),
+            '/projects_work': (_) => HowProjectsWork(),
+            '/paradox': (_) => ProgrammingParadox(),
+            '/use_case': (_) => UseCaseExample(),
+            '/disclosure': (_) => InitialDisclosure(),
+            '/articles': (_) => _interactiveViewer(ArticlesGrid()),
+            '/packages': (_) => _interactiveViewer(DartPackages()),
           }),
           routeInformationParser: AppRouteInformationParser(),
         );
 
   @override
   ThemeMode onThemeMode() => AppTheme.mode();
+
+  /// Wrap widget in an InteractiveViewer when appropriate.
+  static Widget _interactiveViewer(Widget widget) {
+    //
+    final wrapWebPage = widget is! WebPage;
+
+    if (MyApp.inSmallScreen) {
+      //
+      widget = InteractiveViewer(
+        maxScale: 3,
+        minScale: 1,
+        child: widget,
+      );
+    }
+
+    if (wrapWebPage) {
+      widget = WebPageWrapper(child: widget);
+    }
+
+    return widget;
+  }
 
   //
   // Future<void> getUserInfo() async {

@@ -58,13 +58,15 @@ class DartCard extends StatelessWidget with WebPageFeaturesMixin {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        uriBrowse(uri);
-      },
-      child: Image.asset(
-        image,
-        fit: BoxFit.contain,
+    return Material(
+      child: InkWell(
+        onTap: () {
+          uriBrowse(uri);
+        },
+        child: Image.asset(
+          image,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

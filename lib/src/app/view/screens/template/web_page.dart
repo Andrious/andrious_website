@@ -5,9 +5,10 @@
 import 'package:andrious/src/view.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 
-abstract class WebPage<T> extends WebPageBase {
+class WebPage<T> extends WebPageBase {
   WebPage({
     Key? key,
+    this.title = '',
     WebPageController? controller,
     this.coverImage,
     this.coverBanner = true,
@@ -58,13 +59,14 @@ abstract class WebPage<T> extends WebPageBase {
                 ),
             key: key);
 
+  final String title;
   final String? coverImage;
   final bool coverBanner;
   final bool accessBar;
   final bool bottomBar;
 
-  /// Supply a title
-  String get title;
+  // /// Supply a title
+  // String get title;
 
   List<Widget> children05(BuildContext context) {
     final List<Widget> children = [];
@@ -74,6 +76,7 @@ abstract class WebPage<T> extends WebPageBase {
     } catch (ex) {
       widgets = null;
     }
+    // Introduce a Stack widget if children03 was implemented.
     if (widgets != null && widgets.isNotEmpty) {
       /// children03
       children.add(
@@ -201,7 +204,7 @@ class WebPageController<T extends WebPageBase> extends WebPageBaseController {
 
   @override
   Widget? child(BuildContext context) =>
-      _widget?.child(context) ?? Center(child: Container());
+      _widget?.child(context) ?? const Center(child: SizedBox());
 
   @override
   void initWidget() {
@@ -292,4 +295,74 @@ class _WebPageController<T> extends WebPageController {
   @override
   Widget? bottomSheet(BuildContext context) =>
       _bottomSheet == null ? null : _bottomSheet!(context);
+}
+
+class WebPageWrapper extends WebPage<WebPageWrapper> {
+  WebPageWrapper({
+    Key? key,
+    Widget? child,
+    this.children,
+    String title = '',
+    WebPageController? controller,
+    String? coverImage,
+    bool coverBanner = true,
+    bool accessBar = true,
+    bool bottomBar = true,
+    List<Widget>? Function(BuildContext context)? persistentFooterButtons,
+    Widget? Function(BuildContext context)? drawer,
+    DrawerCallback? Function(BuildContext context)? onDrawerChanged,
+    Widget? Function(BuildContext context)? endDrawer,
+    DrawerCallback? Function(BuildContext context)? onEndDrawerChanged,
+    Widget? Function(BuildContext context)? bottomNavigationBar,
+    Widget? Function(BuildContext context)? bottomSheet,
+    Color? backgroundColor,
+    bool? resizeToAvoidBottomInset,
+    bool? primary,
+    DragStartBehavior? drawerDragStartBehavior,
+    bool? extendBody,
+    bool? extendBodyBehindAppBar,
+    Color? drawerScrimColor,
+    double? drawerEdgeDragWidth,
+    bool? drawerEnableOpenDragGesture,
+    bool? endDrawerEnableOpenDragGesture,
+    String? restorationId,
+    ScrollPhysics? physics,
+  })  : assert(child != null || (children != null && children.isNotEmpty)),
+        _child = child,
+        super(
+          key: key,
+          title: title,
+          controller: controller,
+          coverImage: coverImage,
+          coverBanner: coverBanner,
+          accessBar: accessBar,
+          bottomBar: bottomBar,
+          persistentFooterButtons: persistentFooterButtons,
+          drawer: drawer,
+          onDrawerChanged: onDrawerChanged,
+          endDrawer: endDrawer,
+          onEndDrawerChanged: onEndDrawerChanged,
+          bottomNavigationBar: bottomNavigationBar,
+          bottomSheet: bottomSheet,
+          backgroundColor: backgroundColor,
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          primary: primary,
+          drawerDragStartBehavior: drawerDragStartBehavior,
+          extendBody: extendBody,
+          extendBodyBehindAppBar: extendBodyBehindAppBar,
+          drawerScrimColor: drawerScrimColor,
+          drawerEdgeDragWidth: drawerEdgeDragWidth,
+          drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+          endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+          restorationId: restorationId,
+          physics: physics,
+        );
+  final Widget? _child;
+  final List<Widget>? children;
+
+  @override
+  List<Widget>? children04(BuildContext context) => children;
+
+  @override
+  Widget child(context) => _child ?? super.child(context);
 }
