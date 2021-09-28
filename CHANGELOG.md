@@ -1,4 +1,9 @@
 
+## 1.24.0
+ September 28, 2021
+- PopupPage.window<void>( in initial_disclosure
+- if (banner && !_smallScreen) to  if (banner)
+
 ## 1.23.0
  September 28, 2021
 - class WebPage<T>

@@ -33,7 +33,7 @@ class UseCaseExample extends WebPage<UseCaseExample> {
     final _screenSize = MyApp.screenSize;
     return Stack(
       children: <Widget>[
-        if (banner && !_smallScreen)
+        if (banner)
           Container(
             height: 300,
             width: double.infinity,

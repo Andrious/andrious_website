@@ -16,6 +16,10 @@ class InitialDisclosure extends WebPage<InitialDisclosure> {
   List<Widget> children05(BuildContext context) {
     final _screenSize = screenSize;
     final _smallScreen = MyApp.inSmallScreen;
+    final _disclosure = Image.asset(
+      'assets/images/disclosure.png',
+      fit: BoxFit.cover,
+    );
     return [
       if (banner)
         SizedBox(
@@ -27,20 +31,27 @@ class InitialDisclosure extends WebPage<InitialDisclosure> {
           ),
         ),
       if (_smallScreen)
-        Image.asset(
-          'assets/images/disclosure.png',
-          fit: BoxFit.cover,
+        InkWell(
+          splashColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          onTap: () => PopupPage.window<void>(
+            context,
+            (_) => Center(
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                child: InteractiveViewer(
+                  maxScale: 3,
+                  minScale: 1,
+                  child: _disclosure,
+                ),
+              ),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(0),
+            child: _disclosure,
+          ),
         ),
-      // SizedBox(
-      //   child: InteractiveViewer(
-      //     maxScale: 3,
-      //     minScale: 1,
-      //     child: Image.asset(
-      //       'assets/images/disclosure.png',
-      //       fit: BoxFit.cover,
-      //     ),
-      //   ),
-      // ),
       if (!_smallScreen)
         Iframe(
           height: '1000',
