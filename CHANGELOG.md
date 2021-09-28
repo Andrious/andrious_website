@@ -1,4 +1,8 @@
 
+## 1.21.0
+ September 27, 2021
+- _screenSize.height * (_smallScreen ? 0 : 0.35),
+
 ## 1.20.0+2
  September 27, 2021
 - child: InteractiveViewer(
