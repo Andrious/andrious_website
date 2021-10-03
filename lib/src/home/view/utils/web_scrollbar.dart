@@ -44,14 +44,18 @@ class _WebScrollbarState extends State<WebScrollbar> {
     final screenSize = MediaQuery.of(context).size;
     final double _scrollerHeight = screenSize.height * widget.heightFraction;
 
-    final double _topMargin = widget.controller.hasClients
-        ? ((screenSize.height *
-                _scrollPosition /
-                widget.controller.position.maxScrollExtent) -
-            (_scrollerHeight *
-                _scrollPosition /
-                widget.controller.position.maxScrollExtent))
-        : 0;
+    double? _topMargin;
+
+    if (widget.controller.hasClients) {
+      final position =
+          _scrollPosition / widget.controller.position.maxScrollExtent;
+      _topMargin =
+          (screenSize.height * position) - (_scrollerHeight * position);
+    }
+
+    if (_topMargin == null || _topMargin < 0) {
+      _topMargin = 1;
+    }
 
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {

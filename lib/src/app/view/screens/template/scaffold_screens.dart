@@ -19,6 +19,7 @@ class ScaffoldScreenWidget extends BasicStatefulWidget {
   /// Called in its State object's initState() function
   /// To be overridden and used by subclasses
   @override
+  @mustCallSuper
   void initWidget() => _controller.initWidget();
 
   /// Implement the build() function here instead.

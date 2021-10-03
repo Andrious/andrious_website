@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:andrious/src/controller.dart';
-
 // Has a conditional import for runApp()
 import 'package:andrious/src/view.dart';
 
@@ -11,11 +9,25 @@ void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
 
 class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
   factory MyApp({Key? key}) => _this ??= MyApp._(key);
-  MyApp._(Key? key) : super(key: key);
+  MyApp._(Key? key) : super(key: key, errorReport: _onErrorReport);
   static MyApp? _this;
 
   @override
   AppState createView() => _MyAppState();
+
+  /// Log the error
+  static Future<void> _onErrorReport(
+    dynamic exception,
+    StackTrace stack,
+  ) async {
+    //
+    if (App.inDebugger) {
+      //
+      final report = _ReportError();
+//      report.log(exception, stack);
+      report.display(exception, stack);
+    }
+  }
 
   /// Is the phone orientated in Portrait
   static bool get inPortrait => _orientation == Orientation.portrait;
@@ -101,6 +113,8 @@ class _MyAppState extends AppState {
             '/disclosure': (_) => InitialDisclosure(),
             '/articles': (_) => _interactiveViewer(ArticlesGrid()),
             '/packages': (_) => _interactiveViewer(DartPackages()),
+            '/privacy': (_) => PrivacyPolicy(),
+            '/interfaces': (_) => FlutterUIs(),
           }),
           routeInformationParser: AppRouteInformationParser(),
         );
@@ -187,5 +201,69 @@ class AppTheme {
     }
     App.refresh();
     return mode(setting);
+  }
+}
+
+class _ReportError {
+  //
+  List<String> message(dynamic exception, StackTrace stack) {
+    //
+    final List<String> msg = [];
+
+    msg.add('ERROR: $exception\n\n');
+
+    final stackTrace = stack.toString().split('\n');
+
+    int length = stackTrace.length;
+
+    if (length > 0) {
+      //
+      length = length > 10 ? 10 : length;
+
+      msg.add('\n\n');
+
+      msg.addAll(stackTrace.sublist(0, length));
+    }
+    return msg;
+  }
+
+  void display(dynamic exception, StackTrace stack) {
+    //
+    final text = message(exception, stack);
+
+    if (text.isEmpty) {
+      return;
+    }
+
+    final screenSize = MyApp.screenSize;
+
+    showBox(
+      context: StateSet.lastContext!,
+      contentPadding: const EdgeInsets.all(10),
+      scrollable: true,
+      content: Center(
+        child: Container(
+          height: screenSize.height * 0.75,
+          width: screenSize.width * 0.9,
+          child: ListView.builder(
+            itemCount: text.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(text[index]),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  bool log(dynamic exception, StackTrace stack) {
+    //
+    final web = WebUtils();
+
+    final text = message(exception, stack);
+
+    return web.saveTextFile(text, 'errorLog');
   }
 }

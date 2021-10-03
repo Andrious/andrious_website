@@ -8,6 +8,18 @@ class HomeScreen extends WebPageBase {
   HomeScreen({Key? key}) : super(controller: HomeScreenController(), key: key);
 
   @override
+  StackWidgetProperties? screenOverlay(
+    BuildContext context, {
+    AlignmentGeometry? alignment,
+    TextDirection? textDirection,
+    StackFit? fit,
+    Clip? clipBehavior,
+  }) {
+    // TODO: implement screenOverlay
+    throw UnimplementedError();
+  }
+
+  @override
   Widget? child(BuildContext context) {
     // TODO: implement child
     throw UnimplementedError();
@@ -31,6 +43,16 @@ class HomeScreenController extends WebPageBaseController {
   }
 
   double _lastOffset = 0;
+
+  @override
+  StackWidgetProperties? screenOverlay(
+    BuildContext context, {
+    AlignmentGeometry? alignment,
+    TextDirection? textDirection,
+    StackFit? fit,
+    Clip? clipBehavior,
+  }) =>
+      null;
 
   @override
   Widget? child(BuildContext context) => null;

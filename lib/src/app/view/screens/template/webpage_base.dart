@@ -15,10 +15,91 @@ abstract class WebPageBase extends ScaffoldScreenWidget
   /// The 'child' widget containing the core of the screen's content.
   Widget? child(BuildContext context);
 
+  /// Possible Screen overlay
+  StackWidgetProperties? screenOverlay(BuildContext context);
+
   /// Determine if running on a small screen.
   bool get isSmallScreen {
     final WebPageBaseController con = controller as WebPageBaseController;
     return con.isSmallScreen!;
+  }
+
+  Widget popupScreen(
+    BuildContext context, {
+    required String title,
+    required String text,
+    required String name,
+    Widget? image,
+    bool interactive = true,
+    EdgeInsetsGeometry? margin,
+    Decoration? decoration,
+    EdgeInsetsGeometry? padding,
+    CrossAxisAlignment? crossAxisAlignment,
+    TextStyle? titleStyle,
+    TextStyle? textStyle,
+  }) {
+    final _screenSize = MyApp.screenSize;
+    final _smallScreen = MyApp.inSmallScreen;
+
+    Widget popImage;
+
+    popImage = Image.asset(
+      name,
+      fit: BoxFit.cover,
+    );
+
+    if (interactive) {
+      popImage = InteractiveViewer(
+        maxScale: 3,
+        minScale: 1,
+        child: popImage,
+      );
+    }
+
+    return Container(
+      margin: margin ??
+          EdgeInsets.fromLTRB(
+            _screenSize.width * (_smallScreen ? 0 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.1 : 0.2),
+            _screenSize.width * (_smallScreen ? 0.0 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.1 : 0.2),
+          ),
+      decoration: decoration ??
+          BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+          ),
+      padding: padding ?? EdgeInsets.all(_smallScreen ? 10 : 30),
+      child: Column(
+        crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: titleStyle ?? const TextStyle(fontSize: 24),
+          ),
+          const SizedBox(height: 18),
+          AutoSizeText(
+            text,
+            style: textStyle ?? const TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: _screenSize.height * 0.05),
+          InkWell(
+            splashColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            onTap: () => PopupPage.window<void>(
+              context,
+              (_) => Center(
+                child: popImage,
+              ),
+            ),
+            child: image ??
+                Padding(
+                  padding: EdgeInsets.all(_smallScreen ? 0 : 40),
+                  child: Image.asset(name),
+                ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -35,23 +116,66 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
   /// The 'child' widget containing the core of the screen's content.
   Widget? child(BuildContext context);
 
+  /// Possible Screen overlay
+  StackWidgetProperties? screenOverlay(BuildContext context);
+
   /// Provide a appBar
 //  PreferredSizeWidget? appBar(BuildContext context);
 
   /// Provide the body of the webpage
   @override
-  Widget body(BuildContext context) => WebScrollbar(
-        color: Colors.blueGrey,
-        backgroundColor: Colors.blueGrey.withOpacity(0.3),
-        width: 16,
-        heightFraction: 0.3,
+  Widget body(BuildContext context) {
+    //
+    StackWidgetProperties? stackProps;
+
+    Widget? _child;
+
+    /// Retrieve the main content if any.
+    _child = child(context);
+
+    Widget? _overlay;
+
+    /// Display the overlay if it exists
+    if (_child == null) {
+      stackProps = screenOverlay(context);
+      _child = stackProps?.child;
+    } else {
+      stackProps = screenOverlay(context);
+      _overlay = stackProps?.child;
+    }
+
+    /// If there is indeed content to be displayed.
+    if (_child != null) {
+      //
+      _child = SingleChildScrollView(
         controller: scrollController ?? _controller,
-        child: SingleChildScrollView(
-          controller: scrollController ?? _controller,
-          physics: physics ?? const ClampingScrollPhysics(),
-          child: child(context) ?? Center(child: Container()),
-        ),
+        physics: physics ?? const ClampingScrollPhysics(),
+        child: _child,
       );
+
+      ///
+      if (_overlay != null) {
+        _child = Stack(
+          alignment: stackProps?.alignment ?? AlignmentDirectional.topStart,
+          textDirection: stackProps?.textDirection,
+          fit: stackProps?.fit ?? StackFit.loose,
+          clipBehavior: stackProps?.clipBehavior ?? Clip.hardEdge,
+          children: [
+            _child,
+            _overlay,
+          ],
+        );
+      }
+    }
+    return WebScrollbar(
+      color: Colors.blueGrey,
+      backgroundColor: Colors.blueGrey.withOpacity(0.3),
+      width: 16,
+      heightFraction: 0.3,
+      controller: scrollController ?? _controller,
+      child: _child ?? const SizedBox(),
+    );
+  }
 
   /// The State object's Scroll Controller
   ScrollController? get scrollController {
@@ -121,6 +245,18 @@ class _WebPageBaseController extends WebPageBaseController {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;
 
+  /// Possibly overlay displayed on top of the screen.
+  @override
+  StackWidgetProperties? screenOverlay(
+    BuildContext context, {
+    AlignmentGeometry? alignment,
+    TextDirection? textDirection,
+    StackFit? fit,
+    Clip? clipBehavior,
+  }) =>
+      null;
+
+  /// Possibly the main content on the screen.
   @override
   Widget? child(BuildContext context) => null;
 
@@ -188,4 +324,19 @@ class FractionallySizedWidget extends StatelessWidget {
           child: child,
         ),
       );
+}
+
+class StackWidgetProperties {
+  StackWidgetProperties({
+    this.alignment,
+    this.textDirection,
+    this.fit,
+    this.clipBehavior,
+    required this.child,
+  });
+  final AlignmentGeometry? alignment;
+  final TextDirection? textDirection;
+  final StackFit? fit;
+  final Clip? clipBehavior;
+  final Widget? child;
 }

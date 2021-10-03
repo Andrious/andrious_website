@@ -1,4 +1,14 @@
 
+## 1.25.0
+ October 03, 2021
+- Flutter UI Examples
+- class PrivacyPolicy extends WebPage<PrivacyPolicy> {
+- StackWidgetProperties? screenOverlay(BuildContext context) => null;
+- Widget popupScreen(
+- @mustCallSuper
+  void initWidget() => _controller.initWidget();
+- MyApp._(Key? key) : super(key: key, errorReport: _onErrorReport);
+
 ## 1.24.0
  September 28, 2021
 - PopupPage.window<void>( in initial_disclosure

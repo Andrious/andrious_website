@@ -15,14 +15,16 @@ class BottomBar extends StatelessWidget {
         children: [
           if (!smallScreen)
             Row(
-//                  mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 BottomBarColumn(
                   heading: 'ABOUT',
                   s1: 'Contact Us',
                   onPressedS1: () {},
-                  s2: 'About Us',
+                  s2: 'Privacy Policy',
+                  onPressedS2: () {
+                    AppRouterDelegate.nextRoute('/privacy');
+                  },
                   s3: 'Use Case Example',
                   onPressedS3: () {
                     AppRouterDelegate.nextRoute('/use_case');

@@ -18,7 +18,6 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
   @override
   List<Widget> children05(BuildContext context, {bool showPopup = true}) {
     final _smallScreen = MyApp.inSmallScreen;
-    final _howProjectsWork = Image.asset(_projectsImage);
     return [
       Stack(
         children: [
@@ -54,7 +53,7 @@ class HowProjectsWork extends WebPage<HowProjectsWork> {
                     },
               child: Padding(
                 padding: EdgeInsets.all(_smallScreen ? 0 : 40),
-                child: _howProjectsWork,
+                child: Image.asset(_projectsImage),
               ),
             ),
           ),

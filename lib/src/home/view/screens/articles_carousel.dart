@@ -393,9 +393,9 @@ class ArticlesController {
         context: context,
         contentPadding: const EdgeInsets.all(10),
         text: '''
-                    This article is behind a paywall on Medium.com.
-                    If you're a member, it's free. If not, you may wish to cancel.
-                    ''',
+This article is behind a paywall on Medium.com.
+If you're a member, it's free. If not, you may wish to cancel.
+''',
         button01: Option(text: 'Continue', result: true),
         press01: () => browse = true,
       );

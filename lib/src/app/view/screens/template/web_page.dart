@@ -68,6 +68,32 @@ class WebPage<T> extends WebPageBase {
   // /// Supply a title
   // String get title;
 
+  /// Possible Screen overlay
+  @override
+  StackWidgetProperties? screenOverlay(BuildContext context) => null;
+
+  @override
+  Widget child(BuildContext context) {
+    final _screenSize = screenSize ?? MediaQuery.of(context).size;
+    List<Widget> widgets;
+    try {
+      /// children05
+      widgets = children05(context);
+    } catch (ex) {
+      widgets = [];
+    }
+    if (bottomBar) {
+      widgets.addAll([
+        SizedBox(height: _screenSize.height / 10),
+        const BottomBar(),
+      ]);
+    }
+    return Column(
+      children: widgets,
+    );
+  }
+
+  /// Main Content
   List<Widget> children05(BuildContext context) {
     final List<Widget> children = [];
     List<Widget>? widgets;
@@ -159,27 +185,6 @@ class WebPage<T> extends WebPageBase {
       );
 
   @override
-  Widget child(BuildContext context) {
-    final _screenSize = screenSize ?? MediaQuery.of(context).size;
-    List<Widget> widgets;
-    try {
-      /// children05
-      widgets = children05(context);
-    } catch (ex) {
-      widgets = [];
-    }
-    if (bottomBar) {
-      widgets.addAll([
-        SizedBox(height: _screenSize.height / 10),
-        const BottomBar(),
-      ]);
-    }
-    return Column(
-      children: widgets,
-    );
-  }
-
-  @override
   bool get isSmallScreen => _smallScreen ??= super.isSmallScreen;
   static bool? _smallScreen;
 }
@@ -201,6 +206,12 @@ class WebPageController<T extends WebPageBase> extends WebPageBaseController {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) => _widget?.appBar(context);
+
+  @override
+  StackWidgetProperties? screenOverlay(BuildContext context) =>
+      _widget?.screenOverlay(
+        context,
+      );
 
   @override
   Widget? child(BuildContext context) =>

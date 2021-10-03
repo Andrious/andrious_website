@@ -9,4 +9,5 @@ export 'package:andrious/src/app/controller/app_controller.dart'
 
 /// MVC framework
 // hide runApp as it's not compatible with Flutter Web
-export 'package:mvc_application/controller.dart' hide AppController, runApp;
+// Error: Unsupported operation: dart:isolate is not supported on dart4web
+export 'package:mvc_application/controller.dart' hide AppController;

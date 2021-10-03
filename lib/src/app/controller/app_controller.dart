@@ -6,6 +6,7 @@ import 'package:andrious/src/view.dart';
 
 import 'package:firebase_core/firebase_core.dart' as f;
 //import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
+
 import 'package:firebase_crashlytics/firebase_crashlytics.dart'
     show FirebaseCrashlytics;
 
@@ -14,6 +15,8 @@ import 'package:flutter/foundation.dart' show FlutterExceptionHandler;
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 
 import 'package:mvc_application/controller.dart' as c;
+
+import 'package:mvc_application/run_app.dart' as r;
 
 class AppController extends c.AppController {
   factory AppController() => _this ??= AppController._();
@@ -217,7 +220,7 @@ void runApp(
   // Than we setup preferred orientations,
   // and only after it finished we run our app
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => c.runApp(
+      .then((value) => r.runApp(
             app,
             errorHandler: handler,
             errorScreen: builder,
