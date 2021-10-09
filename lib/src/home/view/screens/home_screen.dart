@@ -5,7 +5,7 @@
 import 'package:andrious/src/view.dart';
 
 class HomeScreen extends WebPageBase {
-  HomeScreen({Key? key}) : super(controller: HomeScreenController(), key: key);
+  HomeScreen({Key? key}) : super(HomeScreenController(), key: key);
 
   @override
   StackWidgetProperties? screenOverlay(
@@ -29,10 +29,10 @@ class HomeScreen extends WebPageBase {
 class HomeScreenController extends WebPageBaseController {
   //
   @override
-  void initWidget() {
+  void initState() {
     //
-    scrollController?.addListener(() {
-      final double offset = scrollController!.positions.last.pixels;
+    scrollController.addListener(() {
+      final double offset = scrollController.positions.last.pixels;
       if (offset > _lastOffset) {
 //        print('scrolling down');
       } else {
@@ -43,19 +43,6 @@ class HomeScreenController extends WebPageBaseController {
   }
 
   double _lastOffset = 0;
-
-  @override
-  StackWidgetProperties? screenOverlay(
-    BuildContext context, {
-    AlignmentGeometry? alignment,
-    TextDirection? textDirection,
-    StackFit? fit,
-    Clip? clipBehavior,
-  }) =>
-      null;
-
-  @override
-  Widget? child(BuildContext context) => null;
 
   /// Provide the body of the webpage
   @override
@@ -174,7 +161,7 @@ class HomeScreenController extends WebPageBaseController {
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => isSmallScreen!
+  PreferredSizeWidget? appBar(BuildContext context) => inSmallScreen
       ? AppBar(
           backgroundColor:
               Theme.of(context).bottomAppBarColor.withOpacity(opacity),
@@ -217,6 +204,18 @@ class HomeScreenController extends WebPageBaseController {
       800: Color(0xFF3A7300),
       900: Color(0xFF254A00),
     });
+  }
+
+  @override
+  Widget? child(BuildContext context) {
+    // TODO: implement child
+    throw UnimplementedError();
+  }
+
+  @override
+  StackWidgetProperties? screenOverlay(BuildContext context) {
+    // TODO: implement screenOverlay
+    throw UnimplementedError();
   }
 }
 

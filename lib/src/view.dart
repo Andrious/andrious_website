@@ -7,21 +7,21 @@
 /// Utilities
 export 'package:url_launcher/url_launcher.dart';
 
-/// MVC framework
-export 'package:mvc_application/view.dart' hide AppMenu; //, runApp;
-
 /// Navigation
 export 'package:andrious/src/app/view/app_navigator.dart';
 
-/// SetState routine
-export 'package:state_set/state_set.dart';
+/// MVC framework
+export 'package:mvc_application/view.dart' hide AppMenu; //, runApp;
 
-/// Google Fonts
-export 'package:google_fonts/google_fonts.dart';
+/// State Set
+export 'package:state_set/state_set.dart';
 
 /// App level code
 export 'package:andrious/src/app/view/html_behaviour.dart';
 export 'package:auto_size_text/auto_size_text.dart';
+
+/// Google Fonts
+export 'package:google_fonts/google_fonts.dart';
 
 /// Utility pages - app level
 export 'package:andrious/src/app/view/utils/authentication.dart';

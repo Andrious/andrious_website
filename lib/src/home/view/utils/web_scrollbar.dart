@@ -31,6 +31,7 @@ class _WebScrollbarState extends State<WebScrollbar> {
   double _scrollPosition = 0;
   late bool _isUpdating;
   late Timer timer;
+  late EdgeInsetsGeometry _margin;
 
   @override
   void initState() {
@@ -44,32 +45,35 @@ class _WebScrollbarState extends State<WebScrollbar> {
     final screenSize = MediaQuery.of(context).size;
     final double _scrollerHeight = screenSize.height * widget.heightFraction;
 
-    double? _topMargin;
+    double? topMargin;
 
     if (widget.controller.hasClients) {
       final position =
           _scrollPosition / widget.controller.position.maxScrollExtent;
-      _topMargin =
-          (screenSize.height * position) - (_scrollerHeight * position);
+      topMargin = (screenSize.height * position) - (_scrollerHeight * position);
     }
 
-    if (_topMargin == null || _topMargin < 0) {
-      _topMargin = 1;
+    if (topMargin == null || topMargin == double.nan || topMargin < 0) {
+      topMargin = 1;
     }
 
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
         if (notification.depth == 0) {
           if (notification is ScrollUpdateNotification) {
+            _isUpdating = true;
             timer.cancel();
-            setState(() {
-              _isUpdating = true;
-            });
+            if (mounted) {
+              setState(() {});
+            }
           } else {
             timer = Timer(const Duration(seconds: 5), () {
-              setState(() {
-                _isUpdating = false;
-              });
+              _isUpdating = false;
+              if (mounted) {
+                setState(() {});
+              } else {
+                timer.cancel();
+              }
             });
           }
         }
@@ -100,16 +104,20 @@ class _WebScrollbarState extends State<WebScrollbar> {
                 child: GestureDetector(
                   onTapCancel: () {
                     timer = Timer(const Duration(seconds: 5), () {
-                      setState(() {
-                        _isUpdating = false;
-                      });
+                      _isUpdating = false;
+                      if (mounted) {
+                        setState(() {});
+                      } else {
+                        timer.cancel();
+                      }
                     });
                   },
                   onTapDown: (details) {
+                    _isUpdating = true;
                     timer.cancel();
-                    setState(() {
-                      _isUpdating = true;
-                    });
+                    if (mounted) {
+                      setState(() {});
+                    }
                   },
                   onVerticalDragUpdate: (dragUpdate) {
                     widget.controller.position.moveTo(dragUpdate
@@ -139,11 +147,7 @@ class _WebScrollbarState extends State<WebScrollbar> {
                   child: Container(
                     height: _scrollerHeight,
                     width: widget.width,
-                    margin: EdgeInsets.only(
-                      left: 1,
-                      right: 1,
-                      top: _topMargin,
-                    ),
+                    margin: EdgeInsets.only(left: 1, top: topMargin, right: 1),
                     decoration: BoxDecoration(
                       color: widget.color,
                       borderRadius: const BorderRadius.all(

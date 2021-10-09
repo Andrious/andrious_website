@@ -8,33 +8,48 @@ import 'package:flutter/gestures.dart' show DragStartBehavior;
 
 /// The 'framework' of a typical Material Screen.
 class ScaffoldScreenWidget extends BasicStatefulWidget {
-  const ScaffoldScreenWidget(this._controller, {Key? key})
-      : super(key: key, controller: _controller);
+  const ScaffoldScreenWidget(ScaffoldScreenController controller,
+      {Key? key, this.title})
+      : super(controller, key: key);
+  final String? title;
 
-  final ScaffoldScreenController _controller;
+  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
+        title: Text(title ?? ''),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () {},
+          )
+        ],
+      );
+}
+
+abstract class ScaffoldScreenController extends BasicController {
+  ScaffoldScreenController({
+    this.backgroundColor,
+    this.resizeToAvoidBottomInset,
+    this.primary,
+    this.drawerDragStartBehavior,
+    this.extendBody,
+    this.extendBodyBehindAppBar,
+    this.drawerScrimColor,
+    this.drawerEdgeDragWidth,
+    this.drawerEnableOpenDragGesture,
+    this.endDrawerEnableOpenDragGesture,
+    this.restorationId,
+  }) : super();
+
+  @override
+  void initState() {
+    super.initState();
+    // This function gets called repeatedly. StatefulWidget gets rebuilt?
+    _widget = widget as ScaffoldScreenWidget;
+  }
+
+  ScaffoldScreenWidget? _widget;
 
   /// Provide a appBar
   PreferredSizeWidget? appBar(BuildContext context) => null;
-
-  /// Called in its State object's initState() function
-  /// To be overridden and used by subclasses
-  @override
-  @mustCallSuper
-  void initWidget() => _controller.initWidget();
-
-  /// Implement the build() function here instead.
-  @override
-  Widget build(BuildContext context) => _controller.build(context);
-}
-
-abstract class ScaffoldScreenController extends ControllerMVC {
-  ScaffoldScreenController([StateMVC? state]) : super(state);
-
-  /// Provide a appBar
-  PreferredSizeWidget? appBar(BuildContext context);
-
-  /// Initialize the widget
-  void initWidget();
 
   /// Provide the body of the Scaffold widget
   Widget? body(BuildContext context);
@@ -75,40 +90,31 @@ abstract class ScaffoldScreenController extends ControllerMVC {
 
   String? restorationId;
 
-  BasicStatefulWidget? widget;
-
-  late Size screenSize;
-  late double opacity;
-
-  Widget build(BuildContext context) {
-    //
-    screenSize = MediaQuery.of(context).size;
-    widget = state?.widget as BasicStatefulWidget?;
-    opacity = widget?.opacity ?? 0;
-    return Scaffold(
-      appBar: appBar(context) ??
-          PreferredSize(
-              preferredSize: Size(screenSize.width, 1000),
-              child: TopBarContents(opacity)),
-      body: body(context),
-      drawer: drawer(context),
-      onDrawerChanged: onDrawerChanged(context),
-      endDrawer: endDrawer(context),
-      onEndDrawerChanged: onEndDrawerChanged(context),
-      bottomNavigationBar: bottomNavigationBar(context),
-      bottomSheet: bottomSheet(context),
-      backgroundColor: backgroundColor,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      primary: primary ?? true,
-      drawerDragStartBehavior:
-          drawerDragStartBehavior ?? DragStartBehavior.start,
-      extendBody: extendBody ?? false,
-      extendBodyBehindAppBar: extendBodyBehindAppBar ?? false,
-      drawerScrimColor: drawerScrimColor,
-      drawerEdgeDragWidth: drawerEdgeDragWidth,
-      drawerEnableOpenDragGesture: drawerEnableOpenDragGesture ?? true,
-      endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture ?? true,
-      restorationId: restorationId,
-    );
-  }
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: appBar(context) ??
+            _widget!.appBar(context) ??
+            PreferredSize(
+                preferredSize: Size(screenSize.width, 1000),
+                child: TopBarContents(opacity)),
+        body: body(context),
+        drawer: drawer(context),
+        onDrawerChanged: onDrawerChanged(context),
+        endDrawer: endDrawer(context),
+        onEndDrawerChanged: onEndDrawerChanged(context),
+        bottomNavigationBar: bottomNavigationBar(context),
+        bottomSheet: bottomSheet(context),
+        backgroundColor: backgroundColor,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+        primary: primary ?? true,
+        drawerDragStartBehavior:
+            drawerDragStartBehavior ?? DragStartBehavior.start,
+        extendBody: extendBody ?? false,
+        extendBodyBehindAppBar: extendBodyBehindAppBar ?? false,
+        drawerScrimColor: drawerScrimColor,
+        drawerEdgeDragWidth: drawerEdgeDragWidth,
+        drawerEnableOpenDragGesture: drawerEnableOpenDragGesture ?? true,
+        endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture ?? true,
+        restorationId: restorationId,
+      );
 }

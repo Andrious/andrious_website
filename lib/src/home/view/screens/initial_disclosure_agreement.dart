@@ -4,26 +4,41 @@
 
 import 'package:andrious/src/view.dart';
 
-class InitialDisclosure extends WebPage<InitialDisclosure> {
-  InitialDisclosure({Key? key, this.banner = true}) : super(key: key);
+class InitialDisclosure extends WebPage {
+  InitialDisclosure({Key? key, this.banner = true})
+      : super(_InitialDisclosureController(), key: key);
   final bool banner;
 
   @override
   // Screen's title
   String get title => 'Initial Disclosure Agreement';
+}
+
+class _InitialDisclosureController extends WebPageController {
+  @override
+  void initState() {
+    super.initState();
+    _widget = widget as InitialDisclosure;
+  }
+
+  InitialDisclosure? _widget;
 
   @override
-  List<Widget> children05(BuildContext context) {
-    final _screenSize = screenSize;
+  List<Widget> children05(BuildContext context, [WebPage? widget]) {
+    final _screenSize = MyApp.screenSize;
     final _smallScreen = MyApp.inSmallScreen;
+    // Sometimes this method is called before the widget is mounted.
+    if (_widget == null && widget != null && widget is InitialDisclosure) {
+      _widget = widget;
+    }
     final _disclosure = Image.asset(
       'assets/images/disclosure.png',
       fit: BoxFit.cover,
     );
     return [
-      if (banner)
+      if (_widget?.banner ?? true)
         SizedBox(
-          height: _screenSize!.height * 0.45,
+          height: _screenSize.height * 0.45,
           width: _screenSize.width,
           child: Image.asset(
             'assets/images/earthNetworked.jpg',

@@ -5,13 +5,13 @@
 import 'package:andrious/main.dart';
 import 'package:andrious/src/view.dart';
 
-class HomePageSmall extends WebPage<HomePageSmall> {
+class HomePageSmall extends WebPage {
   factory HomePageSmall({Key? key}) => _this ??= HomePageSmall._(key);
   HomePageSmall._(Key? key)
       : super(
-          key: key,
-          controller: HomePageSmallController<HomePageSmall>(
+          HomePageSmallController(
               physics: const AlwaysScrollableScrollPhysics()),
+          key: key,
           coverBanner: false,
           accessBar: false,
           bottomBar: true,
@@ -22,18 +22,71 @@ class HomePageSmall extends WebPage<HomePageSmall> {
   String get title => 'Andrious Solutions Ltd.';
 
   @override
-  List<Widget> children04(BuildContext context) {
-    final con = controller as HomePageSmallController;
-    return con.children04(context);
+  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
+        backgroundColor:
+            Theme.of(context).bottomAppBarColor.withOpacity(opacity),
+        elevation: 0,
+        centerTitle: true,
+        actions: [
+          AppTheme.fontSizeButton,
+          SizedBox(width: MyApp.screenSize.width * 0.1),
+          AppTheme.darkModeButton,
+        ],
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Colors.blueGrey[100],
+            fontSize: 20,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w400,
+            letterSpacing: 3,
+          ),
+        ),
+      );
+}
+
+class HomePageSmallController extends WebPageController {
+  HomePageSmallController({ScrollPhysics? physics}) : super(physics: physics);
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Determine if an overlay is to be displayed.
+    showOverlay = Prefs.getBool('showOverlay', true);
+
+    projects = HowProjectsWork(showPopup: false);
+    useCase = UseCaseExample(bottomBar: false);
+    paradox = ProgrammingParadox();
+    disclose = InitialDisclosure(banner: false);
+    scrollController.addListener(() {
+      final offset = scrollController.offset;
+      if (offset > _lastOffset) {
+        // print('Down: $offset');
+      } else {
+        // print('Up: $offset');
+      }
+      _lastOffset = offset;
+    });
+    flutterUIs = FlutterUIs();
   }
+
+  late HowProjectsWork projects;
+  late UseCaseExample useCase;
+  late ProgrammingParadox paradox;
+  late InitialDisclosure disclose;
+  late FlutterUIs flutterUIs;
+  late bool showOverlay;
+
+  double _lastOffset = 0;
 
   @override
   StackWidgetProperties? screenOverlay(BuildContext context) {
     //
-    final con = controller as HomePageSmallController;
+//    final con = controller as HomePageSmallController;
 
-    // Don't cotinue if the overlay is not to be shown.
-    if (!con.showOverlay) {
+    // Don't continue if the overlay is not to be shown.
+    if (!showOverlay) {
       return null;
     }
 
@@ -70,7 +123,10 @@ class HomePageSmall extends WebPage<HomePageSmall> {
               flex: 5,
               child: Padding(
                 padding: EdgeInsets.only(left: _screenSize.width * 0.1),
-                child: Text(msg),
+                child: Text(
+                  msg,
+                  style: const TextStyle(height: 1),
+                ),
               ),
             ),
             Flexible(
@@ -91,7 +147,7 @@ class HomePageSmall extends WebPage<HomePageSmall> {
                   alignment: Alignment.centerRight,
                   child: OutlinedButton(
                     onPressed: () {
-                      con.setOverlay(shown: false);
+                      setOverlay(shown: false);
                       setState(() {});
                     },
                     child: const Text(
@@ -115,78 +171,12 @@ class HomePageSmall extends WebPage<HomePageSmall> {
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => true //isSmallScreen
-      ? AppBar(
-          backgroundColor:
-              Theme.of(context).bottomAppBarColor.withOpacity(opacity),
-          elevation: 0,
-          centerTitle: true,
-          actions: const [
-            IconButton(
-              icon: Icon(Icons.brightness_6),
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: AppTheme.toggleMode,
-            ),
-          ],
-          title: Text(
-            title,
-            style: TextStyle(
-              color: Colors.blueGrey[100],
-              fontSize: 20,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w400,
-              letterSpacing: 3,
-            ),
-          ),
-        )
-      : PreferredSize(
-          preferredSize: Size(screenSize!.width, 1000),
-          child: TopBarContents(opacity),
-        );
-}
-
-class HomePageSmallController<T> extends WebPageController {
-  HomePageSmallController({StateMVC? state, ScrollPhysics? physics})
-      : super(state: state, physics: physics);
-  @override
-  void initWidget() {
-    //
-
-    // Determine if an overlay is to be displayed.
-    showOverlay = Prefs.getBool('showOverlay', true);
-
-    projects = HowProjectsWork();
-    useCase = UseCaseExample(bottomBar: false);
-    paradox = ProgrammingParadox();
-    disclose = InitialDisclosure(banner: false);
-    scrollController?.addListener(() {
-      final offset = scrollController!.offset;
-      if (offset > _lastOffset) {
-        // print('Down: $offset');
-      } else {
-        // print('Up: $offset');
-      }
-      _lastOffset = offset;
-    });
-    flutterUIs = FlutterUIs();
-  }
-
-  late HowProjectsWork projects;
-  late UseCaseExample useCase;
-  late ProgrammingParadox paradox;
-  late InitialDisclosure disclose;
-  late FlutterUIs flutterUIs;
-  late bool showOverlay;
-
-  double _lastOffset = 0;
-
-  List<Widget> children04(BuildContext context) {
-    final _smallScreen = MyApp.inSmallScreen;
+  List<Widget> children04(BuildContext context, [WebPage? widget]) {
+    final _smallScreen = inSmallScreen;
     final List<Widget> children = [];
-    children.addAll(projects.children05(context, showPopup: false));
+    children.addAll(projects.children05(context));
     children.add(projects.popup(context, showLink: false));
-    children.add(useCase.child(context));
+    children.add(useCase.child(context)!);
     children.addAll(paradox.children04(context)!);
     children.add(
       Padding(

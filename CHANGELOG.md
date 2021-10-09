@@ -1,4 +1,17 @@
 
+## 1.27.0
+ October 09, 2021
+- Map<String, Object> toJson() =>
+- AppRoutePath fromJson(Map<String, dynamic> json) {
+- abstract class BasicController extends ControllerMVC {
+- if (mounted) { setState(() {});
+
+## 1.26.0
+ October 04, 2021
+- abstract class BasicController extends ControllerMVC {
+- Removed void initWidget();
+- if (topMargin == null || topMargin == double.nan || topMargin < 0) {
+
 ## 1.25.0
  October 03, 2021
 - Flutter UI Examples

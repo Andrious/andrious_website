@@ -282,6 +282,42 @@ class AppRoutePath {
   final bool isUnknown;
   final bool isHomePage;
   final bool isWebPage;
+
+  Map<String, Object> toJson() => <String, Object>{
+        'path': path ?? '',
+        'isUnknown': isUnknown,
+        'isHomePage': isHomePage,
+        'isWebPage': isWebPage
+      };
+
+  AppRoutePath fromJson(Map<String, dynamic> json) {
+    AppRoutePath route;
+
+    String? path;
+    final dynamic value = json['path'];
+
+    if (value is String) {
+      path = value;
+    } else {
+      path = '';
+    }
+
+    if (path.trim().isEmpty) {
+      path = '/404';
+    }
+
+    switch (path) {
+      case '/':
+        route = AppRoutePath.home();
+        break;
+      case '/404':
+        route = AppRoutePath.unknown();
+        break;
+      default:
+        route = AppRoutePath.page(path);
+    }
+    return route;
+  }
 }
 
 /// Returns a Page object.

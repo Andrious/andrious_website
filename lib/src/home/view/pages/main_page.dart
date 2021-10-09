@@ -13,7 +13,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage>
-    with SingleTickerProviderStateMixin, StateSet {
+    with SingleTickerProviderStateMixin {
   TabController? _tabController;
 
   @override

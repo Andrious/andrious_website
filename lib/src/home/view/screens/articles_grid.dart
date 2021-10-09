@@ -4,46 +4,11 @@
 
 import 'package:andrious/src/view.dart';
 
-class ArticlesGrid extends WebPage<ArticlesGrid> {
-  ArticlesGrid({Key? key})
-      : con = ArticlesController(),
-        super(key: key);
-  final ArticlesController con;
+class ArticlesGrid extends WebPage {
+  ArticlesGrid({Key? key}) : super(ArticlesController(), key: key);
 
   @override
   String get title => 'My Technical Articles';
-
-  @override
-  Widget child(BuildContext context) => LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) =>
-            ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: constraints.minWidth,
-            minHeight: constraints.minHeight,
-            maxWidth: constraints.maxWidth,
-            maxHeight: constraints.maxHeight,
-          ),
-          child: Material(
-            child: GridView.builder(
-              primary: false,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(8),
-              shrinkWrap: true,
-              itemCount: con.articles.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
-                childAspectRatio: 5 / 4,
-                crossAxisSpacing: 10,
-              ),
-              itemBuilder: (BuildContext context, int index) => ArticleImage(
-                con,
-                index: index,
-                constraints: constraints,
-              ),
-            ),
-          ),
-        ),
-      );
 }
 
 class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {

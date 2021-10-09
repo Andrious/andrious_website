@@ -4,26 +4,23 @@
 
 import 'package:andrious/src/view.dart';
 
+import 'package:flutter/gestures.dart' show DragStartBehavior;
+
 abstract class WebPageBase extends ScaffoldScreenWidget
     with WebPageFeaturesMixin {
-  WebPageBase({WebPageBaseController? controller, Key? key})
-      : super(controller ?? _WebPageBaseController(), key: key);
+  WebPageBase(this.webPageBaseController, {Key? key, String? title})
+      : super(webPageBaseController, key: key, title: title);
 
-  @override
-  PreferredSizeWidget? appBar(BuildContext context);
+  final WebPageBaseController webPageBaseController;
 
   /// The 'child' widget containing the core of the screen's content.
-  Widget? child(BuildContext context);
+  Widget? child(BuildContext context) => webPageBaseController.child(context);
 
   /// Possible Screen overlay
-  StackWidgetProperties? screenOverlay(BuildContext context);
+  StackWidgetProperties? screenOverlay(BuildContext context) =>
+      webPageBaseController.screenOverlay(context);
 
-  /// Determine if running on a small screen.
-  bool get isSmallScreen {
-    final WebPageBaseController con = controller as WebPageBaseController;
-    return con.isSmallScreen!;
-  }
-
+  /// Supply a 'popup' screen that zooms in on the screen.
   Widget popupScreen(
     BuildContext context, {
     required String title,
@@ -37,6 +34,186 @@ abstract class WebPageBase extends ScaffoldScreenWidget
     CrossAxisAlignment? crossAxisAlignment,
     TextStyle? titleStyle,
     TextStyle? textStyle,
+  }) =>
+      webPageBaseController.popupScreen(
+        context,
+        title: title,
+        text: text,
+        name: name,
+        image: image,
+        interactive: interactive,
+        margin: margin,
+        decoration: decoration,
+        padding: padding,
+        crossAxisAlignment: crossAxisAlignment,
+        titleStyle: titleStyle,
+        textStyle: textStyle,
+      );
+}
+
+abstract class WebPageBaseController extends ScaffoldScreenController {
+  WebPageBaseController({
+    Color? backgroundColor,
+    bool? resizeToAvoidBottomInset,
+    bool? primary,
+    DragStartBehavior? drawerDragStartBehavior,
+    bool? extendBody,
+    bool? extendBodyBehindAppBar,
+    Color? drawerScrimColor,
+    double? drawerEdgeDragWidth,
+    bool? drawerEnableOpenDragGesture,
+    bool? endDrawerEnableOpenDragGesture,
+    String? restorationId,
+    this.physics,
+  }) : super(
+          backgroundColor: backgroundColor,
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          primary: primary,
+          drawerDragStartBehavior: drawerDragStartBehavior,
+          extendBody: extendBody,
+          extendBodyBehindAppBar: extendBodyBehindAppBar,
+          drawerScrimColor: drawerScrimColor,
+          drawerEdgeDragWidth: drawerEdgeDragWidth,
+          drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+          endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+          restorationId: restorationId,
+        );
+
+  ScrollPhysics? physics;
+
+  //
+  /// The 'child' widget containing the core of the screen's content.
+  Widget? child(BuildContext context);
+
+  /// Possible Screen overlay
+  StackWidgetProperties? screenOverlay(BuildContext context);
+
+  /// Provide a appBar
+  @override
+  PreferredSizeWidget? appBar(BuildContext context) => null;
+
+  @override
+  List<Widget>? persistentFooterButtons(BuildContext context) => null;
+
+  @override
+  Widget? drawer(BuildContext context) => null;
+
+  @override
+  DrawerCallback? onDrawerChanged(BuildContext context) => null;
+
+  @override
+  Widget? endDrawer(BuildContext context) => null;
+
+  @override
+  DrawerCallback? onEndDrawerChanged(BuildContext context) => null;
+
+  @override
+  Widget? bottomNavigationBar(BuildContext context) => null;
+
+  @override
+  Widget? bottomSheet(BuildContext context) => null;
+
+  /// Provide the body of the webpage
+  @override
+  Widget body(BuildContext context) {
+    //
+    StackWidgetProperties? stackProps;
+
+    Widget? _child;
+
+    try {
+      /// Retrieve the main content if any.
+      _child = child(context);
+    } catch (ex, stack) {
+      _child = null;
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: ex,
+        stack: stack,
+        library: 'webpage_base.dart',
+        context: ErrorDescription('_child = child(context)'),
+      ));
+      // Make the error known if under development.
+      if (App.inDebugger) {
+        rethrow;
+      }
+    }
+
+    Widget? _overlay;
+
+    /// Display the overlay if it exists
+    if (_child == null) {
+      stackProps = screenOverlay(context);
+      _child = stackProps?.child;
+    } else {
+      stackProps = screenOverlay(context);
+      _overlay = stackProps?.child;
+    }
+
+    /// If there is indeed content to be displayed.
+    if (_child == null) {
+      //
+      final FlutterErrorDetails details = FlutterErrorDetails(
+        exception: Exception('No web content was supplied?'),
+        library: 'webpage_base.dart',
+        context: ErrorDescription(
+            "Please, look to the 'controller' for providing content."),
+      );
+
+      FlutterError.reportError(details);
+      // Notify the developer. Leave an 'empty screen' in production.
+      if (App.inDebugger) {
+        _child = ErrorWidget.builder(details);
+      }
+    } else {
+      //
+      _child = SingleChildScrollView(
+        primary: false,
+        physics: physics ?? const ClampingScrollPhysics(),
+        child: _child,
+      );
+
+      ///
+      if (_overlay != null) {
+        _child = Stack(
+          alignment: stackProps?.alignment ?? AlignmentDirectional.topStart,
+          textDirection: stackProps?.textDirection,
+          fit: stackProps?.fit ?? StackFit.loose,
+          clipBehavior: stackProps?.clipBehavior ?? Clip.hardEdge,
+          children: [
+            _child,
+            _overlay,
+          ],
+        );
+      }
+    }
+    return WebScrollbar(
+      color: Colors.blueGrey,
+      backgroundColor: Colors.blueGrey.withOpacity(0.3),
+      width: 16,
+      heightFraction: 0.3,
+      controller: scrollController,
+      child: _child ?? const SizedBox(),
+    );
+  }
+
+  /// Provide a 'popup' screen.
+  Widget popupScreen(
+    BuildContext context, {
+    required String title,
+    required String text,
+    required String name,
+    Widget? image,
+    bool interactive = true,
+    EdgeInsetsGeometry? margin,
+    Decoration? decoration,
+    EdgeInsetsGeometry? padding,
+    CrossAxisAlignment? crossAxisAlignment,
+    TextStyle? titleStyle,
+    TextStyle? textStyle,
+    String? coverImage,
+    bool? coverBanner,
+    bool? accessBar,
+    bool? bottomBar,
   }) {
     final _screenSize = MyApp.screenSize;
     final _smallScreen = MyApp.inSmallScreen;
@@ -90,6 +267,10 @@ abstract class WebPageBase extends ScaffoldScreenWidget
               (_) => Center(
                 child: popImage,
               ),
+              coverImage: coverImage,
+              coverBanner: coverBanner,
+              accessBar: accessBar,
+              bottomBar: bottomBar,
             ),
             child: image ??
                 Padding(
@@ -103,168 +284,27 @@ abstract class WebPageBase extends ScaffoldScreenWidget
   }
 }
 
-abstract class WebPageBaseController extends ScaffoldScreenController {
-  WebPageBaseController({
-    StateMVC? state,
-    this.physics,
-  })  : _controller = ScrollController(),
-        super(state);
-  ScrollPhysics? physics;
-  final ScrollController _controller;
-
-  //
-  /// The 'child' widget containing the core of the screen's content.
-  Widget? child(BuildContext context);
-
-  /// Possible Screen overlay
-  StackWidgetProperties? screenOverlay(BuildContext context);
-
-  /// Provide a appBar
-//  PreferredSizeWidget? appBar(BuildContext context);
-
-  /// Provide the body of the webpage
-  @override
-  Widget body(BuildContext context) {
-    //
-    StackWidgetProperties? stackProps;
-
-    Widget? _child;
-
-    /// Retrieve the main content if any.
-    _child = child(context);
-
-    Widget? _overlay;
-
-    /// Display the overlay if it exists
-    if (_child == null) {
-      stackProps = screenOverlay(context);
-      _child = stackProps?.child;
-    } else {
-      stackProps = screenOverlay(context);
-      _overlay = stackProps?.child;
-    }
-
-    /// If there is indeed content to be displayed.
-    if (_child != null) {
-      //
-      _child = SingleChildScrollView(
-        controller: scrollController ?? _controller,
-        physics: physics ?? const ClampingScrollPhysics(),
-        child: _child,
-      );
-
-      ///
-      if (_overlay != null) {
-        _child = Stack(
-          alignment: stackProps?.alignment ?? AlignmentDirectional.topStart,
-          textDirection: stackProps?.textDirection,
-          fit: stackProps?.fit ?? StackFit.loose,
-          clipBehavior: stackProps?.clipBehavior ?? Clip.hardEdge,
-          children: [
-            _child,
-            _overlay,
-          ],
-        );
-      }
-    }
-    return WebScrollbar(
-      color: Colors.blueGrey,
-      backgroundColor: Colors.blueGrey.withOpacity(0.3),
-      width: 16,
-      heightFraction: 0.3,
-      controller: scrollController ?? _controller,
-      child: _child ?? const SizedBox(),
-    );
-  }
-
-  /// The State object's Scroll Controller
-  ScrollController? get scrollController {
-    if (_scrollController == null) {
-      final _state = state;
-      if (_state != null) {
-        _scrollController = (_state as BasicState).scrollController;
-      }
-    }
-    return _scrollController;
-  }
-
-  ScrollController? _scrollController;
-
-  /// Clean up
-  @override
-  void dispose() {
-    _scrollController = null;
-    super.dispose();
-  }
-
-  @override
-  List<Widget>? persistentFooterButtons(BuildContext context) => null;
-
-  @override
-  Widget? drawer(BuildContext context) => null;
-
-  @override
-  DrawerCallback? onDrawerChanged(BuildContext context) => null;
-
-  @override
-  Widget? endDrawer(BuildContext context) => null;
-
-  @override
-  DrawerCallback? onEndDrawerChanged(BuildContext context) => null;
-
-  @override
-  Widget? bottomNavigationBar(BuildContext context) => null;
-
-  @override
-  Widget? bottomSheet(BuildContext context) => null;
-
-  bool? _smallScreen;
-
-  /// Determine if running on a small screen.
-  bool? get isSmallScreen {
-    //
-    if (_smallScreen != null) {
-      return _smallScreen;
-    }
-
-    final context = state?.context;
-
-    if (context == null) {
-      _smallScreen = true;
-    } else {
-      _smallScreen =
-          MyApp.inSmallScreen || MediaQuery.of(context).size.width < 800;
-    }
-    return _smallScreen;
-  }
-}
-
-class _WebPageBaseController extends WebPageBaseController {
-  _WebPageBaseController([StateMVC? state]) : super(state: state);
-
-  @override
-  PreferredSizeWidget? appBar(BuildContext context) => null;
-
-  /// Possibly overlay displayed on top of the screen.
-  @override
-  StackWidgetProperties? screenOverlay(
-    BuildContext context, {
-    AlignmentGeometry? alignment,
-    TextDirection? textDirection,
-    StackFit? fit,
-    Clip? clipBehavior,
-  }) =>
-      null;
-
-  /// Possibly the main content on the screen.
-  @override
-  Widget? child(BuildContext context) => null;
-
-  @override
-  void initWidget() {
-    // TODO: implement initWidget
-  }
-}
+// class _WebPageBaseController extends WebPageBaseController {
+//   _WebPageBaseController([StateMVC? state]) : super(state: state);
+//
+//   @override
+//   PreferredSizeWidget? appBar(BuildContext context) => null;
+//
+//   /// Possibly overlay displayed on top of the screen.
+//   @override
+//   StackWidgetProperties? screenOverlay(
+//     BuildContext context, {
+//     AlignmentGeometry? alignment,
+//     TextDirection? textDirection,
+//     StackFit? fit,
+//     Clip? clipBehavior,
+//   }) =>
+//       null;
+//
+//   /// Possibly the main content on the screen.
+//   @override
+//   Widget? child(BuildContext context) => null;
+// }
 
 /// Containing standard functionality for a typical webpage.
 mixin WebPageFeaturesMixin {

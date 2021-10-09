@@ -4,38 +4,47 @@
 
 import 'package:andrious/src/view.dart';
 
-class FlutterUIs extends WebPage<FlutterUIs> {
+class FlutterUIs extends WebPage {
   factory FlutterUIs({Key? key}) => _this ??= FlutterUIs._(key);
   FlutterUIs._(Key? key)
       : super(
+          FlutterUIsController(
+            primary: false,
+            physics: const AlwaysScrollableScrollPhysics(),
+          ),
           key: key,
-          controller: FlutterUIsController<FlutterUIs>(
-              physics: const AlwaysScrollableScrollPhysics()),
           title: 'Flutter UI Examples',
           coverBanner: false,
           accessBar: false,
           bottomBar: false,
-          primary: false,
         );
   static FlutterUIs? _this;
 
-  @override
-  List<Widget>? children04(BuildContext context) {
-    final List<Widget> children = [
-      flutterUI(context),
-      flutterUIInstall(context),
-      flutterUChrome(context),
-      flutterUIDesktop(context),
-    ];
+  Widget coverPage(BuildContext context) =>
+      FlutterUIsController().coverPage(context);
+}
 
-    return children;
-  }
+class FlutterUIsController extends WebPageController {
+  factory FlutterUIsController({
+    bool? primary,
+    ScrollPhysics? physics,
+  }) =>
+      _this ??= FlutterUIsController._(primary, physics);
+
+  FlutterUIsController._(
+    bool? primary,
+    ScrollPhysics? physics,
+  ) : super(
+          primary: primary,
+          physics: physics,
+        );
+  static FlutterUIsController? _this;
 
   final String uiExamples = 'assets/images/flutteruis/flutter_ui_examples.png';
 
   /// Display the cover page
   Widget coverPage(BuildContext context) {
-    final _screenSize = screenSize!;
+    final _screenSize = MyApp.screenSize;
     final _smallScreen = MyApp.inSmallScreen;
     return Container(
       margin: EdgeInsets.fromLTRB(
@@ -58,7 +67,6 @@ class FlutterUIs extends WebPage<FlutterUIs> {
           const SizedBox(height: 18),
           const AutoSizeText(
             "The Flutter Challenge was originally posted by three developers to merely demonstrate Flutter's user interface capabilities. However, it's proven to be a very useful tool when developing applications for customers. It is essentially a catalogue of demonstration screens and showcases an array of functions and features available to the customer.\n\nI've made a point to introduce this catalogue for customers to browse through. They can then literally pick out the 'look and feel' they wish to attain for their own app.",
-            style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: _screenSize.height * 0.05),
           InkWell(
@@ -77,27 +85,17 @@ class FlutterUIs extends WebPage<FlutterUIs> {
     );
   }
 
-  // Widget flutterUI(BuildContext context) {
-  //   final _screenSize = screenSize!;
-  //   final _smallScreen = MyApp.inSmallScreen;
-  //   return popupScreen(
-  //     context,
-  //     title: 'Flutter User Interface Challenge',
-  //     text: '',
-  //     interactive: false,
-  //     name: 'assets/images/flutteruis/flutter_ui.png',
-  //     margin: EdgeInsets.fromLTRB(
-  //       _screenSize.width * (_smallScreen ? 0 : 0.2),
-  //       _screenSize.height * (_smallScreen ? 0.1 : 0.2),
-  //       _screenSize.width * (_smallScreen ? 0.0 : 0.2),
-  //       _screenSize.height * (_smallScreen ? 0.1 : 0.2),
-  //     ),
-  //     image: Padding(
-  //       padding: EdgeInsets.all(MyApp.inSmallScreen ? 0 : 5),
-  //       child: Image.asset('assets/images/flutteruis/flutter_ui.png'),
-  //     ),
-  //   );
-  // }
+  @override
+  List<Widget>? children04(BuildContext context, [WebPage? widget]) {
+    final List<Widget> children = [
+      flutterUI(context),
+      flutterUIInstall(context),
+      flutterUChrome(context),
+      flutterUIDesktop(context),
+    ];
+
+    return children;
+  }
 
   Widget flutterUI(BuildContext context) => popupScreen(
         context,
@@ -130,11 +128,4 @@ class FlutterUIs extends WebPage<FlutterUIs> {
         interactive: false,
         name: 'assets/images/flutteruis/flutter_ui_desktop.png',
       );
-}
-
-class FlutterUIsController<T> extends WebPageController {
-  FlutterUIsController({StateMVC? state, ScrollPhysics? physics})
-      : super(state: state, physics: physics);
-  @override
-  void initWidget() {}
 }

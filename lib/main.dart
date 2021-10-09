@@ -24,7 +24,6 @@ class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
     if (App.inDebugger) {
       //
       final report = _ReportError();
-//      report.log(exception, stack);
       report.display(exception, stack);
     }
   }
@@ -92,8 +91,6 @@ class _MyAppState extends AppState {
           useMaterial: true,
           debugShowCheckedModeBanner: false,
           title: 'Andrious Solutions',
-          theme: lightThemeData,
-          darkTheme: darkThemeData,
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -103,10 +100,6 @@ class _MyAppState extends AppState {
           supportedLocales: I10n.supportedLocales,
           routerDelegate: AppRouterDelegate(routes: {
             '/': (BuildContext context) => HomePageSmall(),
-//                MyApp.useSmallScreen ? HomePageSmall() : HomePage(),
-            // '/': (BuildContext context) =>
-            //     MyApp.useSmallScreen ? HomeScreen() : HomePage(),
-//            '/': (BuildContext context) => HomePage(),
             '/projects_work': (_) => HowProjectsWork(),
             '/paradox': (_) => ProgrammingParadox(),
             '/use_case': (_) => UseCaseExample(),
@@ -120,7 +113,45 @@ class _MyAppState extends AppState {
         );
 
   @override
+  ThemeData? onDarkTheme() => darkThemeData.copyWith(
+        textTheme: customTheme.textTheme.merge(
+          TextTheme(
+            bodyText2: TextStyle(
+              fontSize: customTheme.textTheme.bodyText2!.fontSize! +
+                  AppTheme.fontIncrement,
+            ),
+          ),
+        ),
+      );
+
+  @override
   ThemeMode onThemeMode() => AppTheme.mode();
+
+  // @override
+  // ThemeData onTheme() => lightThemeData.copyWith(
+  //       textTheme: customTheme
+  //           .copyWith(
+  //             textTheme: TextTheme(
+  //               bodyText2: TextStyle(
+  //                 fontSize: customTheme.textTheme.bodyText2!.fontSize! +
+  //                     AppTheme.fontIncrement,
+  //               ),
+  //             ),
+  //           )
+  //           .textTheme,
+  //     );
+
+  @override
+  ThemeData onTheme() => lightThemeData.copyWith(
+        textTheme: customTheme.textTheme.merge(
+          TextTheme(
+            bodyText2: TextStyle(
+              fontSize: customTheme.textTheme.bodyText2!.fontSize! +
+                  AppTheme.fontIncrement,
+            ),
+          ),
+        ),
+      );
 
   /// Wrap widget in an InteractiveViewer when appropriate.
   static Widget _interactiveViewer(Widget widget) {
@@ -159,6 +190,9 @@ class _MyAppState extends AppState {
 
 //ignore: avoid_classes_with_only_static_members
 class AppTheme {
+  //
+  static double get fontIncrement => Prefs.getDouble('fontSizeInc');
+
   /// Set the app's theme mode.
   static ThemeMode mode([String? themeMode]) {
 //
@@ -190,6 +224,15 @@ class AppTheme {
     return mode;
   }
 
+  /// The 'Dark Mode' button
+  static Widget get darkModeButton => const IconButton(
+        icon: Icon(Icons.brightness_6),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onPressed: AppTheme.toggleMode,
+      );
+
+  /// Assign the 'dark mode' or not.
   static ThemeMode toggleMode() {
     //
     var setting = Prefs.getString('ThemeMode', 'system');
@@ -202,7 +245,55 @@ class AppTheme {
     App.refresh();
     return mode(setting);
   }
+
+  static Widget get fontSizeButton {
+    //
+    final fontInc = fontIncrement;
+    // The right format: '0', '+1', '+2', '+3'
+    String value = fontInc.toString();
+    if (fontInc > 0) {
+      value = '+$value';
+    }
+    return DropdownButton<String>(
+      value: value,
+      hint: const Text('Select a font size'),
+      icon: const Icon(Icons.text_fields),
+      style: const TextStyle(
+        decoration: TextDecoration.underline,
+      ),
+      onChanged: (String? v) {
+        final inc = double.tryParse(v!);
+        Prefs.setDouble('fontSizeInc', inc!);
+        App.refresh();
+      },
+      items:
+          ['0', '+1', '+2', '+3'].map<DropdownMenuItem<String>>((String item) {
+        return DropdownMenuItem<String>(
+          value: item,
+          child: Text(item),
+        );
+      }).toList(),
+    );
+  }
 }
+
+final customTheme = ThemeData(
+// // Define the default brightness and colors.
+//   brightness: Brightness.dark,
+//   primaryColor: Colors.lightBlue[800],
+//   accentColor: Colors.cyan[600],
+
+// Define the default font family.
+  fontFamily: 'Montserrat',
+
+// Define the default TextTheme. Use this to specify the default
+// text styling for headlines, titles, bodies of text, and more.
+  textTheme: const TextTheme(
+    headline1: TextStyle(fontSize: 72),
+    headline6: TextStyle(fontSize: 36),
+    bodyText2: TextStyle(fontSize: 18, height: 2, fontWeight: FontWeight.bold),
+  ),
+);
 
 class _ReportError {
   //

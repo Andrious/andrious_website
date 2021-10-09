@@ -14,7 +14,7 @@ class HTMLinkWell extends StatefulWidget {
   State createState() => _HTMLinkWellState();
 }
 
-class _HTMLinkWellState extends State<HTMLinkWell> with StateSet {
+class _HTMLinkWellState extends State<HTMLinkWell> {
   var _isHovering = false;
   late InkWell inkWell;
   String? text;
