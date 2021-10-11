@@ -20,29 +20,6 @@ class HomePageSmall extends WebPage {
 
   @override
   String get title => 'Andrious Solutions Ltd.';
-
-  @override
-  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
-        backgroundColor:
-            Theme.of(context).bottomAppBarColor.withOpacity(opacity),
-        elevation: 0,
-        centerTitle: true,
-        actions: [
-          AppTheme.fontSizeButton,
-          SizedBox(width: MyApp.screenSize.width * 0.1),
-          AppTheme.darkModeButton,
-        ],
-        title: Text(
-          title,
-          style: TextStyle(
-            color: Colors.blueGrey[100],
-            fontSize: 20,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w400,
-            letterSpacing: 3,
-          ),
-        ),
-      );
 }
 
 class HomePageSmallController extends WebPageController {
@@ -50,11 +27,11 @@ class HomePageSmallController extends WebPageController {
 
   @override
   void initState() {
+    //
     super.initState();
 
     // Determine if an overlay is to be displayed.
     showOverlay = Prefs.getBool('showOverlay', true);
-
     projects = HowProjectsWork(showPopup: false);
     useCase = UseCaseExample(bottomBar: false);
     paradox = ProgrammingParadox();
@@ -69,7 +46,11 @@ class HomePageSmallController extends WebPageController {
       _lastOffset = offset;
     });
     flutterUIs = FlutterUIs();
+
+    _widget = widget as HomePageSmall;
   }
+
+  late HomePageSmall _widget;
 
   late HowProjectsWork projects;
   late UseCaseExample useCase;
@@ -79,6 +60,29 @@ class HomePageSmallController extends WebPageController {
   late bool showOverlay;
 
   double _lastOffset = 0;
+
+  @override
+  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
+        backgroundColor:
+            Theme.of(context).bottomAppBarColor.withOpacity(opacity),
+        elevation: 0,
+        centerTitle: true,
+        actions: [
+          if (inSmallScreen) AppTheme.fontSizeButton,
+          // SizedBox(width: MyApp.screenSize.width * 0.1),
+          // AppTheme.darkModeButton,
+        ],
+        title: Text(
+          _widget.title,
+          style: TextStyle(
+            color: Colors.blueGrey[100],
+            fontSize: 20,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w400,
+            letterSpacing: 3,
+          ),
+        ),
+      );
 
   @override
   StackWidgetProperties? screenOverlay(BuildContext context) {
@@ -239,7 +243,15 @@ class HomePageSmallController extends WebPageController {
     );
     children.add(DartPackages());
     children.addAll(disclose.children05(context));
-    children.add(flutterUIs.coverPage(context));
+    children.add(flutterUIs.coverPage(
+      context,
+      onTap: () async {
+        const url = 'https://github.com/lohanidamodar/flutter_ui_challenges/';
+        if (await canLaunch(url)) {
+          await launch(url);
+        }
+      },
+    ));
     return children;
   }
 

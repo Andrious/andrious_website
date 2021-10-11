@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:andrious/src/view.dart';
+import 'package:flutter/gestures.dart';
 
 class HowProjectsWork extends WebPage {
   HowProjectsWork({Key? key, this.showPopup = true})
@@ -135,6 +136,8 @@ class HowProjectsWorkController extends WebPageController {
       );
     }
 
+    final textStyle = Theme.of(context).textTheme.bodyText2;
+
     return Center(
       child: Container(
         margin: EdgeInsets.fromLTRB(
@@ -156,15 +159,37 @@ class HowProjectsWorkController extends WebPageController {
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 2),
-            const Text(
-              'My concern is the first two pictures and the last picture in the famous cartoon:',
-//              style: _textStyle,
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    style: textStyle,
+                    text:
+                        'My concern is the first two pictures and the last picture in the famous cartoon: ',
+                  ),
+                  TextSpan(
+                    style: textStyle!.copyWith(
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    text: 'Tree Swing',
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () async {
+                        const url = 'https://archive.is/FgxPK';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        }
+                      },
+                  )
+                ],
+              ),
             ),
-            const Hyperlink(Text('Tree Swing'), 'https://archive.is/FgxPK'),
             InkWell(
               onTap: () => PopupPage.window<void>(
                 context,
                 (_) => Center(child: threeTrees),
+                title: "The 5 Why's",
               ),
               child: Image.asset(
                 _threeTreesImage,

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:andrious/src/view.dart';
+import 'package:flutter/gestures.dart';
 
 class FlutterUIs extends WebPage {
   factory FlutterUIs({Key? key}) => _this ??= FlutterUIs._(key);
@@ -20,8 +21,8 @@ class FlutterUIs extends WebPage {
         );
   static FlutterUIs? _this;
 
-  Widget coverPage(BuildContext context) =>
-      FlutterUIsController().coverPage(context);
+  Widget coverPage(BuildContext context, {void Function()? onTap}) =>
+      FlutterUIsController().coverPage(context, onTap: onTap);
 }
 
 class FlutterUIsController extends WebPageController {
@@ -43,9 +44,13 @@ class FlutterUIsController extends WebPageController {
   final String uiExamples = 'assets/images/flutteruis/flutter_ui_examples.png';
 
   /// Display the cover page
-  Widget coverPage(BuildContext context) {
+  Widget coverPage(BuildContext context, {void Function()? onTap}) {
     final _screenSize = MyApp.screenSize;
+
     final _smallScreen = MyApp.inSmallScreen;
+
+    final textStyle = Theme.of(context).textTheme.bodyText2;
+
     return Container(
       margin: EdgeInsets.fromLTRB(
         _screenSize.width * (_smallScreen ? 0 : 0.2),
@@ -65,14 +70,44 @@ class FlutterUIsController extends WebPageController {
             style: TextStyle(fontSize: 24),
           ),
           const SizedBox(height: 18),
-          const AutoSizeText(
-            "The Flutter Challenge was originally posted by three developers to merely demonstrate Flutter's user interface capabilities. However, it's proven to be a very useful tool when developing applications for customers. It is essentially a catalogue of demonstration screens and showcases an array of functions and features available to the customer.\n\nI've made a point to introduce this catalogue for customers to browse through. They can then literally pick out the 'look and feel' they wish to attain for their own app.",
+          RichText(
+            text: TextSpan(children: [
+              TextSpan(
+                style: textStyle,
+                text: 'The ',
+              ),
+              TextSpan(
+                style: textStyle!.copyWith(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.bold,
+                ),
+                text: 'Flutter Challenge',
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () async {
+                    const url =
+                        'https://lohanidamodar.github.io/flutter_ui_challenges/#/';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    }
+                  },
+              ),
+              TextSpan(
+                style: textStyle,
+                text:
+                    " was originally posted by three developers to merely demonstrate Flutter's user interface capabilities. However, it's proven to be a very useful tool when developing applications for customers. It is essentially a catalogue of demonstration screens and showcases an array of functions and features available to the customer.\n\nI've made a point to introduce this catalogue for customers to browse through. They can then literally pick out the 'look and feel' they wish to attain for their own app.",
+              ),
+            ]),
           ),
+          // const AutoSizeText(
+          //   "The Flutter Challenge was originally posted by three developers to merely demonstrate Flutter's user interface capabilities. However, it's proven to be a very useful tool when developing applications for customers. It is essentially a catalogue of demonstration screens and showcases an array of functions and features available to the customer.\n\nI've made a point to introduce this catalogue for customers to browse through. They can then literally pick out the 'look and feel' they wish to attain for their own app.",
+          // ),
           SizedBox(height: _screenSize.height * 0.05),
           InkWell(
-            onTap: () {
-              AppRouterDelegate.nextRoute('/interfaces');
-            },
+            onTap: onTap ??
+                () {
+                  AppRouterDelegate.nextRoute('/interfaces');
+                },
             child: Image.asset(
               uiExamples,
               height: _screenSize.height * (_smallScreen ? 0.8 : 0.8),

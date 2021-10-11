@@ -111,6 +111,7 @@ class _MyAppState extends AppState {
           }),
           routeInformationParser: AppRouteInformationParser(),
         );
+  TextStyle? bodyText2;
 
   @override
   ThemeData? onDarkTheme() => darkThemeData.copyWith(
@@ -127,31 +128,28 @@ class _MyAppState extends AppState {
   @override
   ThemeMode onThemeMode() => AppTheme.mode();
 
-  // @override
-  // ThemeData onTheme() => lightThemeData.copyWith(
-  //       textTheme: customTheme
-  //           .copyWith(
-  //             textTheme: TextTheme(
-  //               bodyText2: TextStyle(
-  //                 fontSize: customTheme.textTheme.bodyText2!.fontSize! +
-  //                     AppTheme.fontIncrement,
-  //               ),
-  //             ),
-  //           )
-  //           .textTheme,
-  //     );
-
   @override
-  ThemeData onTheme() => lightThemeData.copyWith(
-        textTheme: customTheme.textTheme.merge(
-          TextTheme(
-            bodyText2: TextStyle(
-              fontSize: customTheme.textTheme.bodyText2!.fontSize! +
-                  AppTheme.fontIncrement,
-            ),
-          ),
+  ThemeData onTheme() {
+    // Record the original text style
+    bodyText2 ??= customTheme.textTheme.bodyText2!;
+
+    // return lightThemeData.copyWith(
+    //   textTheme: customTheme.textTheme.merge(
+    //     TextTheme(
+    //       bodyText2: TextStyle(
+    //         fontSize: firstSize! + AppTheme.fontIncrement,
+    //       ),
+    //     ),
+    //   ),
+    // );
+    return lightThemeData.copyWith(
+      textTheme: customTheme.textTheme.copyWith(
+        bodyText2: bodyText2!.copyWith(
+          fontSize: bodyText2!.fontSize! + AppTheme.fontIncrement,
         ),
-      );
+      ),
+    );
+  }
 
   /// Wrap widget in an InteractiveViewer when appropriate.
   static Widget _interactiveViewer(Widget widget) {
@@ -191,6 +189,15 @@ class _MyAppState extends AppState {
 //ignore: avoid_classes_with_only_static_members
 class AppTheme {
   //
+  static Map<double, String> dropItems = {};
+
+  static final Map<String, double> fontIncs = {
+    '0': 0,
+    '+1': 1,
+    '+2': 2,
+    '+3': 3
+  };
+
   static double get fontIncrement => Prefs.getDouble('fontSizeInc');
 
   /// Set the app's theme mode.
@@ -248,12 +255,19 @@ class AppTheme {
 
   static Widget get fontSizeButton {
     //
-    final fontInc = fontIncrement;
-    // The right format: '0', '+1', '+2', '+3'
-    String value = fontInc.toString();
-    if (fontInc > 0) {
-      value = '+$value';
+    final double fontInc = fontIncrement;
+
+    if (dropItems.isEmpty) {
+      /// Populate the dropdown items.
+      fontIncs.forEach((key, value) {
+        dropItems[value] = key;
+      });
     }
+
+    final value = dropItems[fontInc];
+
+    final items = fontIncs.keys;
+
     return DropdownButton<String>(
       value: value,
       hint: const Text('Select a font size'),
@@ -262,12 +276,11 @@ class AppTheme {
         decoration: TextDecoration.underline,
       ),
       onChanged: (String? v) {
-        final inc = double.tryParse(v!);
-        Prefs.setDouble('fontSizeInc', inc!);
+        final inc = fontIncs[v]!;
+        Prefs.setDouble('fontSizeInc', inc);
         App.refresh();
       },
-      items:
-          ['0', '+1', '+2', '+3'].map<DropdownMenuItem<String>>((String item) {
+      items: items.map<DropdownMenuItem<String>>((String item) {
         return DropdownMenuItem<String>(
           value: item,
           child: Text(item),

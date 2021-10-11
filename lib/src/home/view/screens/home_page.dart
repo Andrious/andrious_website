@@ -32,7 +32,7 @@ class HomePageController extends WebPageController {
           elevation: 0,
           centerTitle: true,
           actions: [
-            AppTheme.fontSizeButton,
+            if (inSmallScreen) AppTheme.fontSizeButton,
             SizedBox(width: MyApp.screenSize.width * 0.1),
             AppTheme.darkModeButton,
           ],

@@ -65,7 +65,8 @@ class _UseCaseExampleController extends WebPageController {
         Container(
           margin: EdgeInsets.fromLTRB(
             _screenSize.width * (_smallScreen ? 0 : 0.2),
-            _screenSize.height * (_smallScreen ? 0.01 : 0.35),
+//            _screenSize.height * (_smallScreen ? 0.01 : 0.35),
+            _screenSize.height * (_smallScreen ? 0.01 : 0.2),
             _screenSize.width * (_smallScreen ? 0 : 0.1),
             _screenSize.height * (_smallScreen ? 0.1 : 0.2),
           ),
@@ -76,16 +77,16 @@ class _UseCaseExampleController extends WebPageController {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Divider(),
-              const SizedBox(
-                height: 10,
-              ),
+              // const Divider(),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Text(
                 'Use Case Scenarios',
                 style: TextStyle(fontSize: _smallScreen ? 24 : 48),
               ),
               const Divider(),
-              Text(
+              const Text(
                 '''
 Help me help you to build the mobile app that you want. 
 

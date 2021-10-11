@@ -19,7 +19,7 @@ class BottomBar extends StatelessWidget {
               children: [
                 BottomBarColumn(
                   heading: 'ABOUT',
-                  s1: 'Contact Us',
+                  s1: 'Contact Me',
                   onPressedS1: () {},
                   s2: 'Privacy Policy',
                   onPressedS2: () {

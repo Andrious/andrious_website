@@ -95,8 +95,9 @@ abstract class ScaffoldScreenController extends BasicController {
         appBar: appBar(context) ??
             _widget!.appBar(context) ??
             PreferredSize(
-                preferredSize: Size(screenSize.width, 1000),
-                child: TopBarContents(opacity)),
+              preferredSize: Size(screenSize.width, 1000),
+              child: TopBarContents(opacity),
+            ),
         body: body(context),
         drawer: drawer(context),
         onDrawerChanged: onDrawerChanged(context),

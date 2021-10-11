@@ -25,6 +25,10 @@ class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {
   @override
   Widget build(BuildContext context) => InkWell(
         onTap: () => PopupPage.window<void>(context, browser),
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         child: Image.asset(
           con.articles[index],
           fit: BoxFit.contain,

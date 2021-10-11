@@ -1,4 +1,11 @@
 
+## 1.28.0
+ October 10, 2021
+- Widget coverPage(BuildContext context, {void Function()? onTap
+- final textStyle = Theme.of(context).textTheme.bodyText2;
+- if (inSmallScreen) AppTheme.fontSizeButton,
+- lightThemeData.copyWith(textTheme: customTheme.textTheme.copyWith(
+
 ## 1.27.0
  October 09, 2021
 - Map<String, Object> toJson() =>
