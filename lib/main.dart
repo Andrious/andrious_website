@@ -53,12 +53,20 @@ class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
 
   /// Determine if the app is running on a 'small screen' or not.
   static bool isSmallScreen({BuildContext? context, Size? size}) {
-    bool smallScreen = asSmallScreen;
+    //
+    bool smallScreen;
+    //
     final Size? screenSize = sizeScreen(context: context, size: size);
-    if (screenSize != null) {
+
+    // May be manually assigned.
+    smallScreen = asSmallScreen;
+
+    if (!smallScreen && screenSize != null) {
       smallScreen = screenSize.width < 800;
     }
+
     _inSmallScreen = smallScreen;
+
     return smallScreen;
   }
 
@@ -154,8 +162,6 @@ class _MyAppState extends AppState {
   /// Wrap widget in an InteractiveViewer when appropriate.
   static Widget _interactiveViewer(Widget widget) {
     //
-    final wrapWebPage = widget is! WebPage;
-
     if (MyApp.inSmallScreen) {
       //
       widget = InteractiveViewer(
@@ -165,7 +171,7 @@ class _MyAppState extends AppState {
       );
     }
 
-    if (wrapWebPage) {
+    if (widget is! WebPage) {
       widget = WebPageWrapper(child: widget);
     }
 

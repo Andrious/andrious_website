@@ -103,18 +103,19 @@ class FlutterUIsController extends WebPageController {
           //   "The Flutter Challenge was originally posted by three developers to merely demonstrate Flutter's user interface capabilities. However, it's proven to be a very useful tool when developing applications for customers. It is essentially a catalogue of demonstration screens and showcases an array of functions and features available to the customer.\n\nI've made a point to introduce this catalogue for customers to browse through. They can then literally pick out the 'look and feel' they wish to attain for their own app.",
           // ),
           SizedBox(height: _screenSize.height * 0.05),
-          InkWell(
-            onTap: onTap ??
-                () {
-                  AppRouterDelegate.nextRoute('/interfaces');
-                },
-            child: Image.asset(
-              uiExamples,
-              height: _screenSize.height * (_smallScreen ? 0.8 : 0.8),
-              width: _screenSize.width * (_smallScreen ? 1 : 0.55),
-              fit: BoxFit.fill,
-            ),
-          )
+          if (!_smallScreen)
+            InkWell(
+              onTap: onTap ??
+                  () {
+                    AppRouterDelegate.nextRoute('/interfaces');
+                  },
+              child: Image.asset(
+                uiExamples,
+                height: _screenSize.height * (_smallScreen ? 0.8 : 0.8),
+                width: _screenSize.width * (_smallScreen ? 1 : 0.55),
+                fit: BoxFit.fill,
+              ),
+            )
         ],
       ),
     );

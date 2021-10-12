@@ -1,4 +1,9 @@
 
+## 1.28.1
+ October 11, 2021
+- _wrapper = widget as WebPageWrapper;
+- Widget? child(BuildContext context, [WebPage? widget]) => _wrapper!._child ?? super.child(context)!;
+
 ## 1.28.0
  October 10, 2021
 - Widget coverPage(BuildContext context, {void Function()? onTap

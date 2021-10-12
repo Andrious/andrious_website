@@ -346,6 +346,25 @@ class WebPageControllerWrapper extends WebPageController {
     _bottomSheet = bottomSheet;
   }
 
+  @override
+  void initState() {
+    super.initState();
+    // This function gets called repeatedly. StatefulWidget gets rebuilt?
+    _wrapper = widget as WebPageWrapper;
+  }
+
+  WebPageWrapper? _wrapper;
+
+  /// Supply the widget's function instead.
+  @override
+  List<Widget>? children04(BuildContext context, [WebPage? widget]) =>
+      _wrapper!.children;
+
+  /// Supply the widget's function instead.
+  @override
+  Widget? child(BuildContext context, [WebPage? widget]) =>
+      _wrapper!._child ?? super.child(context)!;
+
   List<Widget>? Function(BuildContext context)? _persistentFooterButtons;
   Widget? Function(BuildContext context)? _drawer;
   DrawerCallback? Function(BuildContext context)? _onDrawerChanged;
