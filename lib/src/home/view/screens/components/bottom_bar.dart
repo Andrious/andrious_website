@@ -47,7 +47,10 @@ class BottomBar extends StatelessWidget {
                 ),
                 BottomBarColumn(
                   heading: 'SOCIAL',
-                  s1: 'Twitter',
+                  s1: 'GITTER',
+                  onPressedS1: () {
+                    MyApp.browseUri('https://gitter.im/Andrious/community/');
+                  },
                   s2: 'LinkedIn',
                   onPressedS2: () {
                     MyApp.browseUri('https://www.linkedin.com/in/gregtfperry/');

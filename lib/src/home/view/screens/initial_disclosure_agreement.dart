@@ -54,7 +54,10 @@ class _InitialDisclosureController extends WebPageController {
       child = _disclosure;
     }
     const text =
-        "We'll sign a Non-Disclosure agreement so you can share your idea with me.";
+        "We'll sign a Non-Disclosure agreement so you can share it with me.";
+    const printLink = Hyperlink(Text('Print'),
+        'https://docs.google.com/document/d/1Z2zdFIv_n1HXT2rkU8n6kAOr144b6nHsGbhkUOO9IA0/edit?usp=sharing');
+
     return [
       if (_widget?.banner ?? true)
         SizedBox(
@@ -65,21 +68,19 @@ class _InitialDisclosureController extends WebPageController {
             fit: BoxFit.cover,
           ),
         ),
-      Text(
-        'Got an Idea for an App?',
-        style: TextStyle(fontSize: _smallScreen ? 24 : 48),
-      ),
-      if (_smallScreen) const AutoSizeText(text) else const Text(text),
       InkWell(
         splashColor: Colors.transparent,
         hoverColor: Colors.transparent,
         onTap: () => PopupPage.window<void>(
           context,
           (_) => Center(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(200, 100, 200, 50),
-              child: child,
-            ),
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(200, 100, 200, 50),
+                child: child,
+              ),
+              printLink,
+            ]),
           ),
         ),
         // child: Padding(
@@ -88,14 +89,34 @@ class _InitialDisclosureController extends WebPageController {
         // ),
         child: Container(
           margin: EdgeInsets.fromLTRB(
-            _screenSize.width * (_smallScreen ? 0 : 0.2),
-            _screenSize.height * (_smallScreen ? 0.1 : 0.1),
-            _screenSize.width * (_smallScreen ? 0.0 : 0.2),
-            _screenSize.height * (_smallScreen ? 0.1 : 0.05),
+            _screenSize.width * (_smallScreen ? 0.01 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.01 : 0.1),
+            _screenSize.width * (_smallScreen ? 0.01 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.01 : 0.05),
           ),
-          child: _disclosure,
+          child: Column(children: [
+            if (_smallScreen)
+              const AutoSizeText(
+                'Got an Idea for an App?',
+                style: TextStyle(fontSize: 24),
+              )
+            else
+              const Text(
+                'Got an Idea for an App?',
+                style: TextStyle(fontSize: 48),
+              ),
+            SizedBox(
+              height: _screenSize.height * 0.01,
+            ),
+            if (_smallScreen) const AutoSizeText(text) else const Text(text),
+            SizedBox(
+              height: _screenSize.height * 0.2,
+            ),
+            _disclosure,
+          ]),
         ),
       ),
+      printLink,
       // if (!_smallScreen)
       //   Iframe(
       //     height: '1000',
@@ -103,8 +124,6 @@ class _InitialDisclosureController extends WebPageController {
       //     src:
       //         'https://docs.google.com/document/d/e/2PACX-1vSUGrouFhcTcJqJ4ItmKU0qY6XyF4DIPf619wrlEOgvj-kubE9gV3ME_8K-o04vZqHm4nVEUQcSHVSc/pub?embedded=true',
       //   ),
-      const Hyperlink(Text('Print'),
-          'https://docs.google.com/document/d/1Z2zdFIv_n1HXT2rkU8n6kAOr144b6nHsGbhkUOO9IA0/edit?usp=sharing')
     ];
   }
 }

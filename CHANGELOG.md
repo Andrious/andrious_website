@@ -1,4 +1,9 @@
 
+## 1.30.0
+ October 15, 2021
+- s1: 'GITTER',
+- if (!_smallScreen && (_widget?.banner ?? false))
+
 ## 1.29.0
  October 14, 2021
 - # - directives_ordering
