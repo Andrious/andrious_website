@@ -50,12 +50,12 @@ class _ProgrammingParadoxController extends WebPageController {
       Center(
         child: Container(
           margin: EdgeInsets.fromLTRB(
-            _screenSize.width * (_smallScreen ? 0.1 : 0.05),
-            _screenSize.height * (_smallScreen ? 0.1 : 0.2),
+            _screenSize.width * (_smallScreen ? 0.05 : 0.05),
+            _screenSize.height * (_smallScreen ? 0.05 : 0.2),
             _screenSize.width *
-                (_smallScreen ? (_landscape ? 0.1 : 0.1) : 0.05),
+                (_smallScreen ? (_landscape ? 0.05 : 0.05) : 0.05),
             _screenSize.height *
-                (_smallScreen ? (_landscape ? 0.1 : 0.1) : 0.2),
+                (_smallScreen ? (_landscape ? 0.05 : 0.05) : 0.1),
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
