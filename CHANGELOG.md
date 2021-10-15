@@ -1,4 +1,8 @@
 
+## 1.30.1
+ October 15, 2021
+- _screenSize.width * (_smallScreen ? 0.99 :
+
 ## 1.30.0
  October 15, 2021
 - s1: 'GITTER',
