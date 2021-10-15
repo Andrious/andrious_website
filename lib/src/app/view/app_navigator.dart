@@ -388,7 +388,7 @@ class _WebPage extends Page<void> {
   @override
   Route<void> createRoute(BuildContext context) => MaterialPageRoute(
         settings: this,
-        builder: builder ?? (BuildContext context) => Container(),
+        builder: builder ?? (BuildContext context) => const SizedBox(),
       );
 }
 

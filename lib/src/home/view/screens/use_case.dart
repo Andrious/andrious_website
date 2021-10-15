@@ -5,12 +5,14 @@
 import 'package:andrious/src/view.dart';
 
 class UseCaseExample extends WebPage {
-  UseCaseExample({Key? key, this.banner = true, bool? bottomBar})
+  UseCaseExample(
+      {Key? key, this.readMore = false, this.banner = true, bool? bottomBar})
       : super(
           _UseCaseExampleController(),
           key: key,
           bottomBar: bottomBar ?? true,
         );
+  final bool? readMore;
   final bool banner;
   static const double offset = 2000;
 
@@ -47,6 +49,7 @@ class _UseCaseExampleController extends WebPageController {
   Widget child(BuildContext context, [WebPage? widget]) {
     final _smallScreen = MyApp.inSmallScreen;
     final _screenSize = MyApp.screenSize;
+    final style = Theme.of(context).textTheme.bodyText2;
     // This may be called before the widget is even mounted.
     if (_widget == null && widget != null && widget is UseCaseExample) {
       _widget = widget;
@@ -65,29 +68,60 @@ class _UseCaseExampleController extends WebPageController {
         Container(
           margin: EdgeInsets.fromLTRB(
             _screenSize.width * (_smallScreen ? 0 : 0.2),
-//            _screenSize.height * (_smallScreen ? 0.01 : 0.35),
-            _screenSize.height * (_smallScreen ? 0.01 : 0.2),
+            _screenSize.height * (_smallScreen ? 0.01 : 0.01),
             _screenSize.width * (_smallScreen ? 0 : 0.1),
             _screenSize.height * (_smallScreen ? 0.1 : 0.2),
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
           ),
-          padding: EdgeInsets.all(_smallScreen ? 5 : 80),
+          //         padding: EdgeInsets.all(_smallScreen ? 5 : 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // const Divider(),
-              // const SizedBox(
-              //   height: 10,
-              // ),
+              const Divider(),
+              const SizedBox(height: 10),
               Text(
                 'Use Case Scenarios',
                 style: TextStyle(fontSize: _smallScreen ? 24 : 48),
               ),
               const Divider(),
-              const Text(
-                '''
+              if (_widget != null && !_widget!.readMore!)
+                AutoSizeText(
+                  useCaseText,
+                  style: style,
+                  textAlign: TextAlign.justify,
+                ),
+              if (_widget == null || _widget!.readMore!)
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        style: style,
+                        text: useCaseText.substring(0, 498),
+                      ),
+                      TextSpan(
+                        style: style!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        text: ' ...read more',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            AppRouterDelegate.nextRoute('/use_case');
+                          },
+                      )
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  final useCaseText = '''
 Help me help you to build the mobile app that you want. 
 
 To give us a better idea, we are going to write up some Use Case Scenarios. They're 'little stories' essentially detailing how the app is suppose to work. They'll help better convey your idea, and help us develop your app faster.
@@ -137,17 +171,7 @@ Additional Alternate Scenarios:
 
 
 See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be many, more lengthy and complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better. 
-                  ''',
-                textAlign: TextAlign.justify,
-              ),
-              if (!_smallScreen && (_widget?.bottomBar ?? false))
-                const BottomBar(),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+                  ''';
 }
 
 class PNetworkImage extends StatelessWidget {

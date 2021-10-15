@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:andrious/src/view.dart';
-import 'package:flutter/gestures.dart';
 
 class FlutterUIs extends WebPage {
   factory FlutterUIs({Key? key}) => _this ??= FlutterUIs._(key);

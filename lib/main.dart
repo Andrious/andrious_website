@@ -109,7 +109,7 @@ class _MyAppState extends AppState {
           routerDelegate: AppRouterDelegate(routes: {
             '/': (BuildContext context) => HomePageSmall(),
             '/projects_work': (_) => HowProjectsWork(),
-            '/paradox': (_) => ProgrammingParadox(),
+            '/paradox': (_) => _interactiveViewer(ProgrammingParadox()),
             '/use_case': (_) => UseCaseExample(),
             '/disclosure': (_) => InitialDisclosure(),
             '/articles': (_) => _interactiveViewer(ArticlesGrid()),

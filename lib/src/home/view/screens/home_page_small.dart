@@ -32,9 +32,9 @@ class HomePageSmallController extends WebPageController {
 
     // Determine if an overlay is to be displayed.
     showOverlay = Prefs.getBool('showOverlay', true);
-    projects = HowProjectsWork(showPopup: false);
+    projects = HowProjectsWork(showPopup: false, readMore: true);
     useCase = UseCaseExample(bottomBar: false);
-    paradox = ProgrammingParadox();
+    paradox = ProgrammingParadox(readMore: true);
     disclose = InitialDisclosure(banner: false);
     scrollController.addListener(() {
       final offset = scrollController.offset;
@@ -176,6 +176,7 @@ class HomePageSmallController extends WebPageController {
 
   @override
   List<Widget> children04(BuildContext context, [WebPage? widget]) {
+    final _screenSize = MyApp.screenSize;
     final _smallScreen = inSmallScreen;
     final List<Widget> children = [];
     children.addAll(projects.children05(context));
@@ -184,7 +185,7 @@ class HomePageSmallController extends WebPageController {
     children.addAll(paradox.children04(context)!);
     children.add(
       Padding(
-        padding: const EdgeInsets.only(bottom: 32),
+        padding: EdgeInsets.only(top: _screenSize.height * 0.2, bottom: 32),
         child: Row(
           mainAxisAlignment: _smallScreen
               ? MainAxisAlignment.start
@@ -211,7 +212,9 @@ class HomePageSmallController extends WebPageController {
         ),
       ),
     );
-    children.add(const ArticleCarousel());
+    if (!_smallScreen) {
+      children.add(const ArticleCarousel());
+    }
     children.add(
       Row(
         mainAxisAlignment: _smallScreen
@@ -241,7 +244,9 @@ class HomePageSmallController extends WebPageController {
         ],
       ),
     );
-    children.add(DartPackages());
+    if (!_smallScreen) {
+      children.add(DartPackages());
+    }
     children.addAll(disclose.children05(context));
 
     children.add(flutterUIs.coverPage(

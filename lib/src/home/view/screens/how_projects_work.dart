@@ -3,17 +3,21 @@
 // found in the LICENSE file.
 
 import 'package:andrious/src/view.dart';
-import 'package:flutter/gestures.dart';
 
 class HowProjectsWork extends WebPage {
-  HowProjectsWork({Key? key, this.showPopup = true})
+  HowProjectsWork({Key? key, this.showPopup = true, this.readMore = false})
       : super(HowProjectsWorkController(), key: key);
   final bool showPopup;
+  final bool readMore;
   static const double offset = 200;
 
   @override
   // Screen's title
   String get title => 'How Projects Really Work';
+
+  // Access the its controller
+  HowProjectsWorkController get controller =>
+      webPageController as HowProjectsWorkController;
 
   Widget popup(BuildContext context,
           {double? fontSize, bool showLink = true}) =>
@@ -40,6 +44,9 @@ class HowProjectsWorkController extends WebPageController {
 
   HowProjectsWork? _widget;
 
+  // Flag indicating whether 'read more' option is displayed or not.
+  bool readMore = false;
+
   @override
   List<Widget> children05(BuildContext context, [WebPage? widget]) {
     // MyApp.inSmallScreen allows this method to be called before the build() function.
@@ -47,6 +54,7 @@ class HowProjectsWorkController extends WebPageController {
     // Sometimes this method is called before the widget is mounted.
     if (_widget == null && widget != null && widget is HowProjectsWork) {
       _widget = widget;
+      readMore = _widget!.readMore;
     }
     return [
       Stack(
@@ -98,8 +106,16 @@ class HowProjectsWorkController extends WebPageController {
     ];
   }
 
-  Widget popup(BuildContext context, {double? fontSize, bool showLink = true}) {
+  /// The popup window describing the 'Five Why's' diagram.
+  Widget popup(BuildContext context,
+      {double? fontSize, bool showLink = true, bool? readMore}) {
     //
+
+    // Display the 'read more' version if specified.
+    if (readMore != null) {
+      this.readMore = readMore;
+    }
+
     final _smallScreen = MyApp.inSmallScreen;
 
     final _screenSize = MyApp.screenSize;
@@ -122,6 +138,7 @@ class HowProjectsWorkController extends WebPageController {
     }
     const String _fiveWhysImage = 'assets/images/five_whys.png';
 
+    // The five-why's diagram.
     Widget fiveWhys = Image.asset(
       _fiveWhysImage,
       fit: BoxFit.cover,
@@ -137,6 +154,12 @@ class HowProjectsWorkController extends WebPageController {
     }
 
     final textStyle = Theme.of(context).textTheme.bodyText2;
+
+    const firstParagraph =
+        "Simply put, 'garbage in; garbage out.' We have to clarify the requirements right from the start.";
+
+    const secondParagraph =
+        "The ‘5 Whys’ exercise is a good start. Conceived years ago by the Toyota Motor Corporation, it came about to help find the root cause to a problem. You simply ask ‘why?’ repeatedly to every answer to the previous question. The trick is to first establish the question that describes the basic overall problem you wish to address.\n\nNote, it doesn't always have to be 5 why’s. It’ll likely be more but, at times, even less. Also, there is the common trap of seemingly identifying the root cause when further why’s would have revealed it’s really not. Finally, make it a point to have other team members try it separately--different people using ‘5 Whys‘ may come up with different answers for the same problem. You will have to consolidate them with yours and try again.";
 
     return Center(
       child: Container(
@@ -198,30 +221,60 @@ class HowProjectsWorkController extends WebPageController {
                 fit: BoxFit.fill,
               ),
             ),
-            const Text(
-              "Simply put, 'garbage in; garbage out.' We have to clarify the requirements right from the start.",
-              //             style: _textStyle,
-            ),
-            const Text(
-              "The ‘5 Whys’ exercise is a good start. Conceived years ago by the Toyota Motor Corporation, it came about to help find the root cause to a problem. You simply ask ‘why?’ repeatedly to every answer to the previous question. The trick is to first establish the question that describes the basic overall problem you wish to address.\n\nNote, it doesn't always have to be 5 why’s. It’ll likely be more but, at times, even less. Also, there is the common trap of seemingly identifying the root cause when further why’s would have revealed it’s really not. Finally, make it a point to have other team members try it separately--different people using ‘5 Whys‘ may come up with different answers for the same problem. You will have to consolidate them with yours and try again.",
-//              style: _textStyle,
-            ),
-            InkWell(
-              onTap: () => PopupPage.window<void>(
-                context,
-                (_) => Center(child: fiveWhys),
+            if (_smallScreen)
+              const AutoSizeText(firstParagraph)
+            else
+              const Text(firstParagraph),
+            if (this.readMore)
+              TextButton(
+                onPressed: () {
+                  this.readMore = false;
+                  StateSet.root!.setState(() {});
+                },
+                child: Text(
+                  ' ...read more',
+                  style: textStyle.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            else if (_smallScreen)
+              const AutoSizeText(secondParagraph)
+            else
+              const Text(secondParagraph),
+            if (!this.readMore)
+              InkWell(
+                onTap: () => PopupPage.window<void>(
+                  context,
+                  (_) => Center(child: fiveWhys),
+                ),
+                child: Image.asset(
+                  _fiveWhysImage,
+                  height: _screenSize.height * (_smallScreen ? 0.4 : 0.55),
+                  width: _screenSize.width * (_smallScreen ? 1 : 0.65),
+                  fit: BoxFit.fill,
+                ),
               ),
-              child: Image.asset(
-                _fiveWhysImage,
-                height: _screenSize.height * (_smallScreen ? 0.4 : 0.55),
-                width: _screenSize.width * (_smallScreen ? 1 : 0.65),
-                fit: BoxFit.fill,
+            if (!this.readMore)
+              const Text(
+                "Writing some 'Use Case Scenarios' will then pin down how a possible solution would work:",
+                //             style: _textStyle,
               ),
-            ),
-            const Text(
-              "Writing some 'Use Case Scenarios' will then pin down how a possible solution would work:",
-              //             style: _textStyle,
-            ),
+            if (!this.readMore)
+              TextButton(
+                onPressed: () {
+                  this.readMore = true;
+                  StateSet.root!.setState(() {});
+                },
+                child: Text(
+                  ' ...show less',
+                  style: textStyle.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             if (showLink)
               TextButton(
                 onPressed: () {

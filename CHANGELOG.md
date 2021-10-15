@@ -1,4 +1,12 @@
 
+## 1.29.0
+ October 14, 2021
+- # - directives_ordering
+- builder: builder ?? (BuildContext context) => const SizedBox(),
+- padding: EdgeInsets.only(top: _screenSize.height * 0.2, bottom: 32),
+- this.readMore = readMore;
+- export 'package:flutter/gestures.dart'; // for TapGestureRecognizer()
+
 ## 1.28.1
  October 11, 2021
 - _wrapper = widget as WebPageWrapper;

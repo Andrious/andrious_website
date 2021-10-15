@@ -26,6 +26,7 @@ export 'package:google_fonts/google_fonts.dart';
 /// Utility pages - app level
 export 'package:andrious/src/app/view/utils/authentication.dart';
 export 'package:andrious/src/app/view/utils/basic_widgets.dart';
+export 'package:flutter/gestures.dart'; // for TapGestureRecognizer()
 export 'package:andrious/src/app/view/utils/hyperlink.dart';
 export 'package:andrious/src/app/view/utils/iframe_widget.dart';
 export 'package:andrious/src/app/view/screens/template/scaffold_screens.dart';
