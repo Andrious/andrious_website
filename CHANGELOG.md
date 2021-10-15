@@ -1,4 +1,8 @@
 
+## 1.30.2
+ October 15, 2021
+ - _screenSize.width * (_smallScreen ? 0.1 :
+
 ## 1.30.1
  October 15, 2021
 - _screenSize.width * (_smallScreen ? 0.99 :
