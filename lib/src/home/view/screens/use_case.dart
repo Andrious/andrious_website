@@ -42,12 +42,12 @@ class _UseCaseExampleController extends WebPageController {
   @override
   PreferredSizeWidget? appBar(BuildContext context) => AppBar(
         title: const Text('Use Case'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {},
-          )
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: const Icon(Icons.share),
+        //     onPressed: () {},
+        //   )
+        // ],
       );
 
   @override

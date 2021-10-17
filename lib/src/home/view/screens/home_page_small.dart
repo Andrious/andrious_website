@@ -71,11 +71,11 @@ class HomePageSmallController extends WebPageController {
             Theme.of(context).bottomAppBarColor.withOpacity(opacity),
         elevation: 0,
         centerTitle: true,
-        actions: [
-          if (inSmallScreen) AppTheme.fontSizeButton,
-          // SizedBox(width: MyApp.screenSize.width * 0.1),
-          // AppTheme.darkModeButton,
-        ],
+        // actions: [
+        //   if (inSmallScreen) AppTheme.fontSizeButton,
+        //   // SizedBox(width: MyApp.screenSize.width * 0.1),
+        //   // AppTheme.darkModeButton,
+        // ],
         title: Text(
           _widget.title,
           style: TextStyle(

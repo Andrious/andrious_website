@@ -74,19 +74,25 @@ class _InitialDisclosureController extends WebPageController {
         onTap: () => PopupPage.window<void>(
           context,
           (_) => Center(
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(200, 100, 200, 50),
-                child: child,
-              ),
-              printLink,
-            ]),
+            child: Container(
+                margin: EdgeInsets.fromLTRB(
+                  _screenSize.width * 0.1,
+                  _screenSize.height * 0.1,
+                  _screenSize.width * 0.1,
+                  _screenSize.height * 0.1,
+                ),
+                child: child),
           ),
+          // Center(
+          //   child: Column(children: [
+          //     Padding(
+          //       padding: const EdgeInsets.fromLTRB(200, 100, 200, 50),
+          //       child: child,
+          //     ),
+          //     printLink,
+          //   ]),
+          // ),
         ),
-        // child: Padding(
-        //   padding: const EdgeInsets.fromLTRB(300, 200, 300, 10),
-        //   child: _disclosure,
-        // ),
         child: Container(
           margin: EdgeInsets.fromLTRB(
             _screenSize.width * (_smallScreen ? 0.01 : 0.2),

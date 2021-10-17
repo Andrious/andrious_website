@@ -1,5 +1,8 @@
 
 
+## 1.32.0
+Disclosure: margin: EdgeInsets.fromLTRB(_screenSize.width * 0.1,
+
 ## 1.31.0
  October 17, 2021
 - List<Widget> children05(BuildContext context, [WebPage? widget]) =>
