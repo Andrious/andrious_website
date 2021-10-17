@@ -5,12 +5,17 @@
 import 'package:andrious/src/view.dart';
 
 class UseCaseExample extends WebPage {
-  UseCaseExample(
-      {Key? key, this.readMore = false, this.banner = true, bool? bottomBar})
-      : super(
+  UseCaseExample({
+    Key? key,
+    this.readMore = false,
+    this.banner = true,
+    bool? bottomBar,
+    bool coverBanner = true,
+  }) : super(
           _UseCaseExampleController(),
           key: key,
           bottomBar: bottomBar ?? true,
+          coverBanner: coverBanner,
         );
   final bool? readMore;
   final bool banner;

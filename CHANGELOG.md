@@ -1,5 +1,12 @@
 
 
+## 1.31.0
+ October 17, 2021
+- List<Widget> children05(BuildContext context, [WebPage? widget]) =>
+- children.add(paradox.child(context, paradox)!);
+- static late Size _screenSize;
+- Removed icon: const Icon(Icons.share),
+
 ## 1.30.4
  October 15, 2021
 -  _screenSize.width * 0.05,

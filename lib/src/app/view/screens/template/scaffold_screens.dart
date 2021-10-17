@@ -15,12 +15,12 @@ class ScaffoldScreenWidget extends BasicStatefulWidget {
 
   PreferredSizeWidget? appBar(BuildContext context) => AppBar(
         title: Text(title ?? ''),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {},
-          )
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: const Icon(Icons.share),
+        //     onPressed: () {},
+        //   )
+        // ],
       );
 }
 

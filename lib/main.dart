@@ -109,10 +109,10 @@ class _MyAppState extends AppState {
           routerDelegate: AppRouterDelegate(routes: {
             '/': (BuildContext context) => HomePageSmall(),
             '/projects_work': (_) => HowProjectsWork(),
-            '/paradox': (_) => _interactiveViewer(ProgrammingParadox()),
+            '/paradox': (_) => ProgrammingParadox(),
             '/use_case': (_) => UseCaseExample(),
             '/disclosure': (_) => InitialDisclosure(),
-            '/articles': (_) => _interactiveViewer(ArticlesGrid()),
+            '/articles': (_) => ArticlesGrid(),
             '/packages': (_) => _interactiveViewer(DartPackages()),
             '/privacy': (_) => PrivacyPolicy(),
             '/interfaces': (_) => FlutterUIs(),

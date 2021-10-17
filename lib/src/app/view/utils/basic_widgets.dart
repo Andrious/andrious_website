@@ -38,11 +38,11 @@ abstract class BasicController extends ControllerMVC {
   double opacity = 0;
 
   Size get screenSize => _screenSize;
-  late Size _screenSize;
+  static late Size _screenSize;
 
   /// Determine if running on a small screen.
   bool get inSmallScreen => _smallScreen;
-  late bool _smallScreen;
+  static bool _smallScreen = false;
 
   @override
   @mustCallSuper
@@ -90,14 +90,16 @@ class BasicState extends StateMVC<BasicStatefulWidget> with StateSet {
     //
     MyApp.orientation(context);
 
-    _con._screenSize = MediaQuery.of(context).size;
+    BasicController._screenSize = MediaQuery.of(context).size;
 
     /// Determine if the app is running in a small screen.
-    _con._smallScreen = MyApp.isSmallScreen(size: _con._screenSize);
+    BasicController._smallScreen =
+        MyApp.isSmallScreen(size: BasicController._screenSize);
 
-    _con.opacity = _con.scrollPosition < _con._screenSize.height * 0.40
-        ? _con.scrollPosition / (_con._screenSize.height * 0.40)
-        : 1;
+    _con.opacity =
+        _con.scrollPosition < BasicController._screenSize.height * 0.40
+            ? _con.scrollPosition / (BasicController._screenSize.height * 0.40)
+            : 1;
 
     return _con.build(context);
   }

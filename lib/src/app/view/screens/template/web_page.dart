@@ -22,21 +22,21 @@ class WebPage extends WebPageBase {
   final bool? bottomBar;
 
   /// Main Content
-  List<Widget> children05(BuildContext context) =>
+  List<Widget> children05(BuildContext context, [WebPage? widget]) =>
       webPageController.children05(context, this);
 
   /// Main content
-  List<Widget>? children04(BuildContext context) =>
+  List<Widget>? children04(BuildContext context, [WebPage? widget]) =>
       webPageController.children04(context, this);
 
   /// Website's header
-  List<Widget>? children03(BuildContext context) =>
+  List<Widget>? children03(BuildContext context, [WebPage? widget]) =>
       webPageController.children03(context, this);
 
-  List<Widget>? children02(BuildContext context) =>
+  List<Widget>? children02(BuildContext context, [WebPage? widget]) =>
       webPageController.children02(context, this);
 
-  List<Widget>? children01(BuildContext context) =>
+  List<Widget>? children01(BuildContext context, [WebPage? widget]) =>
       webPageController.children01(context, this);
 }
 
@@ -90,13 +90,11 @@ class WebPageController extends WebPageBaseController {
 
     Widget? _child;
 
-    final _screenSize = screenSize;
-
     List<Widget> widgets;
 
     try {
       /// children05
-      widgets = children05(context, _widget);
+      widgets = children05(context, widget);
     } catch (ex, stack) {
       widgets = [];
       FlutterError.reportError(FlutterErrorDetails(
@@ -130,7 +128,7 @@ class WebPageController extends WebPageBaseController {
       //
       if (widget?.bottomBar ?? true) {
         widgets.addAll([
-          SizedBox(height: _screenSize.height / 10),
+          SizedBox(height: screenSize.height / 10),
           const BottomBar(),
         ]);
       }
@@ -184,20 +182,25 @@ class WebPageController extends WebPageBaseController {
 
   /// Website's header
   List<Widget>? children03(BuildContext context, [WebPage? widget]) {
+    // Supply the 'parent' StatefulWidget.
+    widget ??= _widget;
+
     final _screenSize = screenSize;
+
     List<Widget>? widgets;
+
     try {
       widgets = children02(context, widget);
     } catch (ex) {
       widgets = null;
     }
     return [
-      if (!inSmallScreen && (_widget!.coverBanner ?? true))
+      if (!inSmallScreen && (widget?.coverBanner ?? true))
         SizedBox(
           height: _screenSize.height * 0.45,
           width: _screenSize.width,
           child: Image.asset(
-            _widget!.coverImage ?? 'assets/images/earthNetworked.jpg',
+            widget?.coverImage ?? 'assets/images/earthNetworked.jpg',
             fit: BoxFit.cover,
           ),
         ),
@@ -299,7 +302,7 @@ class WebPageWrapper extends WebPage {
   List<Widget>? children04(BuildContext context, [WebPage? widget]) => children;
 
   @override
-  Widget child(context) => _child ?? super.child(context)!;
+  Widget child(context, [WebPage? widget]) => _child ?? super.child(context)!;
 }
 
 class WebPageControllerWrapper extends WebPageController {
@@ -457,7 +460,7 @@ class PopupPage extends WebPage {
   String get title => '';
 
   @override
-  Widget child(BuildContext context) => builder(context);
+  Widget child(BuildContext context, [WebPage? widget]) => builder(context);
 
   /// Create a popup window
   static Future<T?> window<T>(

@@ -14,7 +14,8 @@ abstract class WebPageBase extends ScaffoldScreenWidget
   final WebPageBaseController webPageBaseController;
 
   /// The 'child' widget containing the core of the screen's content.
-  Widget? child(BuildContext context) => webPageBaseController.child(context);
+  Widget? child(BuildContext context, [WebPage? widget]) =>
+      webPageBaseController.child(context, widget);
 
   /// Possible Screen overlay
   StackWidgetProperties? screenOverlay(BuildContext context) =>
@@ -83,7 +84,7 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
 
   //
   /// The 'child' widget containing the core of the screen's content.
-  Widget? child(BuildContext context);
+  Widget? child(BuildContext context, [WebPage? widget]);
 
   /// Possible Screen overlay
   StackWidgetProperties? screenOverlay(BuildContext context);

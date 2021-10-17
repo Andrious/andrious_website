@@ -5,11 +5,17 @@
 import 'package:andrious/src/view.dart';
 
 class ProgrammingParadox extends WebPage {
-  ProgrammingParadox({Key? key, this.readMore = false})
-      : super(
+  ProgrammingParadox({
+    Key? key,
+    this.readMore = false,
+    bool coverBanner = true,
+    bool bottomBar = true,
+  }) : super(
           _ProgrammingParadoxController(),
           key: key,
           accessBar: false,
+          coverBanner: coverBanner,
+          bottomBar: bottomBar,
         );
   final bool? readMore;
 
@@ -33,7 +39,7 @@ class _ProgrammingParadoxController extends WebPageController {
   ProgrammingParadox? parentWidget;
 
   @override
-  List<Widget>? children04(BuildContext context, [WebPage? widget]) {
+  List<Widget> children04(BuildContext context, [WebPage? widget]) {
     //
     final _screenSize = MyApp.screenSize;
 
@@ -77,7 +83,10 @@ class _ProgrammingParadoxController extends WebPageController {
               SizedBox(height: _screenSize.height * 0.05),
               // If not set to the 'read more' feature
               if (parentWidget != null && !parentWidget!.readMore!)
-                const AutoSizeText(text),
+                AutoSizeText(
+                  text,
+                  style: textStyle,
+                ),
               // If no 'widget' or set to 'read more' feature.
               if (parentWidget == null || parentWidget!.readMore!)
                 RichText(
@@ -104,7 +113,7 @@ class _ProgrammingParadoxController extends WebPageController {
             ],
           ),
         ),
-      )
+      ),
     ];
   }
 }

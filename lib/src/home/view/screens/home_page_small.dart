@@ -33,8 +33,12 @@ class HomePageSmallController extends WebPageController {
     // Determine if an overlay is to be displayed.
     showOverlay = Prefs.getBool('showOverlay', true);
     projects = HowProjectsWork(showPopup: false, readMore: true);
-    useCase = UseCaseExample(bottomBar: false);
-    paradox = ProgrammingParadox(readMore: true);
+    useCase = UseCaseExample(readMore: true, banner: false, bottomBar: false);
+    paradox = ProgrammingParadox(
+      readMore: true,
+      coverBanner: false,
+      bottomBar: false,
+    );
     disclose = InitialDisclosure(banner: false);
     scrollController.addListener(() {
       final offset = scrollController.offset;
@@ -181,8 +185,9 @@ class HomePageSmallController extends WebPageController {
     final List<Widget> children = [];
     children.addAll(projects.children05(context));
     children.add(projects.popup(context, showLink: false));
-    children.add(useCase.child(context)!);
-    children.addAll(paradox.children04(context)!);
+    children.add(useCase.child(context, useCase)!);
+//    children.addAll(paradox.children04(context)!);
+    children.add(paradox.child(context, paradox)!);
     children.add(
       Padding(
         padding: EdgeInsets.only(top: _screenSize.height * 0.2, bottom: 32),
