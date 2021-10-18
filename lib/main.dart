@@ -107,7 +107,7 @@ class _MyAppState extends AppState {
           ],
           supportedLocales: I10n.supportedLocales,
           routerDelegate: AppRouterDelegate(routes: {
-            '/': (BuildContext context) => HomePageSmall(),
+            '/': (_) => HomePageSmall(),
             '/projects_work': (_) => HowProjectsWork(),
             '/paradox': (_) => ProgrammingParadox(),
             '/use_case': (_) => UseCaseExample(),

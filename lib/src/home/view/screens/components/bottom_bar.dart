@@ -112,7 +112,7 @@ class BottomBar extends StatelessWidget {
             ]),
           const SizedBox(height: 20),
           Text(
-            'Copyright © 2021 | Andrious Solutions Ltd.',
+            'v. ${App.version}    Copyright © 2021 | Andrious Solutions Ltd.',
             style: TextStyle(
               color: Colors.blueGrey[300],
               fontSize: 14,

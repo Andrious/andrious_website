@@ -1,7 +1,12 @@
 
 
+## 1.32.0+2
+ October 17, 2021
+- 'v. ${App.version}    Copyright © 2021 | Andrious Solutions Ltd.'
+
 ## 1.32.0
-Disclosure: margin: EdgeInsets.fromLTRB(_screenSize.width * 0.1,
+ October 17, 2021
+- Disclosure: margin: EdgeInsets.fromLTRB(_screenSize.width * 0.1,
 
 ## 1.31.0
  October 17, 2021
