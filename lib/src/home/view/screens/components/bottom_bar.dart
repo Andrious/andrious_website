@@ -8,6 +8,7 @@ class BottomBar extends StatelessWidget {
     // Determine the screen's size.
 //    final smallScreen = ResponsiveWidget.isSmallScreen(context);
     final smallScreen = MyApp.inSmallScreen;
+    final textStyle = TextStyle(color: Colors.blueGrey[300], fontSize: 14);
     return Container(
       padding: const EdgeInsets.all(30),
       color: Theme.of(context).bottomAppBarColor,
@@ -111,13 +112,25 @@ class BottomBar extends StatelessWidget {
               ),
             ]),
           const SizedBox(height: 20),
-          Text(
-            'v. ${App.version}    Copyright © 2021 | Andrious Solutions Ltd.',
-            style: TextStyle(
-              color: Colors.blueGrey[300],
-              fontSize: 14,
-            ),
-          ),
+          if (!smallScreen)
+            Text(
+              'v. ${App.version}    Copyright © 2021 | Andrious Solutions Ltd.',
+              style: TextStyle(
+                color: Colors.blueGrey[300],
+                fontSize: 14,
+              ),
+            )
+          else
+            Column(children: [
+              Text(
+                'v. ${App.version}    Copyright © 2021',
+                style: textStyle,
+              ),
+              Text(
+                'Andrious Solutions Ltd.',
+                style: textStyle,
+              ),
+            ]),
         ],
       ),
     );

@@ -97,3 +97,44 @@ class DartPackagesController {
   Map<String, String> get webPages => _webPages;
   late Map<String, String> _webPages;
 }
+
+class PackagesLink extends WebPageContainer {
+  const PackagesLink({Key? key}) : super(key: key);
+
+  @override
+  Widget builder(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme.bodyText2;
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text(
+        'Flutter Packages',
+        style: TextStyle(fontSize: 24),
+      ),
+      const Divider(),
+      RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              style: textStyle,
+              text:
+                  "As an early adapter, I've made my own contributions to the Flutter community with ",
+            ),
+            TextSpan(
+              style: textStyle!.copyWith(
+                color: Theme.of(context).colorScheme.secondary,
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold,
+              ),
+              text: '11 published packages',
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => AppRouterDelegate.nextRoute('/packages'),
+            ),
+            TextSpan(
+              style: textStyle,
+              text: ' to date.',
+            ),
+          ],
+        ),
+      ),
+    ]);
+  }
+}

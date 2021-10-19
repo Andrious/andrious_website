@@ -113,7 +113,7 @@ class _MyAppState extends AppState {
             '/use_case': (_) => UseCaseExample(),
             '/disclosure': (_) => InitialDisclosure(),
             '/articles': (_) => ArticlesGrid(),
-            '/packages': (_) => _interactiveViewer(DartPackages()),
+            '/packages': (_) => interactiveViewer(DartPackages()),
             '/privacy': (_) => PrivacyPolicy(),
             '/interfaces': (_) => FlutterUIs(),
           }),
@@ -157,25 +157,6 @@ class _MyAppState extends AppState {
         ),
       ),
     );
-  }
-
-  /// Wrap widget in an InteractiveViewer when appropriate.
-  static Widget _interactiveViewer(Widget widget) {
-    //
-    if (MyApp.inSmallScreen) {
-      //
-      widget = InteractiveViewer(
-        maxScale: 3,
-        minScale: 1,
-        child: widget,
-      );
-    }
-
-    if (widget is! WebPage) {
-      widget = WebPageWrapper(child: widget);
-    }
-
-    return widget;
   }
 
   //

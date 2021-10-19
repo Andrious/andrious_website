@@ -57,9 +57,9 @@ class _ProgrammingParadoxController extends WebPageController {
         child: Container(
           margin: EdgeInsets.fromLTRB(
             _screenSize.width * 0.05,
-            _screenSize.height * 0.2,
+            _screenSize.height * 0.05,
             _screenSize.width * 0.05,
-            _screenSize.height * 0.1,
+            _screenSize.height * 0.05,
           ),
           // margin: EdgeInsets.fromLTRB(
           //   _screenSize.width * (_smallScreen ? 0.05 : 0.05),

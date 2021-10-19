@@ -166,7 +166,6 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
         _child = ErrorWidget.builder(details);
       }
     } else {
-      //
       _child = SingleChildScrollView(
         primary: false,
         physics: physics ?? const ClampingScrollPhysics(),

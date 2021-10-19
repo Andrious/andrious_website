@@ -233,6 +233,31 @@ class WebPageController extends WebPageBaseController {
   List<Widget>? children01(BuildContext context, [WebPage? widget]) => null;
 }
 
+class WebPageContainer extends StatelessWidget {
+  const WebPageContainer({Key? key, this.child}) : super(key: key);
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MyApp.screenSize;
+    return Container(
+      margin: EdgeInsets.fromLTRB(
+        screenSize.width * 0.05,
+        screenSize.height * 0.05,
+        screenSize.width * 0.05,
+        screenSize.height * 0.05,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: child ?? builder(context) ?? const SizedBox(),
+    );
+  }
+
+  /// A subclass can override this function. It's called in build() function.
+  Widget? builder(BuildContext context) => null;
+}
+
 class WebPageWrapper extends WebPage {
   WebPageWrapper({
     Key? key,
@@ -579,4 +604,23 @@ class BuilderPageController extends WebPageController {
   @override
   List<Widget> children05(BuildContext context, [WebPage? widget]) =>
       !_bottomBar ? [builder(context)] : super.children05(context);
+}
+
+/// Wrap widget in an InteractiveViewer when appropriate.
+Widget interactiveViewer(Widget widget, {bool wrap = true}) {
+//
+  if (MyApp.inSmallScreen) {
+//
+    widget = InteractiveViewer(
+      maxScale: 3,
+      minScale: 1,
+      child: widget,
+    );
+  }
+
+  if (wrap && widget is! WebPage) {
+    widget = WebPageWrapper(child: widget);
+  }
+
+  return widget;
 }

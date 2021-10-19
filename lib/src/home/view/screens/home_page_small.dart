@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:andrious/main.dart';
 import 'package:andrious/src/view.dart';
 
 class HomePageSmall extends WebPage {
@@ -188,70 +187,77 @@ class HomePageSmallController extends WebPageController {
     children.add(useCase.child(context, useCase)!);
 //    children.addAll(paradox.children04(context)!);
     children.add(paradox.child(context, paradox)!);
-    children.add(
-      Padding(
-        padding: EdgeInsets.only(top: _screenSize.height * 0.2, bottom: 32),
-        child: Row(
+
+    if (_smallScreen) {
+      children.add(const ArticlesLink());
+    } else {
+      children.add(
+        Padding(
+          padding: EdgeInsets.only(top: _screenSize.height * 0.2, bottom: 32),
+          child: Row(
+            mainAxisAlignment: _smallScreen
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                _smallScreen ? 'Technical Articles' : 'My Technical Articles',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w400,
+//                letterSpacing: 3,
+                ),
+              ),
+              Flexible(
+                child: IconButton(
+                  icon: const Icon(Icons.grid_on),
+                  onPressed: () {
+                    AppRouterDelegate.nextRoute('/articles');
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+      children.add(const ArticleCarousel());
+    }
+
+    if (_smallScreen) {
+      children.add(const PackagesLink());
+    } else {
+      children.add(
+        Row(
           mainAxisAlignment: _smallScreen
               ? MainAxisAlignment.start
               : MainAxisAlignment.spaceAround,
           children: [
             Text(
-              _smallScreen ? 'Technical Articles' : 'My Technical Articles',
+              _smallScreen
+                  ? 'My Own Contribution'
+                  : 'My Contribution to the Flutter Community',
               style: const TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w400,
-//                letterSpacing: 3,
+                letterSpacing: 3,
               ),
             ),
-            Flexible(
-              child: IconButton(
-                icon: const Icon(Icons.grid_on),
-                onPressed: () {
-                  AppRouterDelegate.nextRoute('/articles');
-                },
+            if (_smallScreen)
+              Flexible(
+                child: IconButton(
+                  icon: const Icon(Icons.grid_on),
+                  onPressed: () {
+                    AppRouterDelegate.nextRoute('/packages');
+                  },
+                ),
               ),
-            ),
           ],
         ),
-      ),
-    );
-    if (!_smallScreen) {
-      children.add(const ArticleCarousel());
-    }
-    children.add(
-      Row(
-        mainAxisAlignment: _smallScreen
-            ? MainAxisAlignment.start
-            : MainAxisAlignment.spaceAround,
-        children: [
-          Text(
-            _smallScreen
-                ? 'My Own Contribution'
-                : 'My Contribution to the Flutter Community',
-            style: const TextStyle(
-              fontSize: 20,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w400,
-              letterSpacing: 3,
-            ),
-          ),
-          if (_smallScreen)
-            Flexible(
-              child: IconButton(
-                icon: const Icon(Icons.grid_on),
-                onPressed: () {
-                  AppRouterDelegate.nextRoute('/packages');
-                },
-              ),
-            ),
-        ],
-      ),
-    );
-    if (!_smallScreen) {
+      );
       children.add(DartPackages());
     }
+
     children.addAll(disclose.children05(context));
 
     children.add(flutterUIs.coverPage(
@@ -263,6 +269,7 @@ class HomePageSmallController extends WebPageController {
         }
       },
     ));
+
     return children;
   }
 

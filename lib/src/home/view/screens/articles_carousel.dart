@@ -19,7 +19,7 @@ class _ArticleCarouselState extends State<ArticleCarousel>
     with WebPageFeaturesMixin {
   //
   late CarouselController _carouselController;
-  late ArticlesController _con;
+  late ArticlesCarouselController _con;
   int _current = 0;
   bool tapTwo = false;
 
@@ -29,7 +29,7 @@ class _ArticleCarouselState extends State<ArticleCarousel>
     _screenSize = MyApp.screenSize;
     _smallScreen = MyApp.inSmallScreen;
     _carouselController = CarouselController();
-    _con = ArticlesController();
+    _con = ArticlesCarouselController();
   }
 
   late Size _screenSize;
@@ -107,10 +107,11 @@ class _ArticleCarouselState extends State<ArticleCarousel>
   }
 }
 
-class ArticlesController extends WebPageController {
-  factory ArticlesController() => _this ??= ArticlesController._();
+class ArticlesCarouselController extends WebPageController {
+  factory ArticlesCarouselController() =>
+      _this ??= ArticlesCarouselController._();
   //
-  ArticlesController._() {
+  ArticlesCarouselController._() {
     _webPages = {
       '$imagePath/medium01.jpg': [
         false,
@@ -364,7 +365,7 @@ class ArticlesController extends WebPageController {
     _articles = _webPages.keys.toList(growable: false);
   }
   //
-  static ArticlesController? _this;
+  static ArticlesCarouselController? _this;
 
   final String imagePath = 'assets/images/carousel';
 
@@ -434,6 +435,52 @@ If you're a member, it's free. If not, you may wish to cancel.
                 index: index,
                 constraints: constraints,
               ),
+            ),
+          ),
+        ),
+      );
+}
+
+class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {
+  const ArticleImage(
+    this.con, {
+    required this.index,
+    required this.constraints,
+    Key? key,
+  }) : super(key: key);
+  final ArticlesCarouselController con;
+  final int index;
+  final BoxConstraints constraints;
+
+  @override
+  Widget build(BuildContext context) => InkWell(
+        onTap: () => PopupPage.window<void>(context, browser),
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Image.asset(
+          con.articles[index],
+          fit: BoxFit.contain,
+        ),
+      );
+
+  Widget browser(BuildContext context) => Center(
+        child: Material(
+          child: InkWell(
+            onTap: () async {
+              await con.browse(
+                context: context,
+                index: index,
+                webPage: this,
+              );
+            },
+            child: interactiveViewer(
+              Image.asset(
+                con.articles[index],
+                fit: BoxFit.cover,
+              ),
+              wrap: false,
             ),
           ),
         ),

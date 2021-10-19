@@ -53,8 +53,9 @@ class _InitialDisclosureController extends WebPageController {
     } else {
       child = _disclosure;
     }
-    const text =
-        "We'll sign a Non-Disclosure agreement so you can share it with me.";
+
+    const text = "We'll sign a Non-Disclosure agreement so you can tell me.";
+
     const printLink = Hyperlink(Text('Print'),
         'https://docs.google.com/document/d/1Z2zdFIv_n1HXT2rkU8n6kAOr144b6nHsGbhkUOO9IA0/edit?usp=sharing');
 
@@ -81,7 +82,7 @@ class _InitialDisclosureController extends WebPageController {
                   _screenSize.width * 0.1,
                   _screenSize.height * 0.1,
                 ),
-                child: child),
+                child: Column(children: [child, printLink])),
           ),
           // Center(
           //   child: Column(children: [
@@ -116,7 +117,7 @@ class _InitialDisclosureController extends WebPageController {
             ),
             if (_smallScreen) const AutoSizeText(text) else const Text(text),
             SizedBox(
-              height: _screenSize.height * 0.2,
+              height: _screenSize.height * 0.01,
             ),
             _disclosure,
           ]),
