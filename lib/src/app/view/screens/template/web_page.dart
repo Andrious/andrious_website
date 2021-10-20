@@ -439,6 +439,8 @@ class PopupPage extends WebPage {
   PopupPage({
     Key? key,
     required this.builder,
+    this.initState,
+    this.dispose,
     String? title,
     String? coverImage,
     bool? coverBanner,
@@ -459,6 +461,8 @@ class PopupPage extends WebPage {
   }) : super(
           BuilderPageController(
             builder: builder,
+            initStateFunc: initState,
+            disposeFunc: dispose,
             bottomBar: bottomBar ?? false,
             backgroundColor: backgroundColor,
             resizeToAvoidBottomInset: resizeToAvoidBottomInset,
@@ -481,6 +485,8 @@ class PopupPage extends WebPage {
           bottomBar: bottomBar ?? false,
         );
   final WidgetBuilder builder;
+  final void Function()? initState;
+  final void Function()? dispose;
 
   @override
   String get title => '';
@@ -510,11 +516,15 @@ class PopupPage extends WebPage {
     String? restorationId,
     ScrollPhysics? physics,
     Curve? curve,
+    void Function()? initState,
+    void Function()? dispose,
   }) async {
     final T? result = await Navigator.of(parentContext).push<T>(
       PageRouteBuilder<T>(
         pageBuilder: (context, animation, secondaryAnimation) => PopupPage(
           builder: (_) => child(parentContext),
+          initState: initState,
+          dispose: dispose,
           title: title,
           coverImage: coverImage,
           coverBanner: coverBanner,
@@ -567,6 +577,8 @@ class PopupPage extends WebPage {
 class BuilderPageController extends WebPageController {
   BuilderPageController({
     required this.builder,
+    this.initStateFunc,
+    this.disposeFunc,
     bool? bottomBar,
     Color? backgroundColor,
     bool? resizeToAvoidBottomInset,
@@ -597,6 +609,24 @@ class BuilderPageController extends WebPageController {
         );
   final bool _bottomBar;
   final WidgetBuilder builder;
+  final void Function()? initStateFunc;
+  final void Function()? disposeFunc;
+
+  @override
+  void initState() {
+    super.initState();
+    if (initStateFunc != null) {
+      initStateFunc!();
+    }
+  }
+
+  @override
+  void dispose() {
+    if (disposeFunc != null) {
+      disposeFunc!();
+    }
+    super.dispose();
+  }
 
   @override
   List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) =>

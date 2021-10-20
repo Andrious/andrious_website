@@ -1,4 +1,9 @@
 
+## 1.35.0
+ October 20, 2021
+- child = RotatedBox(quarterTurns: 5, child: child);
+- final void Function()? initState;
+
 ## 1.34.0
  October 20, 2021
 - class FiveWhys extends WebPage {

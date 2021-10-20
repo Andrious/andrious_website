@@ -73,19 +73,27 @@ class HowProjectsWorkController extends WebPageController {
                       } else {
                         PopupPage.window<void>(
                           context,
-                          (_) => Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(_smallScreen ? 0 : 40),
-                              child: InteractiveViewer(
-                                maxScale: 3,
-                                minScale: 1,
-                                child: Image.asset(
-                                  _projectsImage,
-                                  fit: BoxFit.cover,
+                          (_) {
+                            Widget child = Image.asset(
+                              _projectsImage,
+                              fit: BoxFit.cover,
+                            );
+                            // Rotate it to landscape
+                            if (MediaQuery.of(context).orientation ==
+                                Orientation.portrait) {
+                              child = RotatedBox(quarterTurns: 5, child: child);
+                            }
+                            return Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(_smallScreen ? 0 : 40),
+                                child: InteractiveViewer(
+                                  maxScale: 3,
+                                  minScale: 1,
+                                  child: child,
                                 ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         );
                       }
                     },
