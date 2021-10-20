@@ -39,7 +39,7 @@ class _ProgrammingParadoxController extends WebPageController {
   ProgrammingParadox? parentWidget;
 
   @override
-  List<Widget> children04(BuildContext context, [WebPage? widget]) {
+  List<Widget> withHeader04(BuildContext context, [WebPage? widget]) {
     //
     final _screenSize = MyApp.screenSize;
 

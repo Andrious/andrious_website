@@ -121,16 +121,12 @@ class FlutterUIsController extends WebPageController {
   }
 
   @override
-  List<Widget>? children04(BuildContext context, [WebPage? widget]) {
-    final List<Widget> children = [
-      flutterUI(context),
-      flutterUIInstall(context),
-      flutterUChrome(context),
-      flutterUIDesktop(context),
-    ];
-
-    return children;
-  }
+  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) => [
+        flutterUI(context),
+        flutterUIInstall(context),
+        flutterUChrome(context),
+        flutterUIDesktop(context),
+      ];
 
   Widget flutterUI(BuildContext context) => popupScreen(
         context,

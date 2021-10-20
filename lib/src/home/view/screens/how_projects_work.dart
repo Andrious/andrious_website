@@ -48,7 +48,7 @@ class HowProjectsWorkController extends WebPageController {
   bool readMore = false;
 
   @override
-  List<Widget> children05(BuildContext context, [WebPage? widget]) {
+  List<Widget> withBottomBar05(BuildContext context, [WebPage? widget]) {
     // MyApp.inSmallScreen allows this method to be called before the build() function.
     final _smallScreen = MyApp.inSmallScreen;
     // Sometimes this method is called before the widget is mounted.
@@ -230,8 +230,9 @@ class HowProjectsWorkController extends WebPageController {
             if (this.readMore)
               TextButton(
                 onPressed: () {
-                  this.readMore = false;
-                  StateSet.root!.setState(() {});
+                  // this.readMore = false;
+                  // StateSet.root!.setState(() {});
+                  AppRouterDelegate.nextRoute('/five_whys');
                 },
                 child: Text(
                   ' ...read more',
@@ -263,20 +264,20 @@ class HowProjectsWorkController extends WebPageController {
                 "Writing some 'Use Case Scenarios' will then pin down how a possible solution would work:",
                 //             style: _textStyle,
               ),
-            if (!this.readMore)
-              TextButton(
-                onPressed: () {
-                  this.readMore = true;
-                  StateSet.root!.setState(() {});
-                },
-                child: Text(
-                  ' ...show less',
-                  style: textStyle.copyWith(
-                    color: Theme.of(context).colorScheme.secondary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+            // if (!this.readMore)
+            //   TextButton(
+            //     onPressed: () {
+            //       this.readMore = true;
+            //       StateSet.root!.setState(() {});
+            //     },
+            //     child: Text(
+            //       ' ...show less',
+            //       style: textStyle.copyWith(
+            //         color: Theme.of(context).colorScheme.secondary,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ),
             if (showLink)
               TextButton(
                 onPressed: () {
@@ -301,4 +302,30 @@ class HowProjectsWorkController extends WebPageController {
 //ignore: avoid_classes_with_only_static_members
 class _Content {
   static bool visible = false;
+}
+
+class FiveWhys extends WebPage {
+  FiveWhys({Key? key})
+      : super(
+          FiveWhysController(),
+          key: key,
+          coverBanner: false,
+          accessBar: false,
+          bottomBar: true,
+        );
+}
+
+class FiveWhysController extends WebPageController {
+  factory FiveWhysController() => _this ??= FiveWhysController._();
+  FiveWhysController._() : super();
+  static FiveWhysController? _this;
+
+  /// Main content
+  @override
+  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) {
+    return [
+      HowProjectsWorkController()
+          .popup(context, showLink: false, readMore: false)
+    ];
+  }
 }

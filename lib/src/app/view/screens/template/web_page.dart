@@ -22,22 +22,22 @@ class WebPage extends WebPageBase {
   final bool? bottomBar;
 
   /// Main Content
-  List<Widget> children05(BuildContext context, [WebPage? widget]) =>
-      webPageController.children05(context, this);
+  List<Widget> withBottomBar05(BuildContext context, [WebPage? widget]) =>
+      webPageController.withBottomBar05(context, this);
 
   /// Main content
-  List<Widget>? children04(BuildContext context, [WebPage? widget]) =>
-      webPageController.children04(context, this);
+  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) =>
+      webPageController.withHeader04(context, this);
 
   /// Website's header
-  List<Widget>? children03(BuildContext context, [WebPage? widget]) =>
-      webPageController.children03(context, this);
+  List<Widget>? withBanner03(BuildContext context, [WebPage? widget]) =>
+      webPageController.withBanner03(context, this);
 
-  List<Widget>? children02(BuildContext context, [WebPage? widget]) =>
-      webPageController.children02(context, this);
+  List<Widget>? withHeaderBar02(BuildContext context, [WebPage? widget]) =>
+      webPageController.withHeaderBar02(context, this);
 
-  List<Widget>? children01(BuildContext context, [WebPage? widget]) =>
-      webPageController.children01(context, this);
+  List<Widget>? header01(BuildContext context, [WebPage? widget]) =>
+      webPageController.header01(context, this);
 }
 
 /// Controller
@@ -94,7 +94,7 @@ class WebPageController extends WebPageBaseController {
 
     try {
       /// children05
-      widgets = children05(context, widget);
+      widgets = withBottomBar05(context, widget);
     } catch (ex, stack) {
       widgets = [];
       FlutterError.reportError(FlutterErrorDetails(
@@ -140,11 +140,11 @@ class WebPageController extends WebPageBaseController {
   }
 
   /// Main Content
-  List<Widget> children05(BuildContext context, [WebPage? widget]) {
+  List<Widget> withBottomBar05(BuildContext context, [WebPage? widget]) {
     final List<Widget> children = [];
     List<Widget>? widgets;
     try {
-      widgets = children03(context, widget);
+      widgets = withBanner03(context, widget);
     } catch (ex) {
       widgets = null;
       // Announce the error if under development
@@ -163,7 +163,7 @@ class WebPageController extends WebPageBaseController {
     }
     try {
       /// children04
-      widgets = children04(context, widget);
+      widgets = withHeader04(context, widget);
     } catch (ex) {
       widgets = null;
       // Announce the error if under development
@@ -178,10 +178,10 @@ class WebPageController extends WebPageBaseController {
   }
 
   /// Main content
-  List<Widget>? children04(BuildContext context, [WebPage? widget]) => null;
+  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) => null;
 
   /// Website's header
-  List<Widget>? children03(BuildContext context, [WebPage? widget]) {
+  List<Widget>? withBanner03(BuildContext context, [WebPage? widget]) {
     // Supply the 'parent' StatefulWidget.
     widget ??= _widget;
 
@@ -190,7 +190,7 @@ class WebPageController extends WebPageBaseController {
     List<Widget>? widgets;
 
     try {
-      widgets = children02(context, widget);
+      widgets = withHeaderBar02(context, widget);
     } catch (ex) {
       widgets = null;
     }
@@ -212,10 +212,10 @@ class WebPageController extends WebPageBaseController {
     ];
   }
 
-  List<Widget>? children02(BuildContext context, [WebPage? widget]) {
+  List<Widget>? withHeaderBar02(BuildContext context, [WebPage? widget]) {
     List<Widget>? widgets;
     try {
-      widgets = children01(context, widget);
+      widgets = header01(context, widget);
     } catch (ex) {
       widgets = null;
     }
@@ -230,7 +230,7 @@ class WebPageController extends WebPageBaseController {
     ];
   }
 
-  List<Widget>? children01(BuildContext context, [WebPage? widget]) => null;
+  List<Widget>? header01(BuildContext context, [WebPage? widget]) => null;
 }
 
 class WebPageContainer extends StatelessWidget {
@@ -324,7 +324,8 @@ class WebPageWrapper extends WebPage {
   final List<Widget>? children;
 
   @override
-  List<Widget>? children04(BuildContext context, [WebPage? widget]) => children;
+  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) =>
+      children;
 
   @override
   Widget child(context, [WebPage? widget]) => _child ?? super.child(context)!;
@@ -385,7 +386,7 @@ class WebPageControllerWrapper extends WebPageController {
 
   /// Supply the widget's function instead.
   @override
-  List<Widget>? children04(BuildContext context, [WebPage? widget]) =>
+  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) =>
       _wrapper!.children;
 
   /// Supply the widget's function instead.
@@ -598,12 +599,12 @@ class BuilderPageController extends WebPageController {
   final WidgetBuilder builder;
 
   @override
-  List<Widget>? children04(BuildContext context, [WebPage? widget]) =>
+  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) =>
       _bottomBar ? [builder(context)] : null;
 
   @override
-  List<Widget> children05(BuildContext context, [WebPage? widget]) =>
-      !_bottomBar ? [builder(context)] : super.children05(context);
+  List<Widget> withBottomBar05(BuildContext context, [WebPage? widget]) =>
+      !_bottomBar ? [builder(context)] : super.withBottomBar05(context);
 }
 
 /// Wrap widget in an InteractiveViewer when appropriate.

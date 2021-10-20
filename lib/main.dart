@@ -109,6 +109,7 @@ class _MyAppState extends AppState {
           routerDelegate: AppRouterDelegate(routes: {
             '/': (_) => HomePageSmall(),
             '/projects_work': (_) => HowProjectsWork(),
+            '/five_whys': (_) => FiveWhys(),
             '/paradox': (_) => ProgrammingParadox(),
             '/use_case': (_) => UseCaseExample(),
             '/disclosure': (_) => InitialDisclosure(),

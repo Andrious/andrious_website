@@ -24,7 +24,7 @@ class _InitialDisclosureController extends WebPageController {
   InitialDisclosure? _widget;
 
   @override
-  List<Widget> children05(BuildContext context, [WebPage? widget]) {
+  List<Widget> withBottomBar05(BuildContext context, [WebPage? widget]) {
     //
     final _screenSize = MyApp.screenSize;
 

@@ -52,7 +52,7 @@ class HomePageController extends WebPageController {
         );
 
   @override
-  List<Widget> children01(BuildContext context, [WebPage? widget]) {
+  List<Widget> header01(BuildContext context, [WebPage? widget]) {
     final Size _screenSize = screenSize;
     return [
       FeaturedHeading(
@@ -63,7 +63,7 @@ class HomePageController extends WebPageController {
   }
 
   @override
-  List<Widget> children04(BuildContext context, [WebPage? widget]) {
+  List<Widget> withHeader04(BuildContext context, [WebPage? widget]) {
     final Size _screenSize = screenSize;
     final List<Widget> children = [];
 //    children.add(DestinationHeading(screenSize: _screenSize));

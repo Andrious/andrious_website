@@ -20,7 +20,7 @@ class _PrivacyPolicy extends WebPageController {
   _PrivacyPolicy({bool? primary}) : super(primary: primary);
 
   @override
-  List<Widget>? children04(BuildContext context, [WebPage? widget]) {
+  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) {
     final _screenSize = screenSize;
     final _smallScreen = inSmallScreen;
     return [

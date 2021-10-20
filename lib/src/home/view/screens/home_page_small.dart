@@ -178,11 +178,11 @@ class HomePageSmallController extends WebPageController {
   }
 
   @override
-  List<Widget> children04(BuildContext context, [WebPage? widget]) {
+  List<Widget> withHeader04(BuildContext context, [WebPage? widget]) {
     final _screenSize = MyApp.screenSize;
     final _smallScreen = inSmallScreen;
     final List<Widget> children = [];
-    children.addAll(projects.children05(context));
+    children.addAll(projects.withBottomBar05(context));
     children.add(projects.popup(context, showLink: false));
     children.add(useCase.child(context, useCase)!);
 //    children.addAll(paradox.children04(context)!);
@@ -258,7 +258,7 @@ class HomePageSmallController extends WebPageController {
       children.add(DartPackages());
     }
 
-    children.addAll(disclose.children05(context));
+    children.addAll(disclose.withBottomBar05(context));
 
     children.add(flutterUIs.coverPage(
       context,
