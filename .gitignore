@@ -80,8 +80,13 @@ example/ios/Flutter/flutter_export_environment.sh
 # Visual Studio Code related
 .vscode/
 
+
 # Flutter/Dart/Pub related
-/build/
+##### Don't ignore the build in this case. It's the website.
+#/build/
+/build/382e0ce4788ec5a175687a46475722cf.cache.dill.track.dill
+/build/last_build_run.json
+flutter_assets/
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -135,7 +140,7 @@ Flutter.framework
 Generated.xcconfig
 app.flx
 app.zip
-flutter_assets/
+
 ServiceDefinitions.json
 GeneratedPluginRegistrant.*
 Info.plist

@@ -1,4 +1,8 @@
 
+## 1.36.0
+ December 08, 2021
+- mvc_application v7 to v8
+
 ## 1.35.0
  October 20, 2021
 - child = RotatedBox(quarterTurns: 5, child: child);

@@ -7,13 +7,13 @@ import 'package:andrious/src/view.dart';
 
 void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
 
-class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
+class MyApp extends AppMVC with WebPageFeaturesMixin {
   factory MyApp({Key? key}) => _this ??= MyApp._(key);
   MyApp._(Key? key) : super(key: key, errorReport: _onErrorReport);
   static MyApp? _this;
 
   @override
-  AppState createView() => _MyAppState();
+  AppState createState() => _MyAppState();
 
   /// Log the error
   static Future<void> _onErrorReport(
