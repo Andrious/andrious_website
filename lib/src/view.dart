@@ -20,6 +20,9 @@ export 'package:state_set/state_set.dart';
 export 'package:andrious/src/app/view/html_behaviour.dart';
 export 'package:auto_size_text/auto_size_text.dart';
 
+/// Try to use this instead of auto size text one day gp
+//export 'package:flutter_markdown/flutter_markdown.dart';
+
 /// Google Fonts
 export 'package:google_fonts/google_fonts.dart';
 
