@@ -1,8 +1,9 @@
 
-## 1.36.0+02
+## 1.36.0+03
  December 08, 2021
 - mvc_application v7 to v8
 - .git in build/
+- .git in deployment/web/
 
 ## 1.35.0
  October 20, 2021

@@ -41,6 +41,8 @@ doc/api/
 example/.*
 example/ios/Flutter/flutter_export_environment.sh
 
+/deployment/
+
 ### Eclipse ###
 *.pydevproject
 .project
