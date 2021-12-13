@@ -4,7 +4,7 @@ class FloatingQuickAccessBar extends StatefulWidget {
   const FloatingQuickAccessBar({Key? key, required this.screen})
       : super(key: key);
 
-  final BasicStatefulWidget screen;
+  final BasicScrollStatefulWidget screen;
 
   @override
   _FloatingQuickAccessBarState createState() => _FloatingQuickAccessBarState();
@@ -46,10 +46,10 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
   @override
   Widget build(BuildContext context) {
 //    final _screenSize = MediaQuery.of(context).size;
-    final _screenSize = MyApp.screenSize;
+    final _screenSize = App.screenSize;
     // Determine if displayed in a small screen.
 //    final smallScreen = ResponsiveWidget.isSmallScreen(context);
-    final smallScreen = MyApp.inSmallScreen;
+    final smallScreen = App.inSmallScreen;
     return Center(
       heightFactor: 1,
       child: Padding(

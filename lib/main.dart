@@ -28,59 +28,6 @@ class MyApp extends AppMVC with WebPageFeaturesMixin {
     }
   }
 
-  /// Is the phone orientated in Portrait
-  static bool get inPortrait => _orientation == Orientation.portrait;
-
-  /// Is the phone orientated in Landscape
-  static bool get inLandscape => _orientation == Orientation.landscape;
-
-  /// Determine the phone's orientation
-  static Orientation orientation(BuildContext context) =>
-      _orientation = MediaQuery.of(context).orientation;
-  static Orientation? _orientation;
-
-  /// Return the screen size the app is running on.
-  static Size get screenSize => _screenSize!;
-  static Size? _screenSize;
-
-  /// Set whether the app is to use a 'small screen' or not.
-  /// Determine if running on a desktop or on a phone or tablet
-  static bool get asSmallScreen => App.inDebugger && false;
-
-  /// Return the bool value indicating if running in a small screen or not.
-  static bool get inSmallScreen => _inSmallScreen;
-  static bool _inSmallScreen = false;
-
-  /// Determine if the app is running on a 'small screen' or not.
-  static bool isSmallScreen({BuildContext? context, Size? size}) {
-    //
-    bool smallScreen;
-    //
-    final Size? screenSize = sizeScreen(context: context, size: size);
-
-    // May be manually assigned.
-    smallScreen = asSmallScreen;
-
-    if (!smallScreen && screenSize != null) {
-      smallScreen = screenSize.width < 800;
-    }
-
-    _inSmallScreen = smallScreen;
-
-    return smallScreen;
-  }
-
-  static Size? sizeScreen({BuildContext? context, Size? size}) {
-    Size? screenSize;
-    if (context != null) {
-      screenSize = MediaQuery.of(context).size;
-    } else if (size != null) {
-      screenSize = size;
-    }
-    _screenSize = screenSize;
-    return screenSize;
-  }
-
   /// Supply a ready-means to browse the Internet.
   static Future<bool> browseUri(String? uri) async {
     bool browse;
@@ -93,6 +40,7 @@ class MyApp extends AppMVC with WebPageFeaturesMixin {
   }
 }
 
+/// The 'State object' for the App.
 class _MyAppState extends AppState {
   _MyAppState()
       : super(
@@ -327,7 +275,7 @@ class _ReportError {
       return;
     }
 
-    final screenSize = MyApp.screenSize;
+    final screenSize = App.screenSize;
 
     showBox(
       context: StateSet.lastContext!,

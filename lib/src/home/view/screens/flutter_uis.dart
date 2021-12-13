@@ -44,9 +44,9 @@ class FlutterUIsController extends WebPageController {
 
   /// Display the cover page
   Widget coverPage(BuildContext context, {void Function()? onTap}) {
-    final _screenSize = MyApp.screenSize;
+    final _screenSize = screenSize;
 
-    final _smallScreen = MyApp.inSmallScreen;
+    final _smallScreen = inSmallScreen;
 
     final textStyle = Theme.of(context).textTheme.bodyText2;
 

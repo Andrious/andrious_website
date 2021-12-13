@@ -84,8 +84,7 @@ example/ios/Flutter/flutter_export_environment.sh
 
 
 # Flutter/Dart/Pub related
-##### Don't ignore the build in this case. It's the website.
-#/build/
+/build/
 /build/382e0ce4788ec5a175687a46475722cf.cache.dill.track.dill
 /build/last_build_run.json
 flutter_assets/

@@ -39,15 +39,7 @@ class HomePageSmallController extends WebPageController {
       bottomBar: false,
     );
     disclose = InitialDisclosure(banner: false);
-    scrollController.addListener(() {
-      final offset = scrollController.offset;
-      if (offset > _lastOffset) {
-        // print('Down: $offset');
-      } else {
-        // print('Up: $offset');
-      }
-      _lastOffset = offset;
-    });
+
     flutterUIs = FlutterUIs();
 
     _widget = widget as HomePageSmall;
@@ -61,8 +53,6 @@ class HomePageSmallController extends WebPageController {
   late InitialDisclosure disclose;
   late FlutterUIs flutterUIs;
   late bool showOverlay;
-
-  double _lastOffset = 0;
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) => AppBar(
@@ -97,8 +87,9 @@ class HomePageSmallController extends WebPageController {
       return null;
     }
 
-    final _screenSize = MyApp.screenSize;
-    final _smallScreen = MyApp.inSmallScreen;
+    final _screenSize = screenSize;
+
+    final _smallScreen = inSmallScreen;
 
     final String msg = _smallScreen
         ? 'This website uses cookies for your best experience on my website'
@@ -179,7 +170,7 @@ class HomePageSmallController extends WebPageController {
 
   @override
   List<Widget> withHeader04(BuildContext context, [WebPage? widget]) {
-    final _screenSize = MyApp.screenSize;
+    final _screenSize = screenSize;
     final _smallScreen = inSmallScreen;
     final List<Widget> children = [];
     children.addAll(projects.withBottomBar05(context));

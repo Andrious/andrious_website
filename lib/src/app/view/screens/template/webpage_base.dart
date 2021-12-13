@@ -150,7 +150,7 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
       _overlay = stackProps?.child;
     }
 
-    /// If there is indeed content to be displayed.
+    /// If there is indeed no content to be displayed.
     if (_child == null) {
       //
       final FlutterErrorDetails details = FlutterErrorDetails(
@@ -169,6 +169,7 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
       _child = SingleChildScrollView(
         primary: false,
         physics: physics ?? const ClampingScrollPhysics(),
+        controller: scrollController,
         child: _child,
       );
 
@@ -215,8 +216,8 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
     bool? accessBar,
     bool? bottomBar,
   }) {
-    final _screenSize = MyApp.screenSize;
-    final _smallScreen = MyApp.inSmallScreen;
+    final _screenSize = App.screenSize;
+    final _smallScreen = App.inSmallScreen;
 
     Widget popImage;
 

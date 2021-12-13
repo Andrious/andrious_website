@@ -41,11 +41,9 @@ class _ProgrammingParadoxController extends WebPageController {
   @override
   List<Widget> withHeader04(BuildContext context, [WebPage? widget]) {
     //
-    final _screenSize = MyApp.screenSize;
+    final _screenSize = screenSize;
 
-    final _smallScreen = MyApp.inSmallScreen;
-
-    final _landscape = MyApp.inLandscape;
+    final _smallScreen = inSmallScreen;
 
     final textStyle = Theme.of(context).textTheme.bodyText2;
 

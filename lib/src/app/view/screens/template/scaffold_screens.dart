@@ -2,12 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:andrious/src/controller.dart';
 import 'package:andrious/src/view.dart';
-import 'package:flutter/gestures.dart' show DragStartBehavior;
+//import 'package:flutter/gestures.dart' show DragStartBehavior;
 
 /// The 'framework' of a typical Material Screen.
-class ScaffoldScreenWidget extends BasicStatefulWidget {
+class ScaffoldScreenWidget extends BasicScrollStatefulWidget {
   const ScaffoldScreenWidget(ScaffoldScreenController controller,
       {Key? key, this.title})
       : super(controller, key: key);
@@ -24,7 +23,7 @@ class ScaffoldScreenWidget extends BasicStatefulWidget {
       );
 }
 
-abstract class ScaffoldScreenController extends BasicController {
+abstract class ScaffoldScreenController extends BasicScrollController {
   ScaffoldScreenController({
     this.backgroundColor,
     this.resizeToAvoidBottomInset,

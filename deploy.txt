@@ -1,3 +1,9 @@
+
+
+Tell you what, just build the web folder and then place a copy
+in the folder, 'deployment.' It's got a git and makes things easier.
+
+
 ::@ECHO OFF
 
 GOTO exit

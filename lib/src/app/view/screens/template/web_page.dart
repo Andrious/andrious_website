@@ -42,6 +42,7 @@ class WebPage extends WebPageBase {
 
 /// Controller
 class WebPageController extends WebPageBaseController {
+  //
   WebPageController({
     Color? backgroundColor,
     bool? resizeToAvoidBottomInset,
@@ -78,6 +79,10 @@ class WebPageController extends WebPageBaseController {
   }
 
   WebPage? _widget;
+
+  /// Supply the widget through the widget tree.
+  T? webPageOf<T extends WebPage>(BuildContext context) =>
+      BasicScrollController.of<T>(context);
 
   /// Possible Screen overlay
   @override
@@ -239,7 +244,7 @@ class WebPageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MyApp.screenSize;
+    final screenSize = App.screenSize;
     return Container(
       margin: EdgeInsets.fromLTRB(
         screenSize.width * 0.05,
@@ -640,7 +645,7 @@ class BuilderPageController extends WebPageController {
 /// Wrap widget in an InteractiveViewer when appropriate.
 Widget interactiveViewer(Widget widget, {bool wrap = true}) {
 //
-  if (MyApp.inSmallScreen) {
+  if (App.inSmallScreen) {
 //
     widget = InteractiveViewer(
       maxScale: 3,

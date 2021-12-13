@@ -7,10 +7,11 @@ import 'package:andrious/src/controller.dart';
 import 'package:andrious/src/view.dart';
 
 /// The base
-abstract class BasicStatefulWidget extends StatefulWidget {
-  const BasicStatefulWidget(this._controller, {Key? key}) : super(key: key);
+abstract class BasicScrollStatefulWidget extends StatefulWidget {
+  const BasicScrollStatefulWidget(this._controller, {Key? key})
+      : super(key: key);
 
-  final BasicController _controller;
+  final BasicScrollController _controller;
 
   /// Determine the current screen size.
   Size? get screenSize => _controller.screenSize;
@@ -25,16 +26,52 @@ abstract class BasicStatefulWidget extends StatefulWidget {
   double get opacity => _controller.opacity;
 
   @override
-  State createState() => BasicState(_controller);
+  State createState() => _BasicScrollState(_controller);
 }
 
-abstract class BasicController extends ControllerMVC {
-  BasicController() : super();
+abstract class BasicScrollController extends ControllerMVC {
+  BasicScrollController([StateMVC? state]) : super(state);
 
-  ScrollController get scrollController => _scrollController!;
-  ScrollController? _scrollController;
+  @override
+  @mustCallSuper
+  void initState() {
+    super.initState();
+    _scrollController = _BasicScrollController();
+    _scrollController.addListener(() {
+      // Record the offset with every scroll.
+      _lastOffset = _offset;
+      _offset = _scrollController.offset;
+    });
+  }
 
-  double scrollPosition = 0;
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  late ScrollController _scrollController;
+
+  double _offset = 0;
+  double _lastOffset = 0;
+
+  /// Scrolling up
+  bool get scrollUp => _offset < _lastOffset;
+
+  /// Scrolling down
+  bool get scrollDown => !scrollUp;
+
+  /// The Scroll Controller
+  ScrollController get scrollController => _scrollController;
+
+  /// The first ScrollController that takes in a Scrollable
+  ScrollController? get rootScrollController =>
+      (_scrollController as _BasicScrollController)._rootScrollController;
+
+  /// Return the offset 'scroll position'
+  double get scrollPosition =>
+      !_scrollController.hasClients ? 0 : _scrollController.offset;
+
   double opacity = 0;
 
   Size get screenSize => _screenSize;
@@ -44,63 +81,113 @@ abstract class BasicController extends ControllerMVC {
   bool get inSmallScreen => _smallScreen;
   static bool _smallScreen = false;
 
-  @override
-  @mustCallSuper
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-    _scrollController?.addListener(_scrollListener);
-  }
-
-  @override
-  void dispose() {
-    _scrollController?.dispose();
-    _scrollController = null;
-    super.dispose();
-  }
-
   /// Supply the widget through the controller.
-  BasicStatefulWidget get widget => state!.widget as BasicStatefulWidget;
+  BasicScrollStatefulWidget get widget =>
+      state!.widget as BasicScrollStatefulWidget;
+
+  /// Is the phone orientated in Portrait
+  bool get inPortrait => _orientation == Orientation.portrait;
+
+  /// Is the phone orientated in Landscape
+  bool get inLandscape => _orientation == Orientation.landscape;
+
+  /// Determine the phone's orientation
+  Orientation orientation(BuildContext context) =>
+      _orientation = MediaQuery.of(context).orientation;
+  static Orientation? _orientation;
+
+  /// Find the latest BasicScrollStatefulWidget object if any
+  static T? of<T extends BasicScrollStatefulWidget>(BuildContext? context) {
+    assert(context != null);
+    return context?.findAncestorWidgetOfExactType<T>();
+  }
 
   /// You must implement the build() function.
   Widget build(BuildContext context);
-
-  /// Constantly note the 'scroll position'
-  void _scrollListener() {
-    setState(() {
-      scrollPosition = scrollController.offset;
-    });
-    assert(() {
-      //ignore: avoid_print
-      print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$scrollPosition');
-      return true;
-    }());
-  }
 }
 
-class BasicState extends StateMVC<BasicStatefulWidget> with StateSet {
-  BasicState(BasicController _controller) : super(_controller) {
-    _con = controller as BasicController;
+class _BasicScrollState extends StateMVC<BasicScrollStatefulWidget>
+    with StateSet {
+  _BasicScrollState(BasicScrollController _controller) : super(_controller) {
+    _con = controller as BasicScrollController;
   }
   //
-  late BasicController _con;
+  late BasicScrollController _con;
 
   @override
   Widget build(BuildContext context) {
     //
-    MyApp.orientation(context);
+    _con.orientation(context);
 
-    BasicController._screenSize = MediaQuery.of(context).size;
+    BasicScrollController._screenSize = MediaQuery.of(context).size;
 
     /// Determine if the app is running in a small screen.
-    BasicController._smallScreen =
-        MyApp.isSmallScreen(size: BasicController._screenSize);
+    BasicScrollController._smallScreen =
+        _isSmallScreen(screenSize: BasicScrollController._screenSize);
 
     _con.opacity =
-        _con.scrollPosition < BasicController._screenSize.height * 0.40
-            ? _con.scrollPosition / (BasicController._screenSize.height * 0.40)
+        _con._offset < BasicScrollController._screenSize.height * 0.40
+            ? _con._offset / (BasicScrollController._screenSize.height * 0.40)
             : 1;
 
     return _con.build(context);
+  }
+
+  /// Determine if the app is running on a 'small screen' or not.
+  bool _isSmallScreen({Size? screenSize}) {
+    //
+    bool smallScreen;
+
+    // May be manually assigned.
+    smallScreen = asSmallScreen;
+
+    if (!smallScreen && screenSize != null) {
+      smallScreen = screenSize.width < 800;
+    }
+
+    _inSmallScreen = smallScreen;
+
+    return smallScreen;
+  }
+
+  /// Set whether the app is to use a 'small screen' or not.
+  /// Determine if running on a desktop or on a phone or tablet
+  bool get asSmallScreen => App.inDebugger && false;
+
+  /// Return the bool value indicating if running in a small screen or not.
+  bool get inSmallScreen => _inSmallScreen;
+  bool _inSmallScreen = false;
+}
+
+class _BasicScrollController extends ScrollController {
+  /// Creates a controller for a scrollable widget.
+  ///
+  _BasicScrollController({
+    double initialScrollOffset = 0.0,
+    bool keepScrollOffset = true,
+    String? debugLabel,
+  }) : super(
+          initialScrollOffset: initialScrollOffset,
+          keepScrollOffset: keepScrollOffset,
+          debugLabel: debugLabel,
+        );
+
+  /// The 'first' Scroll Controller
+  _BasicScrollController? _rootScrollController;
+
+  @override
+  ScrollPosition createScrollPosition(
+    ScrollPhysics physics,
+    ScrollContext context,
+    ScrollPosition? oldPosition,
+  ) {
+    // Record the 'root' Scroll Controller
+    _rootScrollController ??= this;
+
+    return super.createScrollPosition(
+      physics,
+      context,
+      oldPosition,
+    );
   }
 }

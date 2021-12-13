@@ -50,7 +50,7 @@ class HowProjectsWorkController extends WebPageController {
   @override
   List<Widget> withBottomBar05(BuildContext context, [WebPage? widget]) {
     // MyApp.inSmallScreen allows this method to be called before the build() function.
-    final _smallScreen = MyApp.inSmallScreen;
+    final _smallScreen = inSmallScreen;
     // Sometimes this method is called before the widget is mounted.
     if (_widget == null && widget != null && widget is HowProjectsWork) {
       _widget = widget;
@@ -124,11 +124,11 @@ class HowProjectsWorkController extends WebPageController {
       this.readMore = readMore;
     }
 
-    final _smallScreen = MyApp.inSmallScreen;
+    final _smallScreen = inSmallScreen;
 
-    final _screenSize = MyApp.screenSize;
+    final _screenSize = screenSize;
 
-    final _landscape = MyApp.inLandscape;
+    final _landscape = inLandscape;
 
     const String _threeTreesImage = 'assets/images/three_trees.jpg';
 

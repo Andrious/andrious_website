@@ -27,23 +27,6 @@ class HomeScreen extends WebPageBase {
 }
 
 class HomeScreenController extends WebPageBaseController {
-  //
-  @override
-  void initState() {
-    //
-    scrollController.addListener(() {
-      final double offset = scrollController.positions.last.pixels;
-      if (offset > _lastOffset) {
-//        print('scrolling down');
-      } else {
-//        print('scrolling up');
-      }
-      _lastOffset = offset;
-    });
-  }
-
-  double _lastOffset = 0;
-
   /// Provide the body of the webpage
   @override
   Widget body(BuildContext context) {

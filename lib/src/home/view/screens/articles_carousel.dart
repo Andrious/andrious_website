@@ -26,22 +26,15 @@ class _ArticleCarouselState extends State<ArticleCarousel>
   @override
   void initState() {
     super.initState();
-    _screenSize = MyApp.screenSize;
-    _smallScreen = MyApp.inSmallScreen;
+    _smallScreen = App.inSmallScreen;
     _carouselController = CarouselController();
     _con = ArticlesCarouselController();
   }
 
-  late Size _screenSize;
   late bool _smallScreen;
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth =
-        _smallScreen ? _screenSize.width / 8 : _screenSize.width / 8;
-    final screenHeight =
-        _smallScreen ? _screenSize.height / 25 : _screenSize.height / 50;
-    final _webPages = _con.webPages.keys.toList();
     return Stack(
       children: [
         CarouselSlider(

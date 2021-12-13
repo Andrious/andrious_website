@@ -52,9 +52,9 @@ class _UseCaseExampleController extends WebPageController {
 
   @override
   Widget child(BuildContext context, [WebPage? widget]) {
-    final _smallScreen = MyApp.inSmallScreen;
-    final _screenSize = MyApp.screenSize;
-    final _landscape = MyApp.inLandscape;
+    final _smallScreen = inSmallScreen;
+    final _screenSize = screenSize;
+    final _landscape = inLandscape;
     final style = Theme.of(context).textTheme.bodyText2;
     // This may be called before the widget is even mounted.
     if (_widget == null && widget != null && widget is UseCaseExample) {
@@ -96,8 +96,8 @@ class _UseCaseExampleController extends WebPageController {
                 ),
                 const Divider(),
                 if (_widget != null && !_widget!.readMore!)
-                  AutoSizeText(
-                    useCaseText,
+                  AutoSizeText.rich(
+                    TextSpan(text: useCaseText),
                     style: style,
                     textAlign: TextAlign.justify,
                   ),

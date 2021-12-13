@@ -1,4 +1,13 @@
 
+## 1.37.0
+ December 13, 2021
+- BasicScrollController
+- Size get screenSize => _screenSize;
+- MyApp.screenSize; to App.screenSize;
+- T? webPageOf<T extends WebPage>(BuildContext context) =>
+- _WebScrollbarState
+- SingleChildScrollView( gets controller: scrollController,
+
 ## 1.36.0+03
  December 08, 2021
 - mvc_application v7 to v8

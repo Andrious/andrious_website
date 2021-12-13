@@ -33,7 +33,7 @@ class HomePageController extends WebPageController {
           centerTitle: true,
           actions: [
             if (inSmallScreen) AppTheme.fontSizeButton,
-            SizedBox(width: MyApp.screenSize.width * 0.1),
+            SizedBox(width: App.screenSize.width * 0.1),
             AppTheme.darkModeButton,
           ],
           title: Text(
@@ -64,7 +64,6 @@ class HomePageController extends WebPageController {
 
   @override
   List<Widget> withHeader04(BuildContext context, [WebPage? widget]) {
-    final Size _screenSize = screenSize;
     final List<Widget> children = [];
 //    children.add(DestinationHeading(screenSize: _screenSize));
 //    children.add(SizedBox(height: screenSize!.height * 0.10));
