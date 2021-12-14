@@ -1,4 +1,9 @@
 
+## 1.37.1
+ December 13, 2021
+- 'assets/images/use_case_example.jpg'
+- this.reverse, in class WebPageBaseController
+
 ## 1.37.0
  December 13, 2021
 - BasicScrollController

@@ -65,7 +65,13 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
     bool? drawerEnableOpenDragGesture,
     bool? endDrawerEnableOpenDragGesture,
     String? restorationId,
+    this.scrollDirection,
+    this.reverse,
+    this.padding,
     this.physics,
+    this.dragStartBehavior,
+    this.clipBehavior,
+    this.keyboardDismissBehavior,
   }) : super(
           backgroundColor: backgroundColor,
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
@@ -80,7 +86,24 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
           restorationId: restorationId,
         );
 
-  ScrollPhysics? physics;
+  /// The axis along which the scroll view scrolls.
+  final Axis? scrollDirection;
+
+  /// Whether the scroll view scrolls in the reading direction.
+  final bool? reverse;
+
+  /// The amount of space by which to inset the child.
+  final EdgeInsetsGeometry? padding;
+
+  /// How the scroll view should respond to user input.
+  final ScrollPhysics? physics;
+
+  final DragStartBehavior? dragStartBehavior;
+
+  /// Defaults to [Clip.hardEdge].
+  final Clip? clipBehavior;
+
+  final ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior;
 
   //
   /// The 'child' widget containing the core of the screen's content.
@@ -166,10 +189,18 @@ abstract class WebPageBaseController extends ScaffoldScreenController {
         _child = ErrorWidget.builder(details);
       }
     } else {
+      //
       _child = SingleChildScrollView(
+        scrollDirection: scrollDirection ?? Axis.vertical,
+        reverse: reverse ?? false,
+        padding: padding,
         primary: false,
         physics: physics ?? const ClampingScrollPhysics(),
         controller: scrollController,
+        dragStartBehavior: dragStartBehavior ?? DragStartBehavior.start,
+        clipBehavior: clipBehavior ?? Clip.hardEdge,
+        keyboardDismissBehavior:
+            keyboardDismissBehavior ?? ScrollViewKeyboardDismissBehavior.manual,
         child: _child,
       );
 

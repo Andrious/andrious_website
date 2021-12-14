@@ -96,18 +96,29 @@ class _UseCaseExampleController extends WebPageController {
                 ),
                 const Divider(),
                 if (_widget != null && !_widget!.readMore!)
-                  AutoSizeText.rich(
-                    TextSpan(text: useCaseText),
-                    style: style,
-                    textAlign: TextAlign.justify,
-                  ),
+                  Column(children: [
+                    Text(
+                      useCase01,
+                      style: style,
+                      textAlign: TextAlign.justify,
+                    ),
+                    Image.asset(
+                      'assets/images/use_case_example.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                    Text(
+                      useCase02,
+                      style: style,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ]),
                 if (_widget == null || _widget!.readMore!)
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
                           style: style,
-                          text: useCaseText.substring(0, 498),
+                          text: useCase01.substring(0, 498),
                         ),
                         TextSpan(
                           style: style!.copyWith(
@@ -131,57 +142,63 @@ class _UseCaseExampleController extends WebPageController {
     );
   }
 
-  final useCaseText = '''
-Help me help you to build the mobile app that you want. 
+  final useCase01 =
+      "Help me help you to build the mobile app that you want.\nTo give us a better idea, we are going to write up some Use Case Scenarios. They're 'little stories' essentially detailing how the; app is suppose to work. They'll help better convey your idea, and help us develop your app faster.\nThey also give us an idea how long it will take to make your app. Generally, each 'step' in a Use Case Scenario represents a separate piece of code that will need to be written. The more steps; the more code.\nBelow is a Use Case Example:";
 
-To give us a better idea, we are going to write up some Use Case Scenarios. They're 'little stories' essentially detailing how the app is suppose to work. They'll help better convey your idea, and help us develop your app faster.
+  final useCase02 =
+      "See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be many, more lengthy and complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better.";
 
-They also give us an idea how long it will take to make your app. Generally, each 'step' in a Use Case Scenario represents a separate piece of code that will need to be written. The more steps; the more code.
-
-Below is a Use Case Example: 
-
-WITHDRAW MONEY FROM AN ATM MACHINE 
-
-Primary actors: 
-Customer 
-ATM Technician 
-Bank 
-
-Basic Scenario: 
-1.   Customer inserts debit card into the ATM and enters PIN. 
-2.   ATM validates PIN. 
-3.   ATM displays customer options. 
-4.   Customer selects the option, Withdraw Cash. 
-5.   ATM prompts the Customer for an amount. 
-6.   Customer enters desired amount. 
-7.   ATM prompts the Customer to print receipt or not. 
-8.   Customer selects to print receipt or not. 
-9.   Transaction sent to Bank to determine if sufficient funds and if at withdrawal limit. 
-10. ATM dispenses money. 
-11. Customer takes money and receipt or not. 
-12. ATM prompts the Customer to end or to continue. 
-13. Customer selects to end or to continue. 
-
-Additional Alternate Scenarios: 
-2a.   Customer PIN is not valid. 
-2a1. ATM prompts the Customer to retry. 
-
-7a.   Customer enters unavailable amount. 
-7a1. ATM prompts the Customer to re-enter amount. 
-
-7b.   ATM itself has insufficient funds to dispense to customer. 
-7b1. ATM Technician is alerted. 
-7b2. ATM notifies customer and prompts for lesser amount. 
-
-13a.   Customer selects to end. 
-13a1. ATM returns debit card to Customer. 
-
-13b.   Customer selects to continue. 
-13b1. ATM returns to step 3. 
-
-
-See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be many, more lengthy and complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better. 
-                  ''';
+//   final useCaseText = """
+// Help me help you to build the mobile app that you want.
+//
+// To give us a better idea, we are going to write up some Use Case Scenarios. They're 'little stories' essentially detailing how the app is suppose to work. They'll help better convey your idea, and help us develop your app faster.
+//
+// They also give us an idea how long it will take to make your app. Generally, each 'step' in a Use Case Scenario represents a separate piece of code that will need to be written. The more steps; the more code.
+//
+// Below is a Use Case Example:
+//
+// WITHDRAW MONEY FROM AN ATM MACHINE
+//
+// Primary actors:
+// Customer
+// ATM Technician
+// Bank
+//
+// Basic Scenario:
+// 1.   Customer inserts debit card into the ATM and enters PIN.
+// 2.   ATM validates PIN.
+// 3.   ATM displays customer options.
+// 4.   Customer selects the option, Withdraw Cash.
+// 5.   ATM prompts the Customer for an amount.
+// 6.   Customer enters desired amount.
+// 7.   ATM prompts the Customer to print receipt or not.
+// 8.   Customer selects to print receipt or not.
+// 9.   Transaction sent to Bank to determine if sufficient funds and if at withdrawal limit.
+// 10. ATM dispenses money.
+// 11. Customer takes money and receipt or not.
+// 12. ATM prompts the Customer to end or to continue.
+// 13. Customer selects to end or to continue.
+//
+// Additional Alternate Scenarios:
+// 2a.   Customer PIN is not valid.
+// 2a1. ATM prompts the Customer to retry.
+//
+// 7a.   Customer enters unavailable amount.
+// 7a1. ATM prompts the Customer to re-enter amount.
+//
+// 7b.   ATM itself has insufficient funds to dispense to customer.
+// 7b1. ATM Technician is alerted.
+// 7b2. ATM notifies customer and prompts for lesser amount.
+//
+// 13a.   Customer selects to end.
+// 13a1. ATM returns debit card to Customer.
+//
+// 13b.   Customer selects to continue.
+// 13b1. ATM returns to step 3.
+//
+//
+// See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be many, more lengthy and complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better.
+// """;
 }
 
 class PNetworkImage extends StatelessWidget {
