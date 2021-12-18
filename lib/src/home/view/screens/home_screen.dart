@@ -20,7 +20,7 @@ class HomeScreen extends WebPageBase {
   }
 
   @override
-  Widget? child(BuildContext context, [WebPage? widget]) {
+  List<Widget>? child(BuildContext context, [WebPage? widget]) {
     // TODO: implement child
     throw UnimplementedError();
   }
@@ -190,7 +190,7 @@ class HomeScreenController extends WebPageBaseController {
   }
 
   @override
-  Widget? child(BuildContext context, [WebPage? widget]) {
+  List<Widget>? child(BuildContext context, [WebPage? widget]) {
     // TODO: implement child
     throw UnimplementedError();
   }

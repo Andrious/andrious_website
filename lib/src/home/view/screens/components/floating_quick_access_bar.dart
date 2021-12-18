@@ -1,3 +1,7 @@
+// Copyright 2021 Andrious Solutions Ltd. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 import 'package:andrious/src/view.dart';
 
 class FloatingQuickAccessBar extends StatefulWidget {
@@ -11,6 +15,7 @@ class FloatingQuickAccessBar extends StatefulWidget {
 }
 
 class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
+  //
   List<Widget> rowElements = [];
 
   // List<IconData> icons = [

@@ -9,12 +9,12 @@ class UseCaseExample extends WebPage {
     Key? key,
     this.readMore = false,
     this.banner = true,
-    bool? bottomBar,
+    bool? hasBottomBar,
     bool coverBanner = true,
   }) : super(
           _UseCaseExampleController(),
           key: key,
-          bottomBar: bottomBar ?? true,
+          hasBottomBar: hasBottomBar ?? true,
           coverBanner: coverBanner,
         );
   final bool? readMore;
@@ -51,7 +51,7 @@ class _UseCaseExampleController extends WebPageController {
       );
 
   @override
-  Widget child(BuildContext context, [WebPage? widget]) {
+  List<Widget>? child(BuildContext context, [WebPage? widget]) {
     final _smallScreen = inSmallScreen;
     final _screenSize = screenSize;
     final _landscape = inLandscape;
@@ -60,86 +60,85 @@ class _UseCaseExampleController extends WebPageController {
     if (_widget == null && widget != null && widget is UseCaseExample) {
       _widget = widget;
     }
-    return Stack(
-      children: <Widget>[
-        if (!_smallScreen && (_widget?.banner ?? false))
-          Container(
-            height: 300,
-            width: double.infinity,
-            child: Image.asset(
-              'assets/images/phone_mist.jpg',
-              fit: BoxFit.cover,
-            ),
-          ),
-        Center(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(
-              _screenSize.width * (_smallScreen ? 0.05 : 0.05),
-              _screenSize.height * (_smallScreen ? 0.05 : 0.45),
-              _screenSize.width *
-                  (_smallScreen ? (_landscape ? 0.05 : 0.05) : 0.05),
-              _screenSize.height *
-                  (_smallScreen ? (_landscape ? 0.05 : 0.05) : 0.1),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            padding: EdgeInsets.all(_smallScreen ? 5 : 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Divider(),
-                const SizedBox(height: 10),
-                Text(
-                  'Use Case Scenarios',
-                  style: TextStyle(fontSize: _smallScreen ? 24 : 48),
-                ),
-                const Divider(),
-                if (_widget != null && !_widget!.readMore!)
-                  Column(children: [
-                    Text(
-                      useCase01,
-                      style: style,
-                      textAlign: TextAlign.justify,
-                    ),
-                    Image.asset(
-                      'assets/images/use_case_example.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                    Text(
-                      useCase02,
-                      style: style,
-                      textAlign: TextAlign.justify,
-                    ),
-                  ]),
-                if (_widget == null || _widget!.readMore!)
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          style: style,
-                          text: useCase01.substring(0, 498),
-                        ),
-                        TextSpan(
-                          style: style!.copyWith(
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          text: ' ...read more',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              AppRouterDelegate.nextRoute('/use_case');
-                            },
-                        )
-                      ],
-                    ),
-                  ),
-              ],
-            ),
+    return [
+      if (!_smallScreen && (_widget?.banner ?? false))
+        Container(
+          height: 300,
+          width: double.infinity,
+          child: Image.asset(
+            'assets/images/phone_mist.jpg',
+            fit: BoxFit.cover,
           ),
         ),
-      ],
-    );
+      Center(
+        child: Container(
+          margin: EdgeInsets.fromLTRB(
+            _screenSize.width * (_smallScreen ? 0.05 : 0.05),
+            _screenSize.height * (_smallScreen ? 0.05 : 0.1),
+            _screenSize.width *
+                (_smallScreen ? (_landscape ? 0.05 : 0.05) : 0.05),
+            _screenSize.height *
+                (_smallScreen ? (_landscape ? 0.05 : 0.05) : 0.1),
+          ),
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(30),
+          // ),
+          padding: EdgeInsets.only(
+              left: _smallScreen ? 5 : 10, right: _smallScreen ? 5 : 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // const Divider(),
+              // const SizedBox(height: 10),
+              Text(
+                'Use Case Scenarios',
+                style: TextStyle(fontSize: _smallScreen ? 24 : 48),
+              ),
+              const Divider(),
+              if (_widget != null && !_widget!.readMore!)
+                Column(children: [
+                  Text(
+                    useCase01,
+                    style: style,
+                    textAlign: TextAlign.justify,
+                  ),
+                  Image.asset(
+                    'assets/images/use_case_example.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  Text(
+                    useCase02,
+                    style: style,
+                    textAlign: TextAlign.justify,
+                  ),
+                ]),
+              if (_widget == null || _widget!.readMore!)
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        style: style,
+                        text: useCase01.substring(0, 498),
+                      ),
+                      TextSpan(
+                        style: style!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        text: ' ...read more',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            AppRouterDelegate.nextRoute('/use_case');
+                          },
+                      )
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    ];
   }
 
   final useCase01 =

@@ -46,6 +46,7 @@ class _MyAppState extends AppState {
       : super(
           useMaterial: true,
           debugShowCheckedModeBanner: false,
+//          debugPaintSizeEnabled: true,
           title: 'Andrious Solutions',
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,

@@ -11,8 +11,8 @@ class PrivacyPolicy extends WebPage {
           key: key,
           title: 'Privacy Policy',
           coverBanner: false,
-          accessBar: false,
-          bottomBar: false,
+          hasAccessBar: false,
+          hasBottomBar: false,
         );
 }
 

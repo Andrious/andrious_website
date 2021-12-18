@@ -15,8 +15,8 @@ class FlutterUIs extends WebPage {
           key: key,
           title: 'Flutter UI Examples',
           coverBanner: false,
-          accessBar: false,
-          bottomBar: false,
+          hasAccessBar: false,
+          hasBottomBar: false,
         );
   static FlutterUIs? _this;
 

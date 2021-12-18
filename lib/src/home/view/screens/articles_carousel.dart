@@ -402,36 +402,39 @@ If you're a member, it's free. If not, you may wish to cancel.
   }
 
   @override
-  Widget child(BuildContext context, [WebPage? widget]) => LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) =>
-            ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: constraints.minWidth,
-            minHeight: constraints.minHeight,
-            maxWidth: constraints.maxWidth,
-            maxHeight: constraints.maxHeight,
-          ),
-          child: Material(
-            child: GridView.builder(
-              primary: false,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(8),
-              shrinkWrap: true,
-              itemCount: articles.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
-                childAspectRatio: 5 / 4,
-                crossAxisSpacing: 10,
-              ),
-              itemBuilder: (BuildContext context, int index) => ArticleImage(
-                this,
-                index: index,
-                constraints: constraints,
+  List<Widget>? child(BuildContext context, [WebPage? widget]) => [
+        LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: constraints.minWidth,
+              minHeight: constraints.minHeight,
+              maxWidth: constraints.maxWidth,
+              maxHeight: constraints.maxHeight,
+            ),
+            child: Material(
+              child: GridView.builder(
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(8),
+                shrinkWrap: true,
+                itemCount: articles.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:
+                      ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
+                  childAspectRatio: 5 / 4,
+                  crossAxisSpacing: 10,
+                ),
+                itemBuilder: (BuildContext context, int index) => ArticleImage(
+                  this,
+                  index: index,
+                  constraints: constraints,
+                ),
               ),
             ),
           ),
-        ),
-      );
+        )
+      ];
 }
 
 class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {

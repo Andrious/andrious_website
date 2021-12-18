@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:andrious/src/controller.dart';
 import 'package:andrious/src/view.dart';
 
 class DartPackages extends StatelessWidget {

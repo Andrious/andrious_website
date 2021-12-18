@@ -11,17 +11,17 @@ class HowProjectsWork extends WebPage {
   final bool readMore;
   static const double offset = 200;
 
-  @override
   // Screen's title
+  @override
   String get title => 'How Projects Really Work';
 
-  // Access the its controller
+  // Access to its controller
   HowProjectsWorkController get controller =>
       webPageController as HowProjectsWorkController;
 
   Widget popup(BuildContext context,
           {double? fontSize, bool showLink = true}) =>
-      HowProjectsWorkController().popup(
+      controller.popup(
         context,
         fontSize: fontSize,
         showLink: showLink,
@@ -173,7 +173,7 @@ class HowProjectsWorkController extends WebPageController {
       child: Container(
         margin: EdgeInsets.fromLTRB(
           _screenSize.width * (_smallScreen ? 0.05 : 0.05),
-          _screenSize.height * (_smallScreen ? 0.05 : 0.2),
+          _screenSize.height * (_smallScreen ? 0.05 : 0.1),
           _screenSize.width *
               (_smallScreen ? (_landscape ? 0.05 : 0.05) : 0.05),
           _screenSize.height *
@@ -318,8 +318,8 @@ class FiveWhys extends WebPage {
           FiveWhysController(),
           key: key,
           coverBanner: false,
-          accessBar: false,
-          bottomBar: true,
+          hasAccessBar: false,
+          hasBottomBar: true,
         );
 }
 
