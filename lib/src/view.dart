@@ -7,9 +7,6 @@
 /// Utilities
 export 'package:url_launcher/url_launcher.dart';
 
-/// Navigation
-export 'package:andrious/src/app/view/app_navigator.dart';
-
 /// MVC framework
 export 'package:mvc_application/view.dart' hide AppMenu; //, runApp;
 

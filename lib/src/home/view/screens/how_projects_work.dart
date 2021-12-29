@@ -4,24 +4,27 @@
 
 import 'package:andrious/src/view.dart';
 
-class HowProjectsWork extends WebPage {
-  HowProjectsWork({Key? key, this.showPopup = true, this.readMore = false})
-      : super(HowProjectsWorkController(), key: key);
+class HowProjectsWork extends WebPageWidget {
+  HowProjectsWork({
+    Key? key,
+    this.showPopup = true,
+    this.readMore = false,
+  }) : super(
+          title: 'How Projects Really Work',
+          controller: HowProjectsWorkController(),
+          key: key,
+        );
   final bool showPopup;
   final bool readMore;
   static const double offset = 200;
 
-  // Screen's title
-  @override
-  String get title => 'How Projects Really Work';
-
   // Access to its controller
-  HowProjectsWorkController get controller =>
-      webPageController as HowProjectsWorkController;
+  HowProjectsWorkController get webPageController =>
+      controller as HowProjectsWorkController;
 
   Widget popup(BuildContext context,
           {double? fontSize, bool showLink = true}) =>
-      controller.popup(
+      webPageController.popup(
         context,
         fontSize: fontSize,
         showLink: showLink,
@@ -36,87 +39,82 @@ class HowProjectsWorkController extends WebPageController {
 
   final String _projectsImage = 'assets/images/how_projects_work.jpg';
 
-  @override
-  void initState() {
-    super.initState();
-    _widget = widget as HowProjectsWork;
-  }
-
-  HowProjectsWork? _widget;
-
   // Flag indicating whether 'read more' option is displayed or not.
   bool readMore = false;
 
+  /// Return the widget containing the web page's main content.
   @override
-  List<Widget> withBottomBar05(BuildContext context, [WebPage? widget]) {
+  Widget builder(BuildContext context) {
     // MyApp.inSmallScreen allows this method to be called before the build() function.
     final _smallScreen = inSmallScreen;
-    // Sometimes this method is called before the widget is mounted.
-    if (_widget == null && widget != null && widget is HowProjectsWork) {
-      _widget = widget;
-      readMore = _widget!.readMore;
-    }
-    return [
-      Stack(
-        children: [
-          Center(
-            child: InkWell(
-              splashColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              onTap: !_smallScreen
-                  ? null
-                  : () {
-                      if (_widget?.showPopup ?? true) {
-                        setState(() {
-                          _Content.visible = !_Content.visible;
-                        });
-                      } else {
-                        PopupPage.window<void>(
-                          context,
-                          (_) {
-                            Widget child = Image.asset(
-                              _projectsImage,
-                              fit: BoxFit.cover,
-                            );
-                            // Rotate it to landscape
-                            if (MediaQuery.of(context).orientation ==
-                                Orientation.portrait) {
-                              child = RotatedBox(quarterTurns: 5, child: child);
-                            }
-                            return Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(_smallScreen ? 0 : 40),
-                                child: InteractiveViewer(
-                                  maxScale: 3,
-                                  minScale: 1,
-                                  child: child,
-                                ),
+
+    final HowProjectsWork _widget = widget as HowProjectsWork;
+
+    readMore = _widget.readMore;
+
+    return Stack(
+      children: [
+        Center(
+          child: InkWell(
+            splashColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            onTap: !_smallScreen
+                ? null
+                : () {
+                    if (_widget.showPopup) {
+                      setState(() {
+                        _Content.visible = !_Content.visible;
+                      });
+                    } else {
+                      PopupPage.window<void>(
+                        context,
+                        (_) {
+                          Widget child = Image.asset(
+                            _projectsImage,
+                            fit: BoxFit.cover,
+                          );
+                          // Rotate it to landscape
+                          if (MediaQuery.of(context).orientation ==
+                              Orientation.portrait) {
+                            child = RotatedBox(quarterTurns: 5, child: child);
+                          }
+                          return Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(_smallScreen ? 0 : 40),
+                              child: InteractiveViewer(
+                                maxScale: 3,
+                                minScale: 1,
+                                child: child,
                               ),
-                            );
-                          },
-                        );
-                      }
-                    },
-              child: Padding(
-                padding: EdgeInsets.all(_smallScreen ? 0 : 40),
-                child: Image.asset(_projectsImage),
-              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+            child: Padding(
+              padding: EdgeInsets.all(_smallScreen ? 0 : 40),
+              child: Image.asset(_projectsImage),
             ),
           ),
-          if (_widget?.showPopup ?? true)
-            Visibility(
-              visible: _Content.visible,
-              // Method is below. Allowing to be called separately.
-              child: popup(context, fontSize: 18),
-            ),
-        ],
-      ),
-    ];
+        ),
+        if (_widget.showPopup)
+          Visibility(
+            visible: _Content.visible,
+            // Method is below. Allowing to be called separately.
+            child: popup(context, fontSize: 18),
+          ),
+      ],
+    );
   }
 
   /// The popup window describing the 'Five Why's' diagram.
-  Widget popup(BuildContext context,
-      {double? fontSize, bool showLink = true, bool? readMore}) {
+  Widget popup(
+    BuildContext context, {
+    double? fontSize,
+    bool showLink = true,
+    bool? readMore,
+  }) {
     //
 
     // Display the 'read more' version if specified.
@@ -312,13 +310,11 @@ class _Content {
   static bool visible = false;
 }
 
-class FiveWhys extends WebPage {
+class FiveWhys extends WebPageWidget {
   FiveWhys({Key? key})
       : super(
-          FiveWhysController(),
+          controller: FiveWhysController(),
           key: key,
-          coverBanner: false,
-          hasAccessBar: false,
           hasBottomBar: true,
         );
 }
@@ -330,10 +326,7 @@ class FiveWhysController extends WebPageController {
 
   /// Main content
   @override
-  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) {
-    return [
-      HowProjectsWorkController()
-          .popup(context, showLink: false, readMore: false)
-    ];
-  }
+//  List<Widget>? withHeader04(BuildContext context, [WebPageWidget? widget]) {
+  Widget? builder(BuildContext context) => HowProjectsWorkController()
+      .popup(context, showLink: false, readMore: false);
 }

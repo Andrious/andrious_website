@@ -4,9 +4,9 @@
 
 import 'package:andrious/src/view.dart';
 
-class InitialDisclosure extends WebPage {
+class InitialDisclosure extends WebPageWidget {
   InitialDisclosure({Key? key, this.banner = true})
-      : super(_InitialDisclosureController(), key: key);
+      : super(controller: _InitialDisclosureController(), key: key);
   final bool banner;
 
   @override
@@ -16,24 +16,13 @@ class InitialDisclosure extends WebPage {
 
 class _InitialDisclosureController extends WebPageController {
   @override
-  void initState() {
-    super.initState();
-    _widget = widget as InitialDisclosure;
-  }
-
-  InitialDisclosure? _widget;
-
-  @override
-  List<Widget> withBottomBar05(BuildContext context, [WebPage? widget]) {
+  Widget builder(BuildContext context) {
     //
     final _screenSize = screenSize;
 
     final _smallScreen = inSmallScreen;
 
-    // Sometimes this method is called before the widget is mounted.
-    if (_widget == null && widget != null && widget is InitialDisclosure) {
-      _widget = widget;
-    }
+    final _widget = widget as InitialDisclosure;
 
     // Image of the disclosure
     final _disclosure = Image.asset(
@@ -59,8 +48,8 @@ class _InitialDisclosureController extends WebPageController {
     const printLink = Hyperlink(Text('Print'),
         'https://docs.google.com/document/d/1Z2zdFIv_n1HXT2rkU8n6kAOr144b6nHsGbhkUOO9IA0/edit?usp=sharing');
 
-    return [
-      if (_widget?.banner ?? true)
+    return Column(children: [
+      if (_widget.banner)
         SizedBox(
           height: _screenSize.height * 0.45,
           width: _screenSize.width,
@@ -84,15 +73,6 @@ class _InitialDisclosureController extends WebPageController {
                 ),
                 child: Column(children: [child, printLink])),
           ),
-          // Center(
-          //   child: Column(children: [
-          //     Padding(
-          //       padding: const EdgeInsets.fromLTRB(200, 100, 200, 50),
-          //       child: child,
-          //     ),
-          //     printLink,
-          //   ]),
-          // ),
         ),
         child: Container(
           margin: EdgeInsets.fromLTRB(
@@ -124,13 +104,6 @@ class _InitialDisclosureController extends WebPageController {
         ),
       ),
       printLink,
-      // if (!_smallScreen)
-      //   Iframe(
-      //     height: '1000',
-      //     width: '640',
-      //     src:
-      //         'https://docs.google.com/document/d/e/2PACX-1vSUGrouFhcTcJqJ4ItmKU0qY6XyF4DIPf619wrlEOgvj-kubE9gV3ME_8K-o04vZqHm4nVEUQcSHVSc/pub?embedded=true',
-      //   ),
-    ];
+    ]);
   }
 }

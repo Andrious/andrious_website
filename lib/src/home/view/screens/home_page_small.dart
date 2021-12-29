@@ -4,25 +4,21 @@
 
 import 'package:andrious/src/view.dart';
 
-class HomePageSmall extends WebPage {
+class HomePageSmall extends WebPageWidget {
   factory HomePageSmall({Key? key}) => _this ??= HomePageSmall._(key);
   HomePageSmall._(Key? key)
       : super(
-          HomePageSmallController(
-              physics: const AlwaysScrollableScrollPhysics()),
+          title: 'Andrious Solutions Ltd.',
+          controller: HomePageSmallController(),
           key: key,
-          coverBanner: false,
-          hasAccessBar: false,
           hasBottomBar: true,
         );
   static HomePageSmall? _this;
-
-  @override
-  String get title => 'Andrious Solutions Ltd.';
 }
 
 class HomePageSmallController extends WebPageController {
-  HomePageSmallController({ScrollPhysics? physics}) : super(physics: physics);
+  HomePageSmallController()
+      : super(physics: const AlwaysScrollableScrollPhysics());
 
   @override
   void initState() {
@@ -32,17 +28,17 @@ class HomePageSmallController extends WebPageController {
     // Determine if an overlay is to be displayed.
     showOverlay = Prefs.getBool('showOverlay', true);
     projects = HowProjectsWork(showPopup: false, readMore: true);
-    useCase = UseCaseExample(readMore: true, banner: false);
-    paradox = ProgrammingParadox(
-        readMore: true, coverBanner: false, hasBottomBar: false);
+    useCase = UseCaseExample(readMore: true);
+    paradox = ProgrammingParadox(readMore: true, hasBottomBar: false);
     disclose = InitialDisclosure(banner: false);
-
     flutterUIs = FlutterUIs();
 
     _widget = widget as HomePageSmall;
+    _state = state!;
   }
 
   late HomePageSmall _widget;
+  late State _state;
 
   late HowProjectsWork projects;
   late UseCaseExample useCase;
@@ -52,18 +48,13 @@ class HomePageSmallController extends WebPageController {
   late bool showOverlay;
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => AppBar(
+  PreferredSizeWidget? onAppBar() => AppBar(
         backgroundColor:
-            Theme.of(context).bottomAppBarColor.withOpacity(opacity),
+            Theme.of(_state.context).bottomAppBarColor.withOpacity(opacity),
         elevation: 0,
         centerTitle: true,
-        // actions: [
-        //   if (inSmallScreen) AppTheme.fontSizeButton,
-        //   // SizedBox(width: MyApp.screenSize.width * 0.1),
-        //   // AppTheme.darkModeButton,
-        // ],
         title: Text(
-          _widget.title,
+          _widget.title ?? '',
           style: TextStyle(
             color: Colors.blueGrey[100],
             fontSize: 20,
@@ -75,106 +66,14 @@ class HomePageSmallController extends WebPageController {
       );
 
   @override
-  StackWidgetProperties? screenOverlay(BuildContext context) {
-    //
-//    final con = controller as HomePageSmallController;
-
-    // Don't continue if the overlay is not to be shown.
-    if (!showOverlay) {
-      return null;
-    }
-
-    final _screenSize = screenSize;
-
-    final _smallScreen = inSmallScreen;
-
-    final String msg = _smallScreen
-        ? 'This website uses cookies for your best experience on my website'
-        : 'This website uses cookies to ensure you get the best experience on my website.';
-
-    final widget = Padding(
-      padding: const EdgeInsets.all(10),
-      child: Container(
-        //           height: _scrollerHeight,
-        width: _screenSize.width,
-        margin: const EdgeInsets.only(
-          left: 4,
-          right: 4,
-          top: 8,
-          bottom: 8,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(width: 2),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(3),
-          ),
-        ),
-        child: SizedBox(
-          width: _screenSize.width * 0.6,
-          height: _screenSize.height * 0.1,
-          child: Row(mainAxisSize: MainAxisSize.min, children: [
-            Flexible(
-              flex: 5,
-              child: Padding(
-                padding: EdgeInsets.only(left: _screenSize.width * 0.1),
-                child: Text(
-                  msg,
-                  style: const TextStyle(height: 1),
-                ),
-              ),
-            ),
-            Flexible(
-              child: TextButton(
-                onPressed: () => AppRouterDelegate.nextRoute('/privacy'),
-                child: Text(
-                  _smallScreen ? 'Info' : 'Learn More',
-                  style: const TextStyle(
-                      color: Colors.blue, decoration: TextDecoration.underline),
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.only(left: _screenSize.width * 0.1),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      setOverlay(shown: false);
-                      setState(() {});
-                    },
-                    child: const Text(
-                      'OK',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ]),
-        ),
-      ),
-    );
-    return StackWidgetProperties(
-      alignment: Alignment.bottomRight,
-      child: widget,
-    );
-  }
-
-  @override
-  List<Widget> withHeader04(BuildContext context, [WebPage? widget]) {
+  Widget builder(BuildContext context) {
     final _screenSize = screenSize;
     final _smallScreen = inSmallScreen;
     final List<Widget> children = [];
-    children.addAll(projects.withBottomBar05(context));
+    children.addAll((projects.builder(context) as Stack).children);
     children.add(projects.popup(context, showLink: false));
-    children.addAll(useCase.child(context, useCase)!);
-//    children.addAll(paradox.children04(context)!);
-    children.addAll(paradox.child(context, paradox)!);
+    children.addAll(useCase.buildList(context));
+    children.add(paradox.builder(context));
 
     if (_smallScreen) {
       children.add(const ArticlesLink());
@@ -193,7 +92,6 @@ class HomePageSmallController extends WebPageController {
                   fontSize: 24,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w400,
-//                letterSpacing: 3,
                 ),
               ),
               Flexible(
@@ -246,7 +144,7 @@ class HomePageSmallController extends WebPageController {
       children.add(DartPackages());
     }
 
-    children.addAll(disclose.withBottomBar05(context));
+    children.add(disclose.builder(context));
 
     children.add(flutterUIs.coverPage(
       context,
@@ -258,17 +156,17 @@ class HomePageSmallController extends WebPageController {
       },
     ));
 
-    return children;
+    return Column(children: children);
   }
 
-  Future<bool> setOverlay({bool shown = true}) {
-    showOverlay = shown;
-    return Prefs.setBool('showOverlay', shown);
+  Future<bool> setOverlay({bool show = true}) {
+    showOverlay = show;
+    return Prefs.setBool('showOverlay', show);
   }
 
   @override
-  Column? bottomBar(BuildContext context, [WebPage? widget]) {
-    final smallScreen = App.inSmallScreen;
+  Column? onBottomBar(BuildContext context, [WebPageWidget? widget]) {
+    final smallScreen = inSmallScreen;
     final textStyle = TextStyle(color: Colors.blueGrey[300], fontSize: 14);
     return Column(
       children: [
@@ -390,6 +288,94 @@ class HomePageSmallController extends WebPageController {
             ),
           ]),
       ],
+    );
+  }
+
+  @override
+  StackWidgetProperties? screenOverlay(BuildContext context) {
+    // Don't continue if the overlay is not to be shown.
+    if (!showOverlay) {
+      return null;
+    }
+
+    final _screenSize = screenSize;
+
+    final _smallScreen = inSmallScreen;
+
+    final String msg = _smallScreen
+        ? 'This website uses cookies for your best experience on my website'
+        : 'This website uses cookies to ensure you get the best experience on my website.';
+
+    final widget = Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        //           height: _scrollerHeight,
+        width: _screenSize.width,
+        margin: const EdgeInsets.only(
+          left: 4,
+          right: 4,
+          top: 8,
+          bottom: 8,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(width: 2),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(3),
+          ),
+        ),
+        child: SizedBox(
+          width: _screenSize.width * 0.6,
+          height: _screenSize.height * 0.1,
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Flexible(
+              flex: 5,
+              child: Padding(
+                padding: EdgeInsets.only(left: _screenSize.width * 0.1),
+                child: Text(
+                  msg,
+                  style: const TextStyle(height: 1),
+                ),
+              ),
+            ),
+            Flexible(
+              child: TextButton(
+                onPressed: () => AppRouterDelegate.nextRoute('/privacy'),
+                child: Text(
+                  _smallScreen ? 'Info' : 'Learn More',
+                  style: const TextStyle(
+                      color: Colors.blue, decoration: TextDecoration.underline),
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.only(left: _screenSize.width * 0.1),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      setOverlay(show: false);
+                      setState(() {});
+                    },
+                    child: const Text(
+                      'OK',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+        ),
+      ),
+    );
+    return StackWidgetProperties(
+      alignment: Alignment.bottomRight,
+      child: widget,
     );
   }
 }

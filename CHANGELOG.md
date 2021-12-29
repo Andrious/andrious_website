@@ -1,4 +1,8 @@
 
+1.39.0
+ December 28, 2021
+- mvc_web 1.3.0
+
 ## 1.38.0
  December 17, 2021
 - now using the package, mvc_web

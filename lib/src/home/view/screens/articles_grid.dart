@@ -4,8 +4,9 @@
 
 import 'package:andrious/src/view.dart';
 
-class ArticlesGrid extends WebPage {
-  ArticlesGrid({Key? key}) : super(ArticlesCarouselController(), key: key);
+class ArticlesGrid extends WebPageWidget {
+  ArticlesGrid({Key? key})
+      : super(controller: ArticlesCarouselController(), key: key);
 
   @override
   String get title => 'My Technical Articles';

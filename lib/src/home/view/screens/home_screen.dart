@@ -20,13 +20,21 @@ class HomeScreen extends WebPageBase {
   }
 
   @override
-  List<Widget>? child(BuildContext context, [WebPage? widget]) {
+  List<Widget>? child(BuildContext context, [WebPageWidget? widget]) {
     // TODO: implement child
     throw UnimplementedError();
   }
 }
 
 class HomeScreenController extends WebPageBaseController {
+  @override
+  void initState() {
+    super.initState();
+    _state = state!;
+  }
+
+  late State _state;
+
   /// Provide the body of the webpage
   @override
   Widget body(BuildContext context) {
@@ -134,9 +142,11 @@ class HomeScreenController extends WebPageBaseController {
         func(overlayWidget);
       },
       panelStartCallback: (activePanelNumber, func) {
+        //ignore: avoid_print
         print('panel start callback $activePanelNumber');
       },
       panelEndCallback: (endingPanelNumber, func) {
+        //ignore: avoid_print
         print('panel end callback $endingPanelNumber');
       },
       lastPanelForceComplete: true,
@@ -144,10 +154,10 @@ class HomeScreenController extends WebPageBaseController {
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => inSmallScreen
+  PreferredSizeWidget? onAppBar() => inSmallScreen
       ? AppBar(
           backgroundColor:
-              Theme.of(context).bottomAppBarColor.withOpacity(opacity),
+              Theme.of(_state.context).bottomAppBarColor.withOpacity(opacity),
           elevation: 0,
           centerTitle: true,
           actions: const [
@@ -190,16 +200,13 @@ class HomeScreenController extends WebPageBaseController {
   }
 
   @override
-  List<Widget>? child(BuildContext context, [WebPage? widget]) {
-    // TODO: implement child
-    throw UnimplementedError();
-  }
-
-  @override
   StackWidgetProperties? screenOverlay(BuildContext context) {
     // TODO: implement screenOverlay
     throw UnimplementedError();
   }
+
+  @override
+  Widget builder(BuildContext context) => const SizedBox();
 }
 
 List<Widget> panelList = [];

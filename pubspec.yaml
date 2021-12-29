@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.38.0
+version: 1.39.0
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -53,10 +53,6 @@ dependencies:
 
   # https://pub.dev/packages/provider/
   provider: ^6.0.0
-
-  # https://pub.dev/packages/mvc_application/
-  mvc_application: ^8.0.0
-#    path: ../../packages/mvc_application
 
   mvc_web:
 #      path: ../../packages/mvc_web

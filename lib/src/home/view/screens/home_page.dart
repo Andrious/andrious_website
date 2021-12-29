@@ -4,8 +4,8 @@
 
 import 'package:andrious/src/view.dart';
 
-class HomePage extends WebPage {
-  HomePage({Key? key}) : super(HomePageController(), key: key);
+class HomePage extends WebPageWidget {
+  HomePage({Key? key}) : super(controller: HomePageController(), key: key);
 
   @override
   String get title => 'Andrious Solutions Ltd.';
@@ -20,15 +20,17 @@ class HomePageController extends WebPageController {
   void initState() {
     super.initState();
     _widget = widget as HomePage;
+    _state = state!;
   }
 
   late HomePage _widget;
+  late State _state;
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => inSmallScreen
+  PreferredSizeWidget? onAppBar() => inSmallScreen
       ? AppBar(
           backgroundColor:
-              Theme.of(context).bottomAppBarColor.withOpacity(opacity),
+              Theme.of(_state.context).bottomAppBarColor.withOpacity(opacity),
           elevation: 0,
           centerTitle: true,
           actions: [
@@ -52,21 +54,12 @@ class HomePageController extends WebPageController {
         );
 
   @override
-  List<Widget> header01(BuildContext context, [WebPage? widget]) {
-    final Size _screenSize = screenSize;
-    return [
-      FeaturedHeading(
-        screenSize: _screenSize,
-      ),
-      FeaturedTiles(screenSize: _screenSize)
-    ];
-  }
+  Widget? builder(BuildContext context) => null;
 
   @override
-  List<Widget> withHeader04(BuildContext context, [WebPage? widget]) {
+  List<Widget>? buildList(BuildContext context) {
     final List<Widget> children = [];
-//    children.add(DestinationHeading(screenSize: _screenSize));
-//    children.add(SizedBox(height: screenSize!.height * 0.10));
+
     children.add(
       const Padding(
         padding: EdgeInsets.only(top: 30, bottom: 20),

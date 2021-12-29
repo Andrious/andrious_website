@@ -4,18 +4,16 @@
 
 import 'package:andrious/src/view.dart';
 
-class FlutterUIs extends WebPage {
+class FlutterUIs extends WebPageWidget {
   factory FlutterUIs({Key? key}) => _this ??= FlutterUIs._(key);
   FlutterUIs._(Key? key)
       : super(
-          FlutterUIsController(
+          controller: FlutterUIsController(
             primary: false,
             physics: const AlwaysScrollableScrollPhysics(),
           ),
           key: key,
           title: 'Flutter UI Examples',
-          coverBanner: false,
-          hasAccessBar: false,
           hasBottomBar: false,
         );
   static FlutterUIs? _this;
@@ -121,7 +119,10 @@ class FlutterUIsController extends WebPageController {
   }
 
   @override
-  List<Widget>? withHeader04(BuildContext context, [WebPage? widget]) => [
+  Widget? builder(BuildContext context) => null;
+
+  @override
+  List<Widget>? buildList(BuildContext context) => [
         flutterUI(context),
         flutterUIInstall(context),
         flutterUChrome(context),

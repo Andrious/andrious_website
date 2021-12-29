@@ -103,6 +103,7 @@ class _ArticleCarouselState extends State<ArticleCarousel>
 class ArticlesCarouselController extends WebPageController {
   factory ArticlesCarouselController() =>
       _this ??= ArticlesCarouselController._();
+
   //
   ArticlesCarouselController._() {
     _webPages = {
@@ -357,6 +358,7 @@ class ArticlesCarouselController extends WebPageController {
     };
     _articles = _webPages.keys.toList(growable: false);
   }
+
   //
   static ArticlesCarouselController? _this;
 
@@ -402,39 +404,40 @@ If you're a member, it's free. If not, you may wish to cancel.
   }
 
   @override
-  List<Widget>? child(BuildContext context, [WebPage? widget]) => [
-        LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: constraints.minWidth,
-              minHeight: constraints.minHeight,
-              maxWidth: constraints.maxWidth,
-              maxHeight: constraints.maxHeight,
+//  List<Widget>? child(BuildContext context, [WebPageWidget? widget]) => [
+  Widget? builder(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) =>
+          ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: constraints.minWidth,
+          minHeight: constraints.minHeight,
+          maxWidth: constraints.maxWidth,
+          maxHeight: constraints.maxHeight,
+        ),
+        child: Material(
+          child: GridView.builder(
+            primary: false,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(8),
+            shrinkWrap: true,
+            itemCount: articles.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
+              childAspectRatio: 5 / 4,
+              crossAxisSpacing: 10,
             ),
-            child: Material(
-              child: GridView.builder(
-                primary: false,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(8),
-                shrinkWrap: true,
-                itemCount: articles.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:
-                      ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
-                  childAspectRatio: 5 / 4,
-                  crossAxisSpacing: 10,
-                ),
-                itemBuilder: (BuildContext context, int index) => ArticleImage(
-                  this,
-                  index: index,
-                  constraints: constraints,
-                ),
-              ),
+            itemBuilder: (BuildContext context, int index) => ArticleImage(
+              this,
+              index: index,
+              constraints: constraints,
             ),
           ),
-        )
-      ];
+        ),
+      ),
+    );
+//      ];
+  }
 }
 
 class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {
