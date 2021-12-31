@@ -1,4 +1,8 @@
 
+1.40.0
+ December 30, 2021
+- routeInformationProvider: AppRouteInformationProvider(),
+
 1.39.0
  December 28, 2021
 - mvc_web 1.3.0

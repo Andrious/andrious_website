@@ -68,6 +68,7 @@ class _MyAppState extends AppState {
             '/interfaces': (_) => FlutterUIs(),
           }),
           routeInformationParser: AppRouteInformationParser(),
+          routeInformationProvider: AppRouteInformationProvider(),
         );
   TextStyle? bodyText2;
 

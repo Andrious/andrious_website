@@ -15,6 +15,10 @@ flutter run -d chrome --web-renderer html // to run the app
 
 flutter build web --web-renderer html --release // to generate a production build
 
+auto (default) - automatically chooses which renderer to use. This option chooses the HTML renderer when the app is running in a mobile browser, and CanvasKit renderer when the app is running in a desktop browser.
+--web-renderer html        is smaller
+--web-renderer canvaskit   is faster
+
 HTML renderer: when the app is running in a mobile browser.
 CanvasKit renderer: when the app is running in a desktop browser.
 
