@@ -9,11 +9,11 @@ in the folder, 'deployment.' It's got its own git and makes things easier.
 
 GOTO exit
 
-flutter build web --release // To build in the build/web
+flutter build web --release // To build in the build/web for production
 
 flutter run -d chrome --web-renderer html // to run the app
 
-flutter build web --web-renderer html --release // to generate a production build
+flutter build web --web-renderer html --release
 
 auto (default) - automatically chooses which renderer to use. This option chooses the HTML renderer when the app is running in a mobile browser, and CanvasKit renderer when the app is running in a desktop browser.
 --web-renderer html        is smaller
