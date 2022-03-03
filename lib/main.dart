@@ -77,6 +77,7 @@ class _MyAppState extends AppState {
         textTheme: customTheme.textTheme.merge(
           TextTheme(
             bodyText2: TextStyle(
+              color: Colors.white70,
               fontSize: customTheme.textTheme.bodyText2!.fontSize! +
                   AppTheme.fontIncrement,
             ),

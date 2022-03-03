@@ -1,9 +1,14 @@
 
-1.40.0
+## 1.40.1
+ March 02, 2022
+- sdk: ">=2.16.1 <3.0.0" from ">=2.12.0 <3.0.0"
+- Colors.white70 when in Dark mode.
+
+## 1.40.0
  December 30, 2021
 - routeInformationProvider: AppRouteInformationProvider(),
 
-1.39.0
+## 1.39.0
  December 28, 2021
 - mvc_web 1.3.0
 

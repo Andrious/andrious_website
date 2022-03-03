@@ -1,10 +1,14 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> New instructions below
 
 flutter build web --web-renderer html --release
+flutter build web --release // To build in the build/web for production
 
-Tell you what, just build the web folder and then place a copy
-in the folder, 'deployment.' It's got its own git and makes things easier.
+Build the web folder under build/ and place a copy in the folder, 'deployment.'
+It's got its own git and makes things easier.
 
+Then commit
 
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Old instructions below
 ::@ECHO OFF
 
 GOTO exit
