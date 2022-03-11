@@ -28,6 +28,7 @@ class HomePageSmallController extends WebPageController {
     // Determine if an overlay is to be displayed.
     showOverlay = Prefs.getBool('showOverlay', true);
     projects = HowProjectsWork(showPopup: false, readMore: true);
+    company = CompanyHistory();
     useCase = UseCaseExample(readMore: true);
     paradox = ProgrammingParadox(readMore: true, hasBottomBar: false);
     disclose = InitialDisclosure(banner: false);
@@ -41,6 +42,7 @@ class HomePageSmallController extends WebPageController {
   late State _state;
 
   late HowProjectsWork projects;
+  late CompanyHistory company;
   late UseCaseExample useCase;
   late ProgrammingParadox paradox;
   late InitialDisclosure disclose;
@@ -71,6 +73,7 @@ class HomePageSmallController extends WebPageController {
     final _smallScreen = inSmallScreen;
     final List<Widget> children = [];
     children.addAll((projects.builder(context) as Stack).children);
+    children.add(company.builder(context));
     children.add(projects.popup(context, showLink: false));
     children.addAll(useCase.buildList(context));
     children.add(paradox.builder(context));
@@ -270,7 +273,7 @@ class HomePageSmallController extends WebPageController {
         const SizedBox(height: 20),
         if (!smallScreen)
           Text(
-            'v. ${App.version}    Copyright © 2021 | Andrious Solutions Ltd.',
+            'Made in Flutter  v. ${App.version}    Copyright © 2022 | Andrious Solutions Ltd.',
             style: TextStyle(
               color: Colors.blueGrey[300],
               fontSize: 14,
@@ -279,7 +282,7 @@ class HomePageSmallController extends WebPageController {
         else
           Column(children: [
             Text(
-              'v. ${App.version}    Copyright © 2021',
+              'v. ${App.version}    Copyright © 2022',
               style: textStyle,
             ),
             Text(

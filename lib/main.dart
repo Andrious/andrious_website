@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 // Has a conditional import for runApp()
+import 'package:andrious/src/app/view/utils/app_localizations.dart';
 import 'package:andrious/src/view.dart';
 
 void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
@@ -52,14 +53,16 @@ class _MyAppState extends AppState {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
-            I10nDelegate(),
+            L10n.delegate,
           ],
-          supportedLocales: I10n.supportedLocales,
+          locale: AppLocalizations().textLocale,
+          supportedLocales: AppLocalizations().supportedLocales,
           routerDelegate: AppRouterDelegate(routes: {
             '/': (_) => HomePageSmall(),
             '/projects_work': (_) => HowProjectsWork(),
             '/five_whys': (_) => FiveWhys(),
             '/paradox': (_) => ProgrammingParadox(),
+            '/company': (_) => CompanyHistory(),
             '/use_case': (_) => UseCaseExample(),
             '/disclosure': (_) => InitialDisclosure(),
             '/articles': (_) => ArticlesGrid(),
@@ -70,6 +73,7 @@ class _MyAppState extends AppState {
           routeInformationParser: AppRouteInformationParser(),
           routeInformationProvider: AppRouteInformationProvider(),
         );
+
   TextStyle? bodyText2;
 
   @override

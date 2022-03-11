@@ -1,4 +1,9 @@
 
+## 1.41.0
+ March 10, 2022
+- Introduce Company History
+- SEO index.html
+
 ## 1.40.1
  March 02, 2022
 - sdk: ">=2.16.1 <3.0.0" from ">=2.12.0 <3.0.0"

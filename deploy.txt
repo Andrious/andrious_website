@@ -4,7 +4,16 @@ flutter build web --web-renderer html --release
 flutter build web --release // To build in the build/web for production
 
 Build the web folder under build/ and place a copy in the folder, 'deployment.'
+
+copy this back to index.html:
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Local Winnipeg company developing apps using Google's cross-platform SDK called Flutter to create mobile applications as well as software to run on the Web as a Flutter Web app or as a Windows even Linx application using the Flutter desktop. Flutter officially launched on Dec. 4th, 2018. I began working in Flutter nine months earlier after working 17 years in a sea of cubicles. I started my own company Andrious Solutions (corporation# 9363076) and recently moved to Winnipeg. I did become a prominent contributor to the Flutter community having written a number of technical articles and released some 12 libraries called Dart packages for Flutter developers. Winnipeg Manitoba software developer.">
+  <meta name="keywords" content="winnipeg, manitoba, software, developer, applications, apps, mobile, web, desktop, flutter, local, programming, cross-platform, standalone, one, codebase">
+
+
 It's got its own git and makes things easier.
+
 
 Then commit
 

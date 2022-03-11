@@ -39,6 +39,7 @@ export 'package:andrious/src/home/view/utils/responsive.dart';
 //export 'package:andrious/src/home/view/utils/bottom_bar_column.dart';
 export 'package:andrious/src/home/view/utils/info_text.dart';
 //export 'package:andrious/src/home/view/screens/components/bottom_bar.dart';
+export 'package:l10n_translator/l10n.dart';
 
 /// Webpage templates
 export 'package:mvc_web/mvc_web.dart';
@@ -73,6 +74,7 @@ export 'package:andrious/src/home/view/screens/dart_packages.dart';
 export 'package:andrious/src/home/view/screens/flutter_uis.dart';
 export 'package:andrious/src/home/view/screens/home_page.dart';
 export 'package:andrious/src/home/view/screens/how_projects_work.dart';
+export 'package:andrious/src/home/view/screens/company_history.dart';
 export 'package:andrious/src/home/view/screens/initial_disclosure_agreement.dart';
 export 'package:andrious/src/home/view/screens/privacy_policy.dart';
 export 'package:andrious/src/home/view/screens/programming_paradox.dart';
