@@ -1,4 +1,10 @@
 
+## 1.42.0
+ March 12, 2022
+- Add robots.txt
+- Add <noscript></noscript>
+
+
 ## 1.41.0
  March 10, 2022
 - Introduce Company History

@@ -14,7 +14,8 @@ export 'package:mvc_application/view.dart' hide AppMenu; //, runApp;
 export 'package:state_set/state_set.dart';
 
 /// App level code
-export 'package:andrious/src/app/view/html_behaviour.dart';
+export 'package:andrious/src/app/view.dart';
+
 export 'package:auto_size_text/auto_size_text.dart';
 
 /// Try to use this instead of auto size text one day gp
@@ -23,16 +24,8 @@ export 'package:auto_size_text/auto_size_text.dart';
 /// Google Fonts
 export 'package:google_fonts/google_fonts.dart';
 
-/// Utility pages - app level
-export 'package:andrious/src/app/view/utils/authentication.dart';
-//export 'package:andrious/src/app/view/utils/basic_widgets.dart';
-export 'package:flutter/gestures.dart'; // for TapGestureRecognizer()
-//export 'package:andrious/src/app/view/utils/hyperlink.dart';
-//export 'package:andrious/src/app/view/utils/iframe_widget.dart';
-//export 'package:andrious/src/app/view/screens/template/scaffold_screens.dart';
-export 'package:andrious/src/app/view/utils/theme_data.dart';
-export 'package:andrious/src/app/view/utils/scrollytell.dart';
-//export 'package:andrious/src/app/view/utils/web_utils.dart';
+// for TapGestureRecognizer()
+export 'package:flutter/gestures.dart';
 
 /// Utility pages - home level
 export 'package:andrious/src/home/view/utils/responsive.dart';
