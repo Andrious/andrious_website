@@ -1,9 +1,9 @@
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> New instructions below
 
-flutter build web --web-renderer html --release
 flutter build web --release // To build in the build/web for production
+flutter build web --web-renderer html --release
 
-Build the web folder under build/ and place a copy in the folder, 'deployment.'
+This builds the web folder build/ . Place a copy in the folder, 'deployment.'
 
 copy this back to index.html:
   <meta charset="UTF-8">
