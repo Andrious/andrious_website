@@ -6,13 +6,13 @@ import 'package:andrious/src/view.dart';
 
 class ProgrammingParadox extends WebPageWidget {
   ProgrammingParadox({
-    Key? key,
+    GlobalKey? key,
     this.readMore = false,
     bool hasBottomBar = true,
   }) : super(
+          key: key ?? LabeledGlobalKey('ProgrammingParadox'),
           title: 'The Programming Paradox',
           controller: _ProgrammingParadoxController(),
-          key: key,
           hasBottomBar: hasBottomBar,
         );
   final bool? readMore;

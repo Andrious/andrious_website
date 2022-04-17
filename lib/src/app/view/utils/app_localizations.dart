@@ -1,7 +1,10 @@
 import 'package:andrious/src/view.dart'
-    show L10nTranslations, Locale, arSA, esAR, frFR, hiIN, koKP, ptPT, zhCN;
+    show L10n, Locale, arSA, esAR, frFR, hiIN, koKP, ptPT, zhCN;
 
-class AppLocalizations extends L10nTranslations {
+//ignore: non_constant_identifier_names
+final AppTrs = AppLocalizations();
+
+class AppLocalizations extends L10n {
   factory AppLocalizations() => _this ??= AppLocalizations._();
   AppLocalizations._();
   static AppLocalizations? _this;

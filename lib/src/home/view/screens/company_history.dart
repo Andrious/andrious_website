@@ -6,11 +6,11 @@ import 'package:andrious/src/view.dart';
 
 class CompanyHistory extends WebPageWidget {
   CompanyHistory({
-    Key? key,
+    GlobalKey? key,
     this.readMore = false,
   }) : super(
           title: 'Company History',
-          key: key,
+          key: key ?? LabeledGlobalKey('CompanyHistory'),
           controller: _CompanyHistoryController(),
         );
   final bool? readMore;

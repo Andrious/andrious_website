@@ -5,7 +5,11 @@
 import 'package:andrious/src/view.dart';
 
 class HomePage extends WebPageWidget {
-  HomePage({Key? key}) : super(controller: HomePageController(), key: key);
+  HomePage({GlobalKey? key})
+      : super(
+          key: key ?? LabeledGlobalKey('HomePage'),
+          controller: HomePageController(),
+        );
 
   @override
   String get title => 'Andrious Solutions Ltd.';

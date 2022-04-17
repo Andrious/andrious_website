@@ -5,12 +5,12 @@
 import 'package:andrious/src/view.dart';
 
 class HomePageSmall extends WebPageWidget {
-  factory HomePageSmall({Key? key}) => _this ??= HomePageSmall._(key);
-  HomePageSmall._(Key? key)
+  factory HomePageSmall({GlobalKey? key}) => _this ??= HomePageSmall._(key);
+  HomePageSmall._(GlobalKey? key)
       : super(
+          key: key ?? LabeledGlobalKey('HomePageSmall'),
           title: 'Andrious Solutions Ltd.',
           controller: HomePageSmallController(),
-          key: key,
           hasBottomBar: true,
         );
   static HomePageSmall? _this;
@@ -27,6 +27,8 @@ class HomePageSmallController extends WebPageController {
 
     // Determine if an overlay is to be displayed.
     showOverlay = Prefs.getBool('showOverlay', true);
+    shrine = Shrine();
+    bazaar = Bazaar();
     projects = HowProjectsWork(showPopup: false, readMore: true);
     company = CompanyHistory();
     useCase = UseCaseExample(readMore: true);
@@ -41,6 +43,8 @@ class HomePageSmallController extends WebPageController {
   late HomePageSmall _widget;
   late State _state;
 
+  late Shrine shrine;
+  late Bazaar bazaar;
   late HowProjectsWork projects;
   late CompanyHistory company;
   late UseCaseExample useCase;
@@ -72,8 +76,11 @@ class HomePageSmallController extends WebPageController {
     final _screenSize = screenSize;
     final _smallScreen = inSmallScreen;
     final List<Widget> children = [];
-    children.addAll((projects.builder(context) as Stack).children);
+    children.add(shrine.builder(context));
+    children.add(const SizedBox(height: 50));
+    children.add(bazaar.builder(context));
     children.add(company.builder(context));
+    children.addAll((projects.builder(context) as Stack).children);
     children.add(projects.popup(context, showLink: false));
     children.addAll(useCase.buildList(context));
     children.add(paradox.builder(context));
@@ -179,8 +186,10 @@ class HomePageSmallController extends WebPageController {
             children: [
               BottomBarColumn(
                 heading: 'ABOUT',
-                s1: 'Contact Me',
-                onPressedS1: () {},
+                // s1: 'Shrine App',
+                // onPressedS1: () {
+                //   AppRouterDelegate.nextRoute('/shrine');
+                // },
                 s2: 'Privacy Policy',
                 onPressedS2: () {
                   AppRouterDelegate.nextRoute('/privacy');
@@ -300,6 +309,9 @@ class HomePageSmallController extends WebPageController {
     if (!showOverlay) {
       return null;
     }
+
+    // Call this context's State object's build() function again.
+    widgetInherited(context);
 
     final _screenSize = screenSize;
 

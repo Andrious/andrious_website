@@ -5,14 +5,14 @@
 import 'package:andrious/src/view.dart';
 
 class FlutterUIs extends WebPageWidget {
-  factory FlutterUIs({Key? key}) => _this ??= FlutterUIs._(key);
-  FlutterUIs._(Key? key)
+  factory FlutterUIs({GlobalKey? key}) => _this ??= FlutterUIs._(key);
+  FlutterUIs._(GlobalKey? key)
       : super(
+          key: key ?? LabeledGlobalKey('FlutterUIs'),
           controller: FlutterUIsController(
             primary: false,
             physics: const AlwaysScrollableScrollPhysics(),
           ),
-          key: key,
           title: 'Flutter UI Examples',
           hasBottomBar: false,
         );

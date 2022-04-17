@@ -8,13 +8,14 @@ import 'package:andrious/src/view.dart';
 
 void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
 
-class MyApp extends AppMVC with WebPageFeaturesMixin {
+class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
   factory MyApp({Key? key}) => _this ??= MyApp._(key);
   MyApp._(Key? key) : super(key: key, errorReport: _onErrorReport);
+
   static MyApp? _this;
 
   @override
-  AppState createState() => _MyAppState();
+  AppState createAppState() => _MyAppState();
 
   /// Log the error
   static Future<void> _onErrorReport(
@@ -49,16 +50,25 @@ class _MyAppState extends AppState {
           debugShowCheckedModeBanner: false,
 //          debugPaintSizeEnabled: true,
           title: 'Andrious Solutions',
+          useInheritedMediaQuery: true,
+          builder: DevicePreview.appBuilder,
+//          locale: AppTrs.textLocale,
+          locale: const Locale('en', 'CA'),
+//         supportedLocales: AppTrs.supportedLocales,
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('en', 'GB'),
+            Locale('en', 'AU'),
+          ],
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
-            L10n.delegate,
+//            L10n.delegate!,
           ],
-          locale: AppLocalizations().textLocale,
-          supportedLocales: AppLocalizations().supportedLocales,
           routerDelegate: AppRouterDelegate(routes: {
-            '/': (_) => HomePageSmall(),
+            '/': (_) =>
+                HomePageSmall(key: GlobalKey(debugLabel: 'HomePageSmall')),
             '/projects_work': (_) => HowProjectsWork(),
             '/five_whys': (_) => FiveWhys(),
             '/paradox': (_) => ProgrammingParadox(),
@@ -69,6 +79,8 @@ class _MyAppState extends AppState {
             '/packages': (_) => interactiveViewer(DartPackages()),
             '/privacy': (_) => PrivacyPolicy(),
             '/interfaces': (_) => FlutterUIs(),
+//            '/shrine': (_) => Shrine(),
+            '/shrine_privacy': (_) => ShrinePolicy(),
           }),
           routeInformationParser: AppRouteInformationParser(),
           routeInformationProvider: AppRouteInformationProvider(),
@@ -296,7 +308,9 @@ class _ReportError {
             itemCount: text.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(text[index]),
+                title: SelectableText(
+                  text[index],
+                ),
               );
             },
           ),

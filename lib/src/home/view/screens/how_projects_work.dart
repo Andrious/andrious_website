@@ -10,9 +10,9 @@ class HowProjectsWork extends WebPageWidget {
     this.showPopup = true,
     this.readMore = false,
   }) : super(
+          key: key ?? LabeledGlobalKey('HowProjectsWork'),
           title: 'How Projects Really Work',
           controller: HowProjectsWorkController(),
-          key: key,
         );
   final bool showPopup;
   final bool readMore;
@@ -311,10 +311,10 @@ class _Content {
 }
 
 class FiveWhys extends WebPageWidget {
-  FiveWhys({Key? key})
+  FiveWhys({GlobalKey? key})
       : super(
           controller: FiveWhysController(),
-          key: key,
+          key: key ?? GlobalKey(debugLabel: 'FiveWhys'),
           hasBottomBar: true,
         );
 }

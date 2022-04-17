@@ -5,10 +5,10 @@
 import 'package:andrious/src/view.dart';
 
 class PrivacyPolicy extends WebPageWidget {
-  PrivacyPolicy({Key? key})
+  PrivacyPolicy({GlobalKey? key})
       : super(
+          key: key ?? LabeledGlobalKey('PrivacyPolicy'),
           controller: _PrivacyPolicy(),
-          key: key,
           title: 'Privacy Policy',
           hasBottomBar: false,
         );

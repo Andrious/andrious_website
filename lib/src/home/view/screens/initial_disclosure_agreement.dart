@@ -5,8 +5,11 @@
 import 'package:andrious/src/view.dart';
 
 class InitialDisclosure extends WebPageWidget {
-  InitialDisclosure({Key? key, this.banner = true})
-      : super(controller: _InitialDisclosureController(), key: key);
+  InitialDisclosure({GlobalKey? key, this.banner = true})
+      : super(
+          key: key ?? LabeledGlobalKey('InitialDisclosure'),
+          controller: _InitialDisclosureController(),
+        );
   final bool banner;
 
   @override
