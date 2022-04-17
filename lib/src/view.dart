@@ -15,8 +15,11 @@ export 'package:state_set/state_set.dart';
 
 /// App level code
 export 'package:andrious/src/app/view.dart';
-
 export 'package:auto_size_text/auto_size_text.dart';
+
+/// Device Preview
+export 'package:device_preview/device_preview.dart'
+    hide basicLocaleListResolution;
 
 /// Try to use this instead of auto size text one day gp
 //export 'package:flutter_markdown/flutter_markdown.dart';
@@ -31,11 +34,13 @@ export 'package:flutter/gestures.dart';
 export 'package:andrious/src/home/view/utils/responsive.dart';
 //export 'package:andrious/src/home/view/utils/bottom_bar_column.dart';
 export 'package:andrious/src/home/view/utils/info_text.dart';
+export 'package:andrious/src/home/view/utils/devicepreviw_screen.dart';
+
 //export 'package:andrious/src/home/view/screens/components/bottom_bar.dart';
 export 'package:l10n_translator/l10n.dart';
 
 /// Webpage templates
-export 'package:mvc_web/mvc_web.dart';
+export 'package:mvc_web/mvc_web.dart' hide DeviceInfo; //device_preview.dart
 
 //export 'package:andrious/src/app/view/screens/template/web_page.dart';
 //export 'package:andrious/src/app/view/screens/template/webpage_base.dart';
@@ -71,4 +76,9 @@ export 'package:andrious/src/home/view/screens/company_history.dart';
 export 'package:andrious/src/home/view/screens/initial_disclosure_agreement.dart';
 export 'package:andrious/src/home/view/screens/privacy_policy.dart';
 export 'package:andrious/src/home/view/screens/programming_paradox.dart';
+export 'package:andrious/src/home/view/screens/shrine_mvc.dart';
+export 'package:andrious/src/home/view/screens/bazaar.dart';
 export 'package:andrious/src/home/view/screens/use_case.dart';
+
+/// App screens
+export 'package:andrious/src/home/view/screens/shrine_policy.dart';

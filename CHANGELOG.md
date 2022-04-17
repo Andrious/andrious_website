@@ -1,9 +1,14 @@
 
+## 1.43.0
+ April 16, 2022
+- import 'package:ads/ads.dart' show Ads is commented out
+- applicationId "com.andrioussolutions.bazaar_demo"
+- msix_config to store on partner.microsoft.com
+
 ## 1.42.0
  March 12, 2022
 - Add robots.txt
 - Add <noscript></noscript>
-
 
 ## 1.41.0
  March 10, 2022

@@ -6,14 +6,15 @@ import 'package:andrious/src/view.dart';
 
 class UseCaseExample extends WebPageWidget {
   UseCaseExample({
-    Key? key,
+    GlobalKey? key,
+//    Key? key,
     this.readMore = false,
     this.banner = false,
     bool? hasBottomBar,
   }) : super(
+          key: key ?? LabeledGlobalKey('UseCaseExample'),
           title: 'Use Case',
           controller: _UseCaseExampleController(),
-          key: key,
           hasBottomBar: hasBottomBar ?? true,
         );
   final bool? readMore;
