@@ -1,9 +1,10 @@
 
-## 1.43.0
+## 1.43.0+01
  April 16, 2022
 - import 'package:ads/ads.dart' show Ads is commented out
 - applicationId "com.andrioussolutions.bazaar_demo"
 - msix_config to store on partner.microsoft.com
+- Shrine & Bazaar apps are included.
 
 ## 1.42.0
  March 12, 2022

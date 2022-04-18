@@ -95,14 +95,14 @@ class _BazaarController extends WebPageController with DevicePreviewMixin {
   Widget get description => const ToolPanelSection(
         title: '',
         children: [
-          Text("     That's a working app running on this site,"),
-          Text("     but it'll also run on any mobile or laptop."),
-          Text('     One program running anywhere.'),
-          Text("     This just wasn't possible for decades!"),
+          Text("     Here's another working app. Imagine all,"),
+          Text('     the capabilities you want in your app'),
+          Text('     running on any device you want adjusting'),
+          Text("     its 'look and feel' accordingly."),
           Text(' '),
-          Text("     Switch 'Device preview' to run as a web app."),
-          Text('     Select a different device below'),
-          Text('     ...and image the possibilities.'),
+          Text('     You can take advantage of the platform used'),
+          Text('     and yet have all the code in one place and'),
+          Text('     in one language. Makes for a maintainable app.'),
         ],
       );
 }
