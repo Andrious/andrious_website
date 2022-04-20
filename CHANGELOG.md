@@ -1,4 +1,8 @@
 
+## 1.43.1
+ April 20, 2022
+- CNAME flutter.andrioussolutions.com
+
 ## 1.43.0+01
  April 16, 2022
 - import 'package:ads/ads.dart' show Ads is commented out
