@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.43.1
+version: 1.43.1+01
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -38,11 +38,13 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # https://github.com/aloisdeniel/flutter_device_preview
-  device_preview:
-    git:
-      url: https://github.com/AndriousSolutions/flutter_device_preview.git
-      ref: master
-      path: device_preview
+  # https://pub.dev/packages/device_preview/
+  device_preview: ^1.0.0
+#    git:
+#      url: https://github.com/AndriousSolutions/flutter_device_preview.git
+#      ref: master
+#      path: device_preview
+
 #    path: C:/Programs/Tools/Projects/Flutter/apps/flutter_device_preview/device_preview
 
   # https://pub.dev/packages/easy_dynamic_theme/

@@ -95,7 +95,7 @@ class _BazaarController extends WebPageController with DevicePreviewMixin {
   Widget get description => const ToolPanelSection(
         title: '',
         children: [
-          Text("     Here's another working app. Imagine all,"),
+          Text("     Here's another working app. Imagine all "),
           Text('     the capabilities you want in your app'),
           Text('     running on any device you want adjusting'),
           Text("     its 'look and feel' accordingly."),
