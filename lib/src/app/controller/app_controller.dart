@@ -69,7 +69,7 @@ class AppController extends c.AppController {
 
   Future<bool> signInWithTwitter() async {
     await MsgBox(
-            title: 'Playhouse Under Development',
+            title: 'Andrious Solutions Ltd.',
             msg: 'Twitter not yet implemented.\nSign in with Google!',
             context: context!)
         .show();
@@ -107,7 +107,7 @@ class AppController extends c.AppController {
 
   Future<bool> signInEmailPassword(BuildContext context) async {
     await MsgBox(
-            title: 'Playhouse Under Development',
+            title: 'Andrious Solutions Ltd.',
             msg: 'Email not yet implemented.\nSign in with Google!',
             context: context)
         .show();
@@ -203,7 +203,9 @@ void runApp(
     WidgetsFlutterBinding.ensureInitialized();
 
     // Allow for FirebaseCrashlytics.instance
-    await f.Firebase.initializeApp();
+    await f.Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
     // Supply Firebase Crashlytics
     final crash = FirebaseCrashlytics.instance;

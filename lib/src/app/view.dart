@@ -9,6 +9,9 @@
 /// App level code
 export 'package:andrious/src/app/view/html_behaviour.dart';
 
+/// Allow access to Firebase
+export 'package:andrious/src/app/view/firebase_options.dart';
+
 /// Utility pages - app level
 export 'package:andrious/src/app/view/utils/authentication.dart';
 export 'package:andrious/src/app/view/utils/theme_data.dart';

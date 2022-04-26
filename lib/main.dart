@@ -4,7 +4,8 @@
 
 // Has a conditional import for runApp()
 import 'package:andrious/src/app/view/utils/app_localizations.dart';
-import 'package:andrious/src/view.dart';
+import 'package:andrious/src/view.dart'; //hide runApp;
+//import 'package:andrious/src/controller.dart' show runApp;
 
 void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
 

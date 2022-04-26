@@ -6,3 +6,5 @@
 export 'package:mvc_application/controller.dart' hide AppController;
 
 export 'package:andrious/src/app/controller.dart';
+
+export 'package:andrious/src/app/controller/app_controller.dart';

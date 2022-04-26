@@ -1,8 +1,9 @@
 
-## 1.43.1+01
+## 1.43.1+02
  April 20, 2022
 - CNAME flutter.andrioussolutions.com
 - device_preview: ^1.0.0
+- firebase_options.dart
 
 ## 1.43.0+01
  April 16, 2022
