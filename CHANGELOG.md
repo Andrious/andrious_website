@@ -1,4 +1,8 @@
 
+## 1.44.0
+ April 27, 2022
+- urlTap() function to launch App store websites
+
 ## 1.43.1+02
  April 20, 2022
 - CNAME flutter.andrioussolutions.com

@@ -66,20 +66,20 @@ class _ShrineController extends WebPageController with DevicePreviewMixin {
 //                 defaultDevice: Devices.ios.iPhone13,),
           ),
         ),
-        if (!_darkMode)
-          Row(key: _rowKey, children: [
-            googlePlay('images/logos/googleplay_light.png'),
-            appStore('images/logos/appstore_light.png'),
-            windowsStore('images/logos/windows_store_light.png'),
-          ]),
-        if (_darkMode)
-          Row(key: _rowKey, children: [
-            // Image.asset('images/logos/googleplay_dark.png'),
-            // Image.asset('images/logos/appstore_dark.png'),
-            googlePlay('images/logos/googleplay_dark.png'),
-            appStore('images/logos/appstore_dark.png'),
-            windowsStore('images/logos/windows_store_dark.png'),
-          ])
+        Row(key: _rowKey, children: [
+          googlePlay(
+            appId: 'com.andrioussolutions.shrine_mvc',
+            darkMode: _darkMode,
+          ),
+          appStore(
+//            appId: 'com.andrioussolutions.bazaar_demo',
+            darkMode: _darkMode,
+          ),
+          windowsStore(
+            appId: '9NCVMK8PLKSP',
+            darkMode: _darkMode,
+          ),
+        ]),
       ]),
     );
   }
