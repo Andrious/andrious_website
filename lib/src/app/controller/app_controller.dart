@@ -14,9 +14,9 @@ import 'package:flutter/foundation.dart' show FlutterExceptionHandler;
 
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 
-import 'package:mvc_application/controller.dart' as c;
+import 'package:fluttery_framework/controller.dart' as c;
 
-import 'package:mvc_application/run_app.dart' as r;
+import 'package:fluttery_framework/run_app.dart' as r;
 
 class AppController extends c.AppController {
   factory AppController() => _this ??= AppController._();
@@ -148,7 +148,7 @@ class AppController extends c.AppController {
   // logout and refresh
   void logOut() {
     // signOut();
-    rebuild();
+    setState(() {});
   }
 
   // // 'disconnect' from Firebase

@@ -7,36 +7,27 @@ import 'package:andrious/src/view.dart' hide MyApp;
 //ignore: implementation_imports
 import 'package:shrine_mvc/main.dart';
 
-class Shrine extends WebPageWidget {
+class Shrine extends WebPage with DevicePreviewMixin {
   //
   Shrine({
     GlobalKey? key,
-    bool hasBottomBar = true,
+    super.addFooter,
   }) : super(
           key: key ?? LabeledGlobalKey('Shrine'),
           title: 'The Shrine Example App',
-          controller: _ShrineController(),
-          hasBottomBar: hasBottomBar,
         );
-}
-
-class _ShrineController extends WebPageController with DevicePreviewMixin {
-  Shrine? parentWidget;
-  MyApp? app;
 
   @override
-  Widget? builder(BuildContext context) {
+  Widget builder(BuildContext context) {
     //
-    final _screenSize = screenSize;
+    final _screenSize = context.screenSize;
 
-    final _smallScreen = inSmallScreen;
+    final _smallScreen = context.inSmallScreen;
 
-    final _landscape = inLandscape;
+    final _landscape = context.isLandscape;
 
     final _darkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-
-    parentWidget = widget as Shrine;
 
     final GlobalKey _rowKey = GlobalKey(debugLabel: 'appStores');
 

@@ -1,56 +1,42 @@
-// Copyright 2021 Andrious Solutions Ltd. All rights reserved.
+// Copyright 2022 Andrious Solutions Ltd. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 import 'package:andrious/src/view.dart';
 
-class UseCaseExample extends WebPageWidget {
+class UseCaseExample extends WebPage {
   UseCaseExample({
     GlobalKey? key,
-//    Key? key,
-    this.readMore = false,
-    this.banner = false,
-    bool? hasBottomBar,
+    this.readMore,
+    this.banner,
+    bool? addFooter,
   }) : super(
           key: key ?? LabeledGlobalKey('UseCaseExample'),
           title: 'Use Case',
-          controller: _UseCaseExampleController(),
-          hasBottomBar: hasBottomBar ?? true,
+          addFooter: addFooter ?? true,
         );
   final bool? readMore;
-  final bool banner;
-  static const double offset = 2000;
+  final bool? banner;
+  // static const double offset = 2000;
 
   static const image =
       'https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F2.jpg?alt=media';
-}
-
-class _UseCaseExampleController extends WebPageController {
-  _UseCaseExampleController() : super();
-
-  @override
-  void initState() {
-    super.initState();
-    _widget = widget as UseCaseExample;
-  }
-
-  UseCaseExample? _widget;
 
   /// Don't supply a widget.
   /// Instead, supply a list of widgets using buildList().
   @override
-  Widget? builder(BuildContext context) => null;
-
-  @override
-  List<Widget>? buildList(BuildContext context) {
+  Widget builder(BuildContext context) {
     //
-    final _smallScreen = inSmallScreen;
-    final _screenSize = screenSize;
-    final _landscape = inLandscape;
+    final _readMore = readMore ?? false;
+
+    final _smallScreen = context.inSmallScreen;
+    final _screenSize = context.screenSize;
+    final _landscape = context.isLandscape;
+
     final style = Theme.of(context).textTheme.bodyText2;
 
-    return [
-      if (!_smallScreen && (_widget?.banner ?? false))
+    return Column(children: [
+      if (!_smallScreen && (banner ?? false))
         Container(
           height: 300,
           width: double.infinity,
@@ -69,22 +55,17 @@ class _UseCaseExampleController extends WebPageController {
             _screenSize.height *
                 (_smallScreen ? (_landscape ? 0.05 : 0.05) : 0.1),
           ),
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.circular(30),
-          // ),
           padding: EdgeInsets.only(
               left: _smallScreen ? 5 : 10, right: _smallScreen ? 5 : 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // const Divider(),
-              // const SizedBox(height: 10),
               Text(
                 'Use Case Scenarios',
                 style: TextStyle(fontSize: _smallScreen ? 24 : 48),
               ),
               const Divider(),
-              if (_widget != null && !_widget!.readMore!)
+              if (!_readMore)
                 Column(children: [
                   Text(
                     useCase01,
@@ -101,7 +82,7 @@ class _UseCaseExampleController extends WebPageController {
                     textAlign: TextAlign.justify,
                   ),
                 ]),
-              if (_widget == null || _widget!.readMore!)
+              if (_readMore)
                 RichText(
                   text: TextSpan(
                     children: [
@@ -117,7 +98,7 @@ class _UseCaseExampleController extends WebPageController {
                         text: ' ...read more',
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            AppRouterDelegate.nextRoute('/use_case');
+                            AppRouterDelegate.newRoute('/use_case');
                           },
                       )
                     ],
@@ -127,7 +108,7 @@ class _UseCaseExampleController extends WebPageController {
           ),
         ),
       ),
-    ];
+    ]);
   }
 
   final useCase01 =

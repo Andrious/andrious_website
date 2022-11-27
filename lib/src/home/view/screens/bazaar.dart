@@ -7,36 +7,28 @@ import 'package:andrious/src/view.dart' hide MyApp;
 //ignore: implementation_imports
 import 'package:bazaar/main.dart';
 
-class Bazaar extends WebPageWidget {
+class Bazaar extends WebPage with DevicePreviewMixin {
   //
   Bazaar({
     GlobalKey? key,
-    bool hasBottomBar = true,
+    bool addFooter = true,
   }) : super(
           key: key ?? LabeledGlobalKey('Bazaar'),
           title: 'The Bazaar Example App',
-          controller: _BazaarController(),
-          hasBottomBar: hasBottomBar,
+          addFooter: addFooter,
         );
-}
-
-class _BazaarController extends WebPageController with DevicePreviewMixin {
-  Bazaar? parentWidget;
-  MyApp? app;
 
   @override
-  Widget? builder(BuildContext context) {
+  Widget builder(BuildContext context) {
     //
-    final _screenSize = screenSize;
+    final _screenSize = context.screenSize;
 
-    final _smallScreen = inSmallScreen;
+    final _smallScreen = context.inSmallScreen;
 
-    final _landscape = inLandscape;
+    final _landscape = context.isLandscape;
 
     final _darkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-
-    parentWidget = widget as Bazaar;
 
     // Allows the app to be moved around and not disposed the widget tree
     final _previewKey = GlobalKey(debugLabel: 'DevicePreview');

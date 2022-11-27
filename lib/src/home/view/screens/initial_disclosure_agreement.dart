@@ -4,28 +4,20 @@
 
 import 'package:andrious/src/view.dart';
 
-class InitialDisclosure extends WebPageWidget {
+class InitialDisclosure extends WebPage {
   InitialDisclosure({GlobalKey? key, this.banner = true})
       : super(
           key: key ?? LabeledGlobalKey('InitialDisclosure'),
-          controller: _InitialDisclosureController(),
+          title: 'Initial Disclosure Agreement',
         );
   final bool banner;
 
   @override
-  // Screen's title
-  String get title => 'Initial Disclosure Agreement';
-}
-
-class _InitialDisclosureController extends WebPageController {
-  @override
   Widget builder(BuildContext context) {
     //
-    final _screenSize = screenSize;
+    final _screenSize = context.screenSize;
 
-    final _smallScreen = inSmallScreen;
-
-    final _widget = widget as InitialDisclosure;
+    final _smallScreen = context.inSmallScreen;
 
     // Image of the disclosure
     final _disclosure = Image.asset(
@@ -52,7 +44,7 @@ class _InitialDisclosureController extends WebPageController {
         'https://docs.google.com/document/d/1Z2zdFIv_n1HXT2rkU8n6kAOr144b6nHsGbhkUOO9IA0/edit?usp=sharing');
 
     return Column(children: [
-      if (_widget.banner)
+      if (banner)
         SizedBox(
           height: _screenSize.height * 0.45,
           width: _screenSize.width,

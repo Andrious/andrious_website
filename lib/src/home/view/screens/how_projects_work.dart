@@ -4,7 +4,7 @@
 
 import 'package:andrious/src/view.dart';
 
-class HowProjectsWork extends WebPageWidget {
+class HowProjectsWork extends WebPage {
   HowProjectsWork({
     Key? key,
     this.showPopup = true,
@@ -12,45 +12,20 @@ class HowProjectsWork extends WebPageWidget {
   }) : super(
           key: key ?? LabeledGlobalKey('HowProjectsWork'),
           title: 'How Projects Really Work',
-          controller: HowProjectsWorkController(),
         );
-  final bool showPopup;
-  final bool readMore;
-  static const double offset = 200;
-
-  // Access to its controller
-  HowProjectsWorkController get webPageController =>
-      controller as HowProjectsWorkController;
-
-  Widget popup(BuildContext context,
-          {double? fontSize, bool showLink = true}) =>
-      webPageController.popup(
-        context,
-        fontSize: fontSize,
-        showLink: showLink,
-      );
-}
-
-class HowProjectsWorkController extends WebPageController {
-  factory HowProjectsWorkController() =>
-      _this ??= HowProjectsWorkController._();
-  HowProjectsWorkController._() : super();
-  static HowProjectsWorkController? _this;
+  final bool? showPopup;
+//  static const double offset = 200;
 
   final String _projectsImage = 'assets/images/how_projects_work.jpg';
 
   // Flag indicating whether 'read more' option is displayed or not.
-  bool readMore = false;
+  final bool? readMore;
 
   /// Return the widget containing the web page's main content.
   @override
   Widget builder(BuildContext context) {
     // MyApp.inSmallScreen allows this method to be called before the build() function.
-    final _smallScreen = inSmallScreen;
-
-    final HowProjectsWork _widget = widget as HowProjectsWork;
-
-    readMore = _widget.readMore;
+    final _smallScreen = context.inSmallScreen;
 
     return Stack(
       children: [
@@ -61,7 +36,7 @@ class HowProjectsWorkController extends WebPageController {
             onTap: !_smallScreen
                 ? null
                 : () {
-                    if (_widget.showPopup) {
+                    if (showPopup ?? true) {
                       setState(() {
                         _Content.visible = !_Content.visible;
                       });
@@ -98,7 +73,7 @@ class HowProjectsWorkController extends WebPageController {
             ),
           ),
         ),
-        if (_widget.showPopup)
+        if (showPopup ?? true)
           Visibility(
             visible: _Content.visible,
             // Method is below. Allowing to be called separately.
@@ -112,21 +87,20 @@ class HowProjectsWorkController extends WebPageController {
   Widget popup(
     BuildContext context, {
     double? fontSize,
-    bool showLink = true,
+    bool? showLink,
     bool? readMore,
   }) {
     //
+    final _showLink = showLink ?? true;
 
     // Display the 'read more' version if specified.
-    if (readMore != null) {
-      this.readMore = readMore;
-    }
+    final _readMore = readMore ?? true;
 
-    final _smallScreen = inSmallScreen;
+    final _smallScreen = context.inSmallScreen;
 
-    final _screenSize = screenSize;
+    final _screenSize = context.screenSize;
 
-    final _landscape = inLandscape;
+    final _landscape = context.isLandscape;
 
     const String _threeTreesImage = 'assets/images/three_trees.jpg';
 
@@ -233,12 +207,12 @@ class HowProjectsWorkController extends WebPageController {
               const AutoSizeText(firstParagraph)
             else
               const Text(firstParagraph),
-            if (this.readMore)
+            if (_readMore)
               TextButton(
                 onPressed: () {
                   // this.readMore = false;
                   // StateSet.root!.setState(() {});
-                  AppRouterDelegate.nextRoute('/five_whys');
+                  AppRouterDelegate.newRoute('/five_whys');
                 },
                 child: Text(
                   ' ...read more',
@@ -252,7 +226,7 @@ class HowProjectsWorkController extends WebPageController {
               const AutoSizeText(secondParagraph)
             else
               const Text(secondParagraph),
-            if (!this.readMore)
+            if (!_readMore)
               InkWell(
                 onTap: () => PopupPage.window<void>(
                   context,
@@ -265,29 +239,15 @@ class HowProjectsWorkController extends WebPageController {
                   fit: BoxFit.fill,
                 ),
               ),
-            if (!this.readMore)
+            if (!_readMore)
               const Text(
                 "Writing some 'Use Case Scenarios' will then pin down how a possible solution would work:",
                 //             style: _textStyle,
               ),
-            // if (!this.readMore)
-            //   TextButton(
-            //     onPressed: () {
-            //       this.readMore = true;
-            //       StateSet.root!.setState(() {});
-            //     },
-            //     child: Text(
-            //       ' ...show less',
-            //       style: textStyle.copyWith(
-            //         color: Theme.of(context).colorScheme.secondary,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ),
-            if (showLink)
+            if (_showLink)
               TextButton(
                 onPressed: () {
-                  AppRouterDelegate.nextRoute('/use_case');
+                  AppRouterDelegate.newRoute('/use_case');
                 },
                 child: Text(
                   'Use Case Scenarios',
@@ -310,23 +270,17 @@ class _Content {
   static bool visible = false;
 }
 
-class FiveWhys extends WebPageWidget {
+class FiveWhys extends WebPage {
   FiveWhys({GlobalKey? key})
       : super(
-          controller: FiveWhysController(),
           key: key ?? GlobalKey(debugLabel: 'FiveWhys'),
-          hasBottomBar: true,
+          title: 'How Projects Should Work',
+          addFooter: true,
         );
-}
-
-class FiveWhysController extends WebPageController {
-  factory FiveWhysController() => _this ??= FiveWhysController._();
-  FiveWhysController._() : super();
-  static FiveWhysController? _this;
 
   /// Main content
   @override
 //  List<Widget>? withHeader04(BuildContext context, [WebPageWidget? widget]) {
-  Widget? builder(BuildContext context) => HowProjectsWorkController()
-      .popup(context, showLink: false, readMore: false);
+  Widget? builder(BuildContext context) =>
+      HowProjectsWork().popup(context, showLink: false, readMore: false);
 }

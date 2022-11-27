@@ -37,7 +37,7 @@ class _HTMLinkWellState extends State<HTMLinkWell> {
         onHighlightChanged: inkWell.onHighlightChanged,
         onHover: inkWell.onHover ??
             (value) {
-              widget.state?.setState(() {
+              setState(() {
                 _isHovering = value;
               });
             },

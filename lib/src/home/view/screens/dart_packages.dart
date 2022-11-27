@@ -44,7 +44,8 @@ class DartPackages extends StatelessWidget {
       );
 }
 
-class DartCard extends StatelessWidget with WebPageFeaturesMixin {
+class DartCard extends StatelessWidget {
+  // with WebPageFeaturesMixin {
   const DartCard({
     required this.image,
     required this.uri,
@@ -125,7 +126,7 @@ class PackagesLink extends WebPageContainer {
               ),
               text: '11 published packages',
               recognizer: TapGestureRecognizer()
-                ..onTap = () => AppRouterDelegate.nextRoute('/packages'),
+                ..onTap = () => AppRouterDelegate.newRoute('/packages'),
             ),
             TextSpan(
               style: textStyle,

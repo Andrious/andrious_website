@@ -3,13 +3,14 @@
 // found in the LICENSE file.
 
 // Has a conditional import for runApp()
-import 'package:andrious/src/app/view/utils/app_localizations.dart';
+
 import 'package:andrious/src/view.dart'; //hide runApp;
 //import 'package:andrious/src/controller.dart' show runApp;
 
 void main() => runApp(EasyDynamicThemeWidget(child: MyApp()));
 
-class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
+class MyApp extends AppStatefulWidget {
+  //} with WebPageFeaturesMixin {
   factory MyApp({Key? key}) => _this ??= MyApp._(key);
   MyApp._(Key? key) : super(key: key, errorReport: _onErrorReport);
 
@@ -37,7 +38,7 @@ class MyApp extends AppStatefulWidget with WebPageFeaturesMixin {
     if (uri == null) {
       browse = false;
     } else {
-      browse = await _this!.uriBrowse(uri);
+      browse = await uriBrowse(uri);
     }
     return browse;
   }
@@ -53,9 +54,7 @@ class _MyAppState extends AppState {
           title: 'Andrious Solutions',
           useInheritedMediaQuery: true,
           builder: DevicePreview.appBuilder,
-//          locale: AppTrs.textLocale,
           locale: const Locale('en', 'CA'),
-//         supportedLocales: AppTrs.supportedLocales,
           supportedLocales: const [
             Locale('en', 'US'),
             Locale('en', 'GB'),
@@ -65,7 +64,7 @@ class _MyAppState extends AppState {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
-//            L10n.delegate!,
+            L10n.delegate,
           ],
           routerDelegate: AppRouterDelegate(routes: {
             '/': (_) =>
@@ -80,7 +79,7 @@ class _MyAppState extends AppState {
             '/packages': (_) => interactiveViewer(DartPackages()),
             '/privacy': (_) => PrivacyPolicy(),
             '/interfaces': (_) => FlutterUIs(),
-//            '/shrine': (_) => Shrine(),
+            '/shrine': (_) => Shrine(),
             '/shrine_privacy': (_) => ShrinePolicy(),
           }),
           routeInformationParser: AppRouteInformationParser(),
@@ -205,7 +204,7 @@ class AppTheme {
     } else {
       setting = 'system';
     }
-    App.refresh();
+    App.setState(() {});
     return mode(setting);
   }
 
@@ -298,7 +297,7 @@ class _ReportError {
     final screenSize = App.screenSize;
 
     showBox(
-      context: StateSet.lastContext!,
+      context: App.context!,
       contentPadding: const EdgeInsets.all(10),
       scrollable: true,
       content: Center(

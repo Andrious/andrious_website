@@ -4,26 +4,18 @@
 
 import 'package:andrious/src/view.dart';
 
-class PrivacyPolicy extends WebPageWidget {
+class PrivacyPolicy extends WebPage {
   PrivacyPolicy({GlobalKey? key})
       : super(
           key: key ?? LabeledGlobalKey('PrivacyPolicy'),
-          controller: _PrivacyPolicy(),
           title: 'Privacy Policy',
-          hasBottomBar: false,
-        );
-}
-
-class _PrivacyPolicy extends WebPageController {
-  _PrivacyPolicy()
-      : super(
-          appBar: AppBar(title: const Text('Privacy Policy')),
+          addFooter: false,
         );
 
   @override
   Widget? builder(BuildContext context) {
-    final _screenSize = screenSize;
-    final _smallScreen = inSmallScreen;
+    final _screenSize = context.screenSize;
+    final _smallScreen = context.inSmallScreen;
     return Container(
       margin: EdgeInsets.fromLTRB(
         _screenSize.width * (_smallScreen ? 0 : 0.2),

@@ -4,46 +4,27 @@
 
 import 'package:andrious/src/view.dart';
 
-class HomePage extends WebPageWidget {
+class HomePage extends WebPage {
   HomePage({GlobalKey? key})
       : super(
           key: key ?? LabeledGlobalKey('HomePage'),
-          controller: HomePageController(),
+          title: 'Andrious Solutions Ltd.',
         );
-
-  @override
-  String get title => 'Andrious Solutions Ltd.';
-}
-
-class HomePageController extends WebPageController {
-  factory HomePageController() => _this ??= HomePageController._();
-  HomePageController._() : super();
-  static HomePageController? _this;
-
-  @override
-  void initState() {
-    super.initState();
-    _widget = widget as HomePage;
-    _state = state!;
-  }
-
-  late HomePage _widget;
-  late State _state;
 
   @override
   PreferredSizeWidget? onAppBar() => inSmallScreen
       ? AppBar(
           backgroundColor:
-              Theme.of(_state.context).bottomAppBarColor.withOpacity(opacity),
+              Theme.of(context).bottomAppBarColor.withOpacity(opacity),
           elevation: 0,
           centerTitle: true,
           actions: [
             if (inSmallScreen) AppTheme.fontSizeButton,
-            SizedBox(width: App.screenSize.width * 0.1),
+            SizedBox(width: screenSize.width * 0.1),
             AppTheme.darkModeButton,
           ],
           title: Text(
-            _widget.title,
+            title!,
             style: TextStyle(
               color: Colors.blueGrey[100],
               fontSize: 20,
@@ -58,10 +39,7 @@ class HomePageController extends WebPageController {
         );
 
   @override
-  Widget? builder(BuildContext context) => null;
-
-  @override
-  List<Widget>? buildList(BuildContext context) {
+  Widget? builder(BuildContext context) {
     final List<Widget> children = [];
 
     children.add(
@@ -79,6 +57,6 @@ class HomePageController extends WebPageController {
       ),
     );
     children.add(const ArticleCarousel());
-    return children;
+    return Column(children: children);
   }
 }

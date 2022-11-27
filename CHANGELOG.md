@@ -1,4 +1,8 @@
 
+## 1.45.0
+ November 27, 2022
+- class WebPageWrapper
+
 ## 1.44.0
  April 27, 2022
 - urlTap() function to launch App store websites

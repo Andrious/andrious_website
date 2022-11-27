@@ -15,14 +15,8 @@ class ArticleCarousel extends StatefulWidget {
   State createState() => _ArticleCarouselState();
 }
 
-class _ArticleCarouselState extends State<ArticleCarousel>
-    with WebPageFeaturesMixin {
+class _ArticleCarouselState extends State<ArticleCarousel> {
   //
-  late CarouselController _carouselController;
-  late ArticlesCarouselController _con;
-  int _current = 0;
-  bool tapTwo = false;
-
   @override
   void initState() {
     super.initState();
@@ -32,57 +26,59 @@ class _ArticleCarouselState extends State<ArticleCarousel>
   }
 
   late bool _smallScreen;
+  late CarouselController _carouselController;
+  late ArticlesCarouselController _con;
+  int _current = 0;
+  bool tapTwo = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CarouselSlider(
-          items: _generateImageTiles(_con.webPages),
-          options: CarouselOptions(
-            height: 450,
-            aspectRatio: 18 / 8,
-            scrollPhysics: _smallScreen
-                ? const PageScrollPhysics()
-                : const NeverScrollableScrollPhysics(),
-            enlargeCenterPage: true,
-            autoPlay: !tapTwo,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _current = index;
-                tapTwo = false;
-              });
-            },
-          ),
-          carouselController: _carouselController,
-        ),
-        AspectRatio(
-          aspectRatio: 16 / 8,
-          child: InkWell(
-            splashColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            onTap: () async {
-              if (!tapTwo) {
-                tapTwo = true;
-                await _carouselController.animateToPage(_current);
-                _carouselController.stopAutoPlay();
-              } else {
-                tapTwo = false;
-                await _con.browse(
-                  context: this.context,
-                  index: _current,
-                  webPage: this,
-                );
+  Widget build(BuildContext context) => Stack(
+        children: [
+          CarouselSlider(
+            items: _generateImageTiles(_con.webPages),
+            options: CarouselOptions(
+              height: 450,
+              aspectRatio: 18 / 8,
+              scrollPhysics: _smallScreen
+                  ? const PageScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
+              enlargeCenterPage: true,
+              autoPlay: !tapTwo,
+              onPageChanged: (index, reason) {
                 setState(() {
-                  _carouselController.nextPage();
+                  _current = index;
+                  tapTwo = false;
                 });
-              }
-            },
+              },
+            ),
+            carouselController: _carouselController,
           ),
-        ),
-      ],
-    );
-  }
+          AspectRatio(
+            aspectRatio: 16 / 8,
+            child: InkWell(
+              splashColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              onTap: () async {
+                if (!tapTwo) {
+                  tapTwo = true;
+                  await _carouselController.animateToPage(_current);
+                  _carouselController.stopAutoPlay();
+                } else {
+                  tapTwo = false;
+                  await _con.browse(
+                    context: this.context,
+                    index: _current,
+//                  webPage: this,
+                  );
+                  setState(() {
+                    _carouselController.nextPage();
+                  });
+                }
+              },
+            ),
+          ),
+        ],
+      );
 
   List<Widget> _generateImageTiles(Map<String, dynamic> map) {
     final List<Widget> widgets = [];
@@ -100,7 +96,8 @@ class _ArticleCarouselState extends State<ArticleCarousel>
   }
 }
 
-class ArticlesCarouselController extends WebPageController {
+class ArticlesCarouselController {
+  //extends WebPageController {
   factory ArticlesCarouselController() =>
       _this ??= ArticlesCarouselController._();
 
@@ -375,7 +372,7 @@ class ArticlesCarouselController extends WebPageController {
   Future<void> browse({
     required BuildContext context,
     required int index,
-    required WebPageFeaturesMixin webPage,
+//    required WebPageFeaturesMixin webPage,
   }) async {
     //
     final free = webPages[_articles[index]][0];
@@ -399,49 +396,45 @@ If you're a member, it's free. If not, you may wish to cancel.
       browse = true;
     }
     if (browse) {
-      await webPage.uriBrowse(url);
+      await uriBrowse(url);
     }
   }
 
-  @override
-//  List<Widget>? child(BuildContext context, [WebPageWidget? widget]) => [
-  Widget? builder(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) =>
-          ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: constraints.minWidth,
-          minHeight: constraints.minHeight,
-          maxWidth: constraints.maxWidth,
-          maxHeight: constraints.maxHeight,
-        ),
-        child: Material(
-          child: GridView.builder(
-            primary: false,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(8),
-            shrinkWrap: true,
-            itemCount: articles.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
-              childAspectRatio: 5 / 4,
-              crossAxisSpacing: 10,
-            ),
-            itemBuilder: (BuildContext context, int index) => ArticleImage(
-              this,
-              index: index,
-              constraints: constraints,
+  Widget builder(BuildContext context) => LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) =>
+            ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: constraints.minWidth,
+            minHeight: constraints.minHeight,
+            maxWidth: constraints.maxWidth,
+            maxHeight: constraints.maxHeight,
+          ),
+          child: Material(
+            child: GridView.builder(
+              primary: false,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(8),
+              shrinkWrap: true,
+              itemCount: articles.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: ResponsiveWidget.isSmallScreen(context) ? 3 : 5,
+                childAspectRatio: 5 / 4,
+                crossAxisSpacing: 10,
+              ),
+              itemBuilder: (BuildContext context, int index) => _ArticleImage(
+                this,
+                index: index,
+                constraints: constraints,
+              ),
             ),
           ),
         ),
-      ),
-    );
-//      ];
-  }
+      );
 }
 
-class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {
-  const ArticleImage(
+class _ArticleImage extends StatelessWidget {
+  // with WebPageFeaturesMixin {
+  const _ArticleImage(
     this.con, {
     required this.index,
     required this.constraints,
@@ -453,7 +446,15 @@ class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: () => PopupPage.window<void>(context, browser),
+        onTap: () async {
+          final url = con.webPages[con.articles[index]][1];
+          final name = url.split('/').last;
+          AppRouterDelegate.INSTANCE?.offRoute(
+            name,
+//            () async => PopupPage.window<void>(context, browser, title: ' '),
+            (context) => WebPage(title: ' ', child: browser(context)),
+          );
+        },
         focusColor: Colors.transparent,
         hoverColor: Colors.transparent,
         splashColor: Colors.transparent,
@@ -471,7 +472,6 @@ class ArticleImage extends StatelessWidget with WebPageFeaturesMixin {
               await con.browse(
                 context: context,
                 index: index,
-                webPage: this,
               );
             },
             child: interactiveViewer(

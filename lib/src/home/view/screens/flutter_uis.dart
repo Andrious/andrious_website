@@ -4,47 +4,24 @@
 
 import 'package:andrious/src/view.dart';
 
-class FlutterUIs extends WebPageWidget {
-  factory FlutterUIs({GlobalKey? key}) => _this ??= FlutterUIs._(key);
-  FlutterUIs._(GlobalKey? key)
+class FlutterUIs extends WebPage {
+  FlutterUIs({GlobalKey? key})
       : super(
           key: key ?? LabeledGlobalKey('FlutterUIs'),
-          controller: FlutterUIsController(
-            primary: false,
-            physics: const AlwaysScrollableScrollPhysics(),
-          ),
           title: 'Flutter UI Examples',
-          hasBottomBar: false,
+          addFooter: false,
+          primary: false,
+          physics: const AlwaysScrollableScrollPhysics(),
         );
-  static FlutterUIs? _this;
-
-  Widget coverPage(BuildContext context, {void Function()? onTap}) =>
-      FlutterUIsController().coverPage(context, onTap: onTap);
-}
-
-class FlutterUIsController extends WebPageController {
-  factory FlutterUIsController({
-    bool? primary,
-    ScrollPhysics? physics,
-  }) =>
-      _this ??= FlutterUIsController._(primary, physics);
-
-  FlutterUIsController._(
-    bool? primary,
-    ScrollPhysics? physics,
-  ) : super(
-          primary: primary,
-          physics: physics,
-        );
-  static FlutterUIsController? _this;
 
   final String uiExamples = 'assets/images/flutteruis/flutter_ui_examples.png';
 
   /// Display the cover page
   Widget coverPage(BuildContext context, {void Function()? onTap}) {
-    final _screenSize = screenSize;
+    //
+    final _screenSize = context.screenSize;
 
-    final _smallScreen = inSmallScreen;
+    final _smallScreen = context.inSmallScreen;
 
     final textStyle = Theme.of(context).textTheme.bodyText2;
 
@@ -104,7 +81,7 @@ class FlutterUIsController extends WebPageController {
             InkWell(
               onTap: onTap ??
                   () {
-                    AppRouterDelegate.nextRoute('/interfaces');
+                    AppRouterDelegate.newRoute('/interfaces');
                   },
               child: Image.asset(
                 uiExamples,
@@ -119,15 +96,12 @@ class FlutterUIsController extends WebPageController {
   }
 
   @override
-  Widget? builder(BuildContext context) => null;
-
-  @override
-  List<Widget>? buildList(BuildContext context) => [
+  Widget? builder(BuildContext context) => Column(children: [
         flutterUI(context),
         flutterUIInstall(context),
         flutterUChrome(context),
         flutterUIDesktop(context),
-      ];
+      ]);
 
   Widget flutterUI(BuildContext context) => popupScreen(
         context,

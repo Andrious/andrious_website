@@ -4,15 +4,17 @@
 
 import 'package:andrious/src/view.dart';
 
-class ArticlesGrid extends WebPageWidget {
+class ArticlesGrid extends WebPage {
   ArticlesGrid({GlobalKey? key})
       : super(
+          title: 'My Technical Articles',
           key: key ?? LabeledGlobalKey('ArticlesGrid'),
-          controller: ArticlesCarouselController(),
         );
 
   @override
-  String get title => 'My Technical Articles';
+  Widget builder(BuildContext context) =>
+      ArticlesCarouselController().builder(context);
+  //     ArticleCarousel().gridArticles(context);
 }
 
 class ArticlesLink extends WebPageContainer {
@@ -43,7 +45,7 @@ class ArticlesLink extends WebPageContainer {
               ),
               text: 'Medium.',
               recognizer: TapGestureRecognizer()
-                ..onTap = () => AppRouterDelegate.nextRoute('/articles'),
+                ..onTap = () => AppRouterDelegate.newRoute('/articles'),
             )
           ],
         ),

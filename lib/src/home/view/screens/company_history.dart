@@ -4,34 +4,24 @@
 
 import 'package:andrious/src/view.dart';
 
-class CompanyHistory extends WebPageWidget {
+class CompanyHistory extends WebPage {
   CompanyHistory({
     GlobalKey? key,
     this.readMore = false,
   }) : super(
           title: 'Company History',
           key: key ?? LabeledGlobalKey('CompanyHistory'),
-          controller: _CompanyHistoryController(),
         );
   final bool? readMore;
-}
-
-class _CompanyHistoryController extends WebPageController {
-  factory _CompanyHistoryController() =>
-      _this ??= _CompanyHistoryController._();
-  _CompanyHistoryController._() : super();
-  static _CompanyHistoryController? _this;
-
-  late CompanyHistory parentWidget;
 
   @override
   Widget builder(BuildContext context) {
     //
-    final _screenSize = screenSize;
+    final _readMore = readMore ?? false;
 
-    final _smallScreen = inSmallScreen;
+    final _screenSize = context.screenSize;
 
-    parentWidget = widget as CompanyHistory;
+    final _smallScreen = context.inSmallScreen;
 
     final textStyle = Theme.of(context).textTheme.bodyText2;
 
@@ -55,13 +45,13 @@ class _CompanyHistoryController extends WebPageController {
             ),
             SizedBox(height: _screenSize.height * 0.05),
             // If not set to the 'read more' feature
-            if (!parentWidget.readMore!)
+            if (!_readMore)
               AutoSizeText(
                 text,
                 style: textStyle,
               ),
             // If no 'widget' or set to 'read more' feature.
-            if (parentWidget.readMore!)
+            if (_readMore)
               RichText(
                 text: TextSpan(
                   children: [
@@ -77,7 +67,7 @@ class _CompanyHistoryController extends WebPageController {
                       text: ' ...read more',
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          AppRouterDelegate.nextRoute('/company');
+                          AppRouterDelegate.newRoute('/company');
                         },
                     )
                   ],

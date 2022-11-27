@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /// MVC framework
-export 'package:mvc_application/controller.dart' hide AppController;
+export 'package:fluttery_framework/controller.dart' hide AppController;
 
 export 'package:andrious/src/app/controller.dart';
 

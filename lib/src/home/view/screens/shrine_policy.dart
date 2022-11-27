@@ -6,20 +6,12 @@ import 'package:andrious/src/view.dart';
 
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-class ShrinePolicy extends WebPageWidget {
+class ShrinePolicy extends WebPage {
   ShrinePolicy({GlobalKey? key})
       : super(
           key: key ?? LabeledGlobalKey('PrivacyPolicy'),
-          controller: _ShrinePolicy(),
           title: 'Privacy Policy',
-          hasBottomBar: false,
-        );
-}
-
-class _ShrinePolicy extends WebPageController {
-  _ShrinePolicy()
-      : super(
-          appBar: AppBar(title: const Text('Privacy Policy')),
+          addFooter: false,
         );
 
   @override
