@@ -72,10 +72,38 @@ class UseCaseExample extends WebPage {
                     style: style,
                     textAlign: TextAlign.justify,
                   ),
-                  Image.asset(
-                    'assets/images/use_case_example.jpg',
-                    fit: BoxFit.cover,
-                  ),
+                  if (!_smallScreen)
+                    Image.asset(
+                      'assets/images/use_case_example.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                  if (_smallScreen)
+                    InkWell(
+                      onTap: () async {
+                        AppRouterDelegate.INSTANCE?.offRoute(
+                          'use_case_example',
+                          (context) => WebPage(
+                            title: ' ',
+                            addFooter: false,
+                            child: interactiveViewer(
+                              Image.asset(
+                                'assets/images/use_case_example.jpg',
+                                fit: BoxFit.cover,
+                              ),
+                              wrap: false,
+                            ),
+                          ),
+                        );
+                      },
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      child: Image.asset(
+                        'assets/images/use_case_example.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   Text(
                     useCase02,
                     style: style,
@@ -112,10 +140,10 @@ class UseCaseExample extends WebPage {
   }
 
   final useCase01 =
-      "Help me help you to build the mobile app that you want.\nTo give us a better idea, we are going to write up some Use Case Scenarios. They're 'little stories' essentially detailing how the; app is suppose to work. They'll help better convey your idea, and help us develop your app faster.\nThey also give us an idea how long it will take to make your app. Generally, each 'step' in a Use Case Scenario represents a separate piece of code that will need to be written. The more steps; the more code.\nBelow is a Use Case Example:";
+      "Help me help you to build the mobile app that you want.\nTo give us a better idea, we are going to write up some Use Case Scenarios. They're 'little stories' essentially detailing how the app is suppose to work. They'll help better convey your idea, and help us develop your app faster.\nThey also give us an idea how long it will take to make your app. Generally, each 'step' in a Use Case Scenario represents a separate piece of code that will need to be written. The more steps; the more code.\nBelow is a Use Case Example:";
 
   final useCase02 =
-      "See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be many, more lengthy and complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better.";
+      "See how that works? It's amazingly effective in developing a useful app. Of course, your Use Case scenarios will likely be much more lengthy and more complicated. You may have to make revisions over and over again, but you'll only make the mobile app that much better.";
 }
 
 class PNetworkImage extends StatelessWidget {

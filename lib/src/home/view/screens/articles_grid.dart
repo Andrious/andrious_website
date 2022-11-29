@@ -14,7 +14,6 @@ class ArticlesGrid extends WebPage {
   @override
   Widget builder(BuildContext context) =>
       ArticlesCarouselController().builder(context);
-  //     ArticleCarousel().gridArticles(context);
 }
 
 class ArticlesLink extends WebPageContainer {
@@ -24,9 +23,21 @@ class ArticlesLink extends WebPageContainer {
   Widget builder(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.bodyText2;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text(
-        'My Technical Article',
-        style: TextStyle(fontSize: 24),
+      Row(
+        children: [
+          const Text(
+            'My Technical Article',
+            style: TextStyle(fontSize: 24),
+          ),
+          Flexible(
+            child: IconButton(
+              icon: const Icon(Icons.grid_on),
+              onPressed: () {
+                AppRouterDelegate.newRoute('/articles');
+              },
+            ),
+          ),
+        ],
       ),
       const Divider(),
       RichText(

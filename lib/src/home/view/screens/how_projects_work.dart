@@ -26,7 +26,6 @@ class HowProjectsWork extends WebPage {
   Widget builder(BuildContext context) {
     // MyApp.inSmallScreen allows this method to be called before the build() function.
     final _smallScreen = context.inSmallScreen;
-
     return Stack(
       children: [
         Center(
@@ -76,7 +75,6 @@ class HowProjectsWork extends WebPage {
         if (showPopup ?? true)
           Visibility(
             visible: _Content.visible,
-            // Method is below. Allowing to be called separately.
             child: popup(context, fontSize: 18),
           ),
       ],
@@ -241,7 +239,7 @@ class HowProjectsWork extends WebPage {
               ),
             if (!_readMore)
               const Text(
-                "Writing some 'Use Case Scenarios' will then pin down how a possible solution would work:",
+                "Writing some 'Use Case Scenarios' will then pin down how a possible solution would work.",
                 //             style: _textStyle,
               ),
             if (_showLink)

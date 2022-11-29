@@ -1,7 +1,9 @@
 
-## 1.45.0
+## 1.45.0+01
  November 27, 2022
 - class WebPageWrapper
+- interactiveViewer in Use Case Example on a small screen.
+- Syntax and interface corrections
 
 ## 1.44.0
  April 27, 2022

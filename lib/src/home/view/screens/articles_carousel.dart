@@ -68,7 +68,6 @@ class _ArticleCarouselState extends State<ArticleCarousel> {
                   await _con.browse(
                     context: this.context,
                     index: _current,
-//                  webPage: this,
                   );
                   setState(() {
                     _carouselController.nextPage();
@@ -97,7 +96,6 @@ class _ArticleCarouselState extends State<ArticleCarousel> {
 }
 
 class ArticlesCarouselController {
-  //extends WebPageController {
   factory ArticlesCarouselController() =>
       _this ??= ArticlesCarouselController._();
 
@@ -372,7 +370,6 @@ class ArticlesCarouselController {
   Future<void> browse({
     required BuildContext context,
     required int index,
-//    required WebPageFeaturesMixin webPage,
   }) async {
     //
     final free = webPages[_articles[index]][0];
@@ -433,7 +430,6 @@ If you're a member, it's free. If not, you may wish to cancel.
 }
 
 class _ArticleImage extends StatelessWidget {
-  // with WebPageFeaturesMixin {
   const _ArticleImage(
     this.con, {
     required this.index,
@@ -451,8 +447,11 @@ class _ArticleImage extends StatelessWidget {
           final name = url.split('/').last;
           AppRouterDelegate.INSTANCE?.offRoute(
             name,
-//            () async => PopupPage.window<void>(context, browser, title: ' '),
-            (context) => WebPage(title: ' ', child: browser(context)),
+            (context) => WebPage(
+              title: ' ',
+              addFooter: false,
+              child: browser(context),
+            ),
           );
         },
         focusColor: Colors.transparent,
