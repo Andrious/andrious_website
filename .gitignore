@@ -41,7 +41,7 @@ doc/api/
 example/.*
 example/ios/Flutter/flutter_export_environment.sh
 
-/deployment/
+/deployment
 
 ### Eclipse ###
 *.pydevproject
@@ -90,7 +90,6 @@ example/ios/Flutter/flutter_export_environment.sh
 flutter_assets/
 
 # Web related
-lib/generated_plugin_registrant.dart
 
 # Symbolication related
 app.*.symbolscd
