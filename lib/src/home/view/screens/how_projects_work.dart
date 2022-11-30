@@ -47,9 +47,10 @@ class HowProjectsWork extends WebPage {
                             _projectsImage,
                             fit: BoxFit.cover,
                           );
-                          // Rotate it to landscape
-                          if (MediaQuery.of(context).orientation ==
-                              Orientation.portrait) {
+                          // if (MediaQuery.of(context).orientation ==
+                          //     Orientation.portrait) {
+                          if (_smallScreen) {
+                            // Rotate it to landscape
                             child = RotatedBox(quarterTurns: 5, child: child);
                           }
                           return Center(
